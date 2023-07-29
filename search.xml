@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/07/29/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>hexo美化记录</title>
+    <url>/2023/07/29/hexo%E7%BE%8E%E5%8C%96%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<hr>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>在网站(hexo)[<a href="https://hexo.io/themes/">Themes | Hexo</a>]中可以查看别人的主题，下载并进行自己的美化</p>
+<p>下载后文件会放在&#x2F;themes目录下</p>
+<p>更改blog文件夹下的_config.yml，修改主题</p>
+<p><img src="/image/config.png" alt="image-20230729122511291"></p>
+<p>有能力的也可以修改模板文件进行自定义主题</p>
+<h2 id="文章分类"><a href="#文章分类" class="headerlink" title="文章分类"></a>文章分类</h2><p>生成的新文章头部会有一个说明</p>
+<p>例如这篇博客的头部</p>
+<p><img src="/image/%E5%A4%B4%E9%83%A8%E4%BF%A1%E6%81%AF.jpg" alt="图片"></p>
+<p>在这一块加上</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">categories: hexo</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="本地图片插入文章网页不显示"><a href="#本地图片插入文章网页不显示" class="headerlink" title="本地图片插入文章网页不显示"></a>本地图片插入文章网页不显示</h2><p>关于这个问题，搜索后发现有几种方法：</p>
+<ul>
+<li>修改配置文件</li>
+<li>安装插件</li>
+<li>手动插入</li>
+</ul>
+<p>我尝试了一下，修改配置文件是指<code>_config.yml</code></p>
+<p><img src="/image/assert%E4%BF%AE%E6%94%B9.jpg" alt="配置"></p>
+<p>将这一行改成false，再将图片存放在与博客同名的文件夹中</p>
+<p><strong>这个方法没用</strong></p>
+<hr>
+<p>于是我又尝试了手动插入</p>
+<p>在<code>source</code>文件夹下新建一个文件夹为<code>image</code>，再将图片存放在里面，博客里使用相对路径，如<code>/image/assert.jpg</code>这样就可以成功显示了</p>
+<p><strong>这个方法对我有用，于是没有尝试插件</strong></p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的hexo配置过程</title>
+    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
+<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
+<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
+<p>在网上找到的解决方案：</p>
+<p>建立一个空的blog文件夹，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+
+<p>注：命令在blog文件夹打开终端执行</p>
+<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
+<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
+<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
+<p>上传博客：</p>
+<ul>
+<li><code>npx hexo clean</code></li>
+<li><code>npx hexo g</code></li>
+<li><code>npx hexo s</code></li>
+</ul>
+<p>再打开网页，就可以看到上传的博客了</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>daily;experient</tag>
+      </tags>
+  </entry>
+</search>
