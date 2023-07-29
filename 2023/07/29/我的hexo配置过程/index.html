@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>我的hexo配置过程 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="起因前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来 过程当初的实验并没有成功，于是我重新尝试了一下 遇到的问题：git bash中无法执行hexo,即使修改了环境变量也没用  在网上找到的解决方案： 建立一个空的blog文件夹，再执行： 1234npx hexo init blogcd blognpm installnpx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的hexo配置过程">
+<meta property="og:url" content="http://example.com/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="起因前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来 过程当初的实验并没有成功，于是我重新尝试了一下 遇到的问题：git bash中无法执行hexo,即使修改了环境变量也没用  在网上找到的解决方案： 建立一个空的blog文件夹，再执行： 1234npx hexo init blogcd blognpm installnpx">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="d:\study-note\picture\hexo%E9%94%99%E8%AF%AF">
+<meta property="article:published_time" content="2023-07-29T01:46:35.000Z">
+<meta property="article:modified_time" content="2023-07-29T02:05:37.069Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="daily;experient">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:\study-note\picture\hexo%E9%94%99%E8%AF%AF">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-我的hexo配置过程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2023-07-29T01:46:35.000Z" itemprop="datePublished">2023-07-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      我的hexo配置过程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
+<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
+<p><img src="D:\study-note\picture\hexo错误" alt="image-20230729095144582"></p>
+<p>在网上找到的解决方案：</p>
+<p>建立一个空的blog文件夹，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+
+<p>注：命令在blog文件夹打开终端执行</p>
+<p>执行后打开 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
+<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
+<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/" data-id="clkndf3z40001cgi240yh1g8h" data-title="我的hexo配置过程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/daily-experient/" rel="tag">daily;experient</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/29/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily-experient/" rel="tag">daily;experient</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/daily-experient/" style="font-size: 10px;">daily;experient</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/">我的hexo配置过程</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/29/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
