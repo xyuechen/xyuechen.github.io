@@ -1,45 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>archlinux记录</title>
-    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
-<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
-<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
-<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
-<p>美化使用了类苹果的主题</p>
-<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
-<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v 2 ray</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
-<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
-<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
-<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-        <tag>archlinux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2023/07/29/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>hexo美化记录</title>
     <url>/2023/07/29/hexo%E7%BE%8E%E5%8C%96%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<hr>
@@ -119,7 +80,29 @@
         <category>hexo</category>
       </categories>
       <tags>
-        <tag>daily;experient</tag>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>archlinux记录</title>
+    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
+<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
+<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
+<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
+<p>美化使用了类苹果的主题</p>
+<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
+<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v 2 ray</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
+<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
+<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
       </tags>
   </entry>
 </search>
