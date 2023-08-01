@@ -48,6 +48,65 @@
       </tags>
   </entry>
   <entry>
+    <title>我的hexo配置过程</title>
+    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
+<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
+<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
+<p>在网上找到的解决方案：</p>
+<p>建立一个空的blog文件夹，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+
+<p>注：命令在blog文件夹打开终端执行</p>
+<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
+<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
+<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
+<p>上传博客：</p>
+<ul>
+<li><code>npx hexo clean</code></li>
+<li><code>npx hexo g</code></li>
+<li><code>npx hexo s</code></li>
+</ul>
+<p>再打开网页，就可以看到上传的博客了</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>picgo+github</title>
+    <url>/2023/07/30/picgo-github/</url>
+    <content><![CDATA[<h2 id="picgo下载"><a href="#picgo下载" class="headerlink" title="picgo下载"></a>picgo下载</h2><p>[链接](<a href="http://molunerfinn.com/PicGo/">PicGo (molunerfinn.com)</a>)</p>
+<p>下载安装后打开，进入 <code>图床设置</code>-&gt;<code>github</code></p>
+<p><img src="/image/image-20230730225439663.png" alt="image-20230730225439663"></p>
+<p>填入相应的信息</p>
+<p>token要在GitHub生成</p>
+<h2 id="生成token"><a href="#生成token" class="headerlink" title="生成token"></a>生成token</h2><p>在GitHub新建一个仓库，取一个自己喜欢的名，（*这里取的是<code>image</code>*）</p>
+<p>然后在设置里，拉到最下面，选择开发者选项</p>
+<p><img src="/image/image-20230730225729836.png" alt="image-20230730225729836"></p>
+<p>填入即可</p>
+<h2 id="typora设置"><a href="#typora设置" class="headerlink" title="typora设置"></a>typora设置</h2><p>由于app上传失败（不知道为什么，于是选择了插件模式）</p>
+<p><img src="/./../image/image-20230730231733097.png" alt="image-20230730231733097"></p>
+<p>选择这个模式并下载，接着在C盘中&#x2F;APPData&#x2F;Roaming文件夹下找到Typora文件夹，里面的&#x2F;picgo&#x2F;win64子文件夹，其中有一个.exe文件，不用管他，在路径中输入cmd打开终端，并按照下图输入</p>
+<p>其中customUrl最后两个为你的用户名和仓库名，按照自身情况替换</p>
+<p><img src="/./../image/image-20230730231709888.png" alt="image-20230730231709888"></p>
+<p>接着输入<code>picgo use uploader</code>，回车后选择GitHub，成功后回到typora选择验证，在GitHub中看到图片即成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230730232515873.png" alt="image-20230730232515873"></p>
+<p>这样就成功了</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo美化记录</title>
     <url>/2023/07/29/hexo%E7%BE%8E%E5%8C%96%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<hr>
@@ -101,34 +160,29 @@
       </tags>
   </entry>
   <entry>
-    <title>我的hexo配置过程</title>
-    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
-<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
-<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
-<p>在网上找到的解决方案：</p>
-<p>建立一个空的blog文件夹，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+    <title>错误1006解决方案</title>
+    <url>/2023/08/01/%E9%94%99%E8%AF%AF1006%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h2 id="记录一下"><a href="#记录一下" class="headerlink" title="记录一下"></a>记录一下</h2><p>今天离开电脑的时候没有关闭watt toolkit软件（并且它还开着GitHub加速），等我回来时电脑自动关机了</p>
+<p>当时意识到大事不妙（以前也遇到过），果然，已经无法上网了，并且watt提示错误代码1006，主机拒绝访问</p>
+<p>于是记录一下解决过程</p>
+<hr>
+<p>首先搜索了一下“电脑连上网络但是无法上网怎么办”</p>
+<p>一个解决方案说可以修改wlan的设置，双击IPv4</p>
+<img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801221357568.png" alt="image-20230801221357568" style="zoom:67%;" />
 
-<p>注：命令在blog文件夹打开终端执行</p>
-<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
-<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
-<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
-<p>上传博客：</p>
-<ul>
-<li><code>npx hexo clean</code></li>
-<li><code>npx hexo g</code></li>
-<li><code>npx hexo s</code></li>
-</ul>
-<p>再打开网页，就可以看到上传的博客了</p>
+<p>修改DNS设置（由于并没有用所以我就不贴上来了）</p>
+<hr>
+<p>然后在edge里运行网络检测，提示“远程计算机或设备不接受连接”，搜索这个关键词</p>
+<p>修复方法：打开控制面板（<code>win</code>+<code>R</code>再输入<code>control</code>）–&gt; 连接 –&gt; 局域网设置 –&gt; 只勾选“自动检测设置”</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801222017921.png" alt="image-20230801222017921"></p>
+<p>这样就解决问题了</p>
 ]]></content>
       <categories>
-        <category>hexo</category>
+        <category>daily</category>
+        <category>error</category>
       </categories>
       <tags>
         <tag>daily</tag>
-        <tag>experient</tag>
       </tags>
   </entry>
 </search>
