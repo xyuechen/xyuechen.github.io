@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>archlinux的截图配置</title>
-    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
-<p>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
-
-<p>截图方式：在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
-<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>archliux</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>archlinux记录</title>
     <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
@@ -48,6 +25,29 @@
       </tags>
   </entry>
   <entry>
+    <title>archlinux的截图配置</title>
+    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
+<p>在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
+
+<p>截图方式：在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
+<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archliux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>conda_set</title>
     <url>/2024/04/19/conda-set/</url>
     <content><![CDATA[<h2 id="conda修改环境路径"><a href="#conda修改环境路径" class="headerlink" title="conda修改环境路径"></a>conda修改环境路径</h2><p>conda 默认的环境路径在<code>C:\Users\用户名\conda</code>中，C盘位置不够，因此希望修改到其余地方</p>
@@ -68,6 +68,39 @@
       <categories>
         <category>experient</category>
       </categories>
+  </entry>
+  <entry>
+    <title>hexo-git报错</title>
+    <url>/2024/04/20/hexo-git%E6%8A%A5%E9%94%99/</url>
+    <content><![CDATA[<h2 id="无法连接"><a href="#无法连接" class="headerlink" title="无法连接"></a>无法连接</h2><p>半年没用hexo，今天连接时发现需要输入用户名和密码，输入后报错，无法连接</p>
+<p>遂重新配置一遍</p>
+<ol>
+<li><p>首先配置一下git的用户名和邮箱</p>
+<p><img src="/./../image/image-20240420173725105.png" alt="image-20240420173725105"></p>
+</li>
+<li><p>创建ssh密钥</p>
+<p><img src="/./../image/image-20240420173931385.png" alt="image-20240420173931385"></p>
+<p>在显示的路径下找到文件</p>
+<p><img src="/./../image/image-20240420174042116.png" alt="image-20240420174042116"></p>
+<p>复制里面的内容</p>
+</li>
+<li><p>上传密钥</p>
+<p><img src="/./../image/image-20240420174519454.png" alt="image-20240420174519454"></p>
+<ol start="4">
+<li><p>验证连接</p>
+<p><img src="/./../image/image-20240420174753903.png" alt="image-20240420174753903"></p>
+<p>出现图中”Hi“后面的内容即连接成功</p>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>dairy</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title>hexo美化记录</title>
