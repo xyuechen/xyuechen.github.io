@@ -24,34 +24,6 @@
       </tags>
   </entry>
   <entry>
-    <title>picgo+github</title>
-    <url>/2023/07/30/picgo-github/</url>
-    <content><![CDATA[<h2 id="picgo下载"><a href="#picgo下载" class="headerlink" title="picgo下载"></a>picgo下载</h2><p>[链接](<a href="http://molunerfinn.com/PicGo/">PicGo (molunerfinn.com)</a>)</p>
-<p>下载安装后打开，进入 <code>图床设置</code>-&gt;<code>github</code></p>
-<p><img src="/image/image-20230730225439663.png" alt="image-20230730225439663"></p>
-<p>填入相应的信息</p>
-<p>token要在GitHub生成</p>
-<h2 id="生成token"><a href="#生成token" class="headerlink" title="生成token"></a>生成token</h2><p>在GitHub新建一个仓库，取一个自己喜欢的名，（*这里取的是<code>image</code>*）</p>
-<p>然后在设置里，拉到最下面，选择开发者选项</p>
-<p><img src="/image/image-20230730225729836.png" alt="image-20230730225729836"></p>
-<p>填入即可</p>
-<h2 id="typora设置"><a href="#typora设置" class="headerlink" title="typora设置"></a>typora设置</h2><p>由于app上传失败（不知道为什么，于是选择了插件模式）</p>
-<p><img src="/./../image/image-20230730231733097.png" alt="image-20230730231733097"></p>
-<p>选择这个模式并下载，接着在C盘中&#x2F;APPData&#x2F;Roaming文件夹下找到Typora文件夹，里面的&#x2F;picgo&#x2F;win64子文件夹，其中有一个.exe文件，不用管他，在路径中输入cmd打开终端，并按照下图输入</p>
-<p>其中customUrl最后两个为你的用户名和仓库名，按照自身情况替换</p>
-<p><img src="/./../image/image-20230730231709888.png" alt="image-20230730231709888"></p>
-<p>接着输入<code>picgo use uploader</code>，回车后选择GitHub，成功后回到typora选择验证，在GitHub中看到图片即成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230730232515873.png" alt="image-20230730232515873"></p>
-<p>这样就成功了</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>archlinux记录</title>
     <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
@@ -151,6 +123,59 @@
       </tags>
   </entry>
   <entry>
+    <title>picgo+github</title>
+    <url>/2023/07/30/picgo-github/</url>
+    <content><![CDATA[<h2 id="picgo下载"><a href="#picgo下载" class="headerlink" title="picgo下载"></a>picgo下载</h2><p>[链接](<a href="http://molunerfinn.com/PicGo/">PicGo (molunerfinn.com)</a>)</p>
+<p>下载安装后打开，进入 <code>图床设置</code>-&gt;<code>github</code></p>
+<p><img src="/image/image-20230730225439663.png" alt="image-20230730225439663"></p>
+<p>填入相应的信息</p>
+<p>token要在GitHub生成</p>
+<h2 id="生成token"><a href="#生成token" class="headerlink" title="生成token"></a>生成token</h2><p>在GitHub新建一个仓库，取一个自己喜欢的名，（*这里取的是<code>image</code>*）</p>
+<p>然后在设置里，拉到最下面，选择开发者选项</p>
+<p><img src="/image/image-20230730225729836.png" alt="image-20230730225729836"></p>
+<p>填入即可</p>
+<h2 id="typora设置"><a href="#typora设置" class="headerlink" title="typora设置"></a>typora设置</h2><p>由于app上传失败（不知道为什么，于是选择了插件模式）</p>
+<p><img src="/./../image/image-20230730231733097.png" alt="image-20230730231733097"></p>
+<p>选择这个模式并下载，接着在C盘中&#x2F;APPData&#x2F;Roaming文件夹下找到Typora文件夹，里面的&#x2F;picgo&#x2F;win64子文件夹，其中有一个.exe文件，不用管他，在路径中输入cmd打开终端，并按照下图输入</p>
+<p>其中customUrl最后两个为你的用户名和仓库名，按照自身情况替换</p>
+<p><img src="/./../image/image-20230730231709888.png" alt="image-20230730231709888"></p>
+<p>接着输入<code>picgo use uploader</code>，回车后选择GitHub，成功后回到typora选择验证，在GitHub中看到图片即成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230730232515873.png" alt="image-20230730232515873"></p>
+<p>这样就成功了</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>免费科学上网方法记录</title>
+    <url>/2023/08/10/%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>今天在油管上看到一个科学上网方法，记录一下</p>
+<p>首先是[下载链接](<a href="https://1.1.1.1/">1.1.1.1 — The free app that makes your Internet faster.</a>)，这是一个名为warp的软件，下载后可以免费获得1G的科学流量</p>
+<p>但是这显然不够用</p>
+<p>免费获取永久资格的方法有两种：</p>
+<ul>
+<li>使用信用卡或者paypal注册一个CloudFlare的账号，选择团队套餐，$0的那个，就可以获得免费的流量</li>
+<li>关注warp的telegram</li>
+</ul>
+<p>我选择的是第二种</p>
+<p>先使用免费的1G流量注册一个telegram账号（国内手机号可以使用），然后搜索<code>warp+bot</code></p>
+<p><img src="/./../image/image-20230810221713595.png" alt="image-20230810221713595"></p>
+<p>如图所示，选择这个账号，进入后点击”&#x2F;generate“，他会提醒你关注两个账号，关注后点击第三个”我已关注“，它会返给你几个计算题，算好后就会生成密钥，最后回到warp软件偏好设置中更换密钥，就可以获得花不完的流量啦</p>
+<p>原视频链接：<a href="https://www.youtube.com/watch?v=mkv6MRzvjPE">(10) 免费VPN的杀手！Warp+ 速度贼快，不限制流量，由大名鼎鼎的CloudFlare 提供，放心白嫖 | 零度解说 - YouTube</a></p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+        <tag>magic</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>我的hexo配置过程</title>
     <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
@@ -205,31 +230,6 @@
       </categories>
       <tags>
         <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>免费科学上网方法记录</title>
-    <url>/2023/08/10/%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>今天在油管上看到一个科学上网方法，记录一下</p>
-<p>首先是[下载链接](<a href="https://1.1.1.1/">1.1.1.1 — The free app that makes your Internet faster.</a>)，这是一个名为warp的软件，下载后可以免费获得1G的科学流量</p>
-<p>但是这显然不够用</p>
-<p>免费获取永久资格的方法有两种：</p>
-<ul>
-<li>使用信用卡或者paypal注册一个CloudFlare的账号，选择团队套餐，$0的那个，就可以获得免费的流量</li>
-<li>关注warp的telegram</li>
-</ul>
-<p>我选择的是第二种</p>
-<p>先使用免费的1G流量注册一个telegram账号（国内手机号可以使用），然后搜索<code>warp+bot</code></p>
-<p><img src="/./../image/image-20230810221713595.png" alt="image-20230810221713595"></p>
-<p>如图所示，选择这个账号，进入后点击”&#x2F;generate“，他会提醒你关注两个账号，关注后点击第三个”我已关注“，它会返给你几个计算题，算好后就会生成密钥，最后回到warp软件偏好设置中更换密钥，就可以获得花不完的流量啦</p>
-<p>原视频链接：<a href="https://www.youtube.com/watch?v=mkv6MRzvjPE">(10) 免费VPN的杀手！Warp+ 速度贼快，不限制流量，由大名鼎鼎的CloudFlare 提供，放心白嫖 | 零度解说 - YouTube</a></p>
-]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-        <tag>magic</tag>
       </tags>
   </entry>
 </search>
