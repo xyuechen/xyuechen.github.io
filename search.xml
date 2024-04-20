@@ -24,61 +24,6 @@
       </tags>
   </entry>
   <entry>
-    <title>archlinux记录</title>
-    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
-<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
-<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
-<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
-<p>美化使用了类苹果的主题</p>
-<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
-<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v 2 ray</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
-<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
-<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
-<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>archlinux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的hexo配置过程</title>
-    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
-<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
-<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
-<p>在网上找到的解决方案：</p>
-<p>建立一个空的blog文件夹，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
-
-<p>注：命令在blog文件夹打开终端执行</p>
-<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
-<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
-<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
-<p>上传博客：</p>
-<ul>
-<li><code>npx hexo clean</code></li>
-<li><code>npx hexo g</code></li>
-<li><code>npx hexo s</code></li>
-</ul>
-<p>再打开网页，就可以看到上传的博客了</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-        <tag>experient</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>picgo+github</title>
     <url>/2023/07/30/picgo-github/</url>
     <content><![CDATA[<h2 id="picgo下载"><a href="#picgo下载" class="headerlink" title="picgo下载"></a>picgo下载</h2><p>[链接](<a href="http://molunerfinn.com/PicGo/">PicGo (molunerfinn.com)</a>)</p>
@@ -105,6 +50,52 @@
       <tags>
         <tag>hexo</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>archlinux记录</title>
+    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
+<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
+<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
+<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
+<p>美化使用了类苹果的主题</p>
+<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
+<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v 2 ray</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
+<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
+<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>conda_set</title>
+    <url>/2024/04/19/conda-set/</url>
+    <content><![CDATA[<h2 id="conda修改环境路径"><a href="#conda修改环境路径" class="headerlink" title="conda修改环境路径"></a>conda修改环境路径</h2><p>conda 默认的环境路径在<code>C:\Users\用户名\conda</code>中，C盘位置不够，因此希望修改到其余地方</p>
+<p>在anaconda的终端输入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240419225720792.png" alt="image-20240419225720792"></p>
+<p>之后新建的环境就会出现再目标路径下了</p>
+<h2 id="conda修改jupyter-notebook的默认文件夹"><a href="#conda修改jupyter-notebook的默认文件夹" class="headerlink" title="conda修改jupyter notebook的默认文件夹"></a>conda修改jupyter notebook的默认文件夹</h2><p>在anaconda的终端找到jupyter的配置文件</p>
+<p><img src="/./../image/image-20240420000758149.png" alt="image-20240420000758149"></p>
+<p>打开文件，找到这几行</p>
+<p><img src="/./../image/image-20240420000917995.png" alt="image-20240420000917995"></p>
+<p>取消<code>c.NotebookApp.notebook_dir</code>这一行的注释，在单引号中写入目标路径</p>
+<p><img src="/./../image/image-20240420001053387.png" alt="image-20240420001053387"></p>
+<p>打开jupyter notebook的应用路径</p>
+<p><img src="/./../image/image-20240420001221183.png" alt="image-20240420001221183"></p>
+<p>将选中区域删除</p>
+<p>配置完成</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
   </entry>
   <entry>
     <title>hexo美化记录</title>
@@ -160,6 +151,37 @@
       </tags>
   </entry>
   <entry>
+    <title>我的hexo配置过程</title>
+    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
+<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
+<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
+<p>在网上找到的解决方案：</p>
+<p>建立一个空的blog文件夹，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+
+<p>注：命令在blog文件夹打开终端执行</p>
+<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
+<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
+<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
+<p>上传博客：</p>
+<ul>
+<li><code>npx hexo clean</code></li>
+<li><code>npx hexo g</code></li>
+<li><code>npx hexo s</code></li>
+</ul>
+<p>再打开网页，就可以看到上传的博客了</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>错误1006解决方案</title>
     <url>/2023/08/01/%E9%94%99%E8%AF%AF1006%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<h2 id="记录一下"><a href="#记录一下" class="headerlink" title="记录一下"></a>记录一下</h2><p>今天离开电脑的时候没有关闭watt toolkit软件（并且它还开着GitHub加速），等我回来时电脑自动关机了</p>
@@ -183,6 +205,31 @@
       </categories>
       <tags>
         <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>免费科学上网方法记录</title>
+    <url>/2023/08/10/%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>今天在油管上看到一个科学上网方法，记录一下</p>
+<p>首先是[下载链接](<a href="https://1.1.1.1/">1.1.1.1 — The free app that makes your Internet faster.</a>)，这是一个名为warp的软件，下载后可以免费获得1G的科学流量</p>
+<p>但是这显然不够用</p>
+<p>免费获取永久资格的方法有两种：</p>
+<ul>
+<li>使用信用卡或者paypal注册一个CloudFlare的账号，选择团队套餐，$0的那个，就可以获得免费的流量</li>
+<li>关注warp的telegram</li>
+</ul>
+<p>我选择的是第二种</p>
+<p>先使用免费的1G流量注册一个telegram账号（国内手机号可以使用），然后搜索<code>warp+bot</code></p>
+<p><img src="/./../image/image-20230810221713595.png" alt="image-20230810221713595"></p>
+<p>如图所示，选择这个账号，进入后点击”&#x2F;generate“，他会提醒你关注两个账号，关注后点击第三个”我已关注“，它会返给你几个计算题，算好后就会生成密钥，最后回到warp软件偏好设置中更换密钥，就可以获得花不完的流量啦</p>
+<p>原视频链接：<a href="https://www.youtube.com/watch?v=mkv6MRzvjPE">(10) 免费VPN的杀手！Warp+ 速度贼快，不限制流量，由大名鼎鼎的CloudFlare 提供，放心白嫖 | 零度解说 - YouTube</a></p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+        <tag>magic</tag>
       </tags>
   </entry>
 </search>
