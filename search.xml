@@ -392,6 +392,41 @@
       </tags>
   </entry>
   <entry>
+    <title>我的hexo配置过程</title>
+    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
+<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
+<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
+<p>在网上找到的解决方案：</p>
+<p>建立一个空的blog文件夹，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+
+<p>注：命令在blog文件夹打开终端执行</p>
+<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
+<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
+<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
+<p>上传博客：</p>
+<ul>
+<li><code>npx hexo clean</code></li>
+<li><code>npx hexo g</code></li>
+<li><code>npx hexo s</code></li>
+</ul>
+<p>再打开网页，就可以看到上传的博客了</p>
+<p>上传到<code>github</code>：</p>
+<ul>
+<li><code>npx hexo d</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>错误1006解决方案</title>
     <url>/2023/08/01/%E9%94%99%E8%AF%AF1006%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<h2 id="记录一下"><a href="#记录一下" class="headerlink" title="记录一下"></a>记录一下</h2><p>今天离开电脑的时候没有关闭watt toolkit软件（并且它还开着GitHub加速），等我回来时电脑自动关机了</p>
@@ -415,37 +450,6 @@
       </categories>
       <tags>
         <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的hexo配置过程</title>
-    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
-<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
-<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
-<p>在网上找到的解决方案：</p>
-<p>建立一个空的blog文件夹，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
-
-<p>注：命令在blog文件夹打开终端执行</p>
-<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
-<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
-<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
-<p>上传博客：</p>
-<ul>
-<li><code>npx hexo clean</code></li>
-<li><code>npx hexo g</code></li>
-<li><code>npx hexo s</code></li>
-</ul>
-<p>再打开网页，就可以看到上传的博客了</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-        <tag>experient</tag>
       </tags>
   </entry>
 </search>
