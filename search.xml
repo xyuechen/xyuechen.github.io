@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Autodl的使用</title>
+    <url>/2024/06/01/Autodl%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h2><p>首先登录网页<a href="https://www.autodl.com/home">AutoDL算力云 | 弹性、好用、省钱。租GPU就上AutoDL</a></p>
+<blockquote>
+<p>注：记得进行学生认证</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144233859.png" alt="image-20240601144233859"></p>
+<p>按照自己的需求选择，我希望进行深度学习，同时预算不高，因此我选择按量计费以及3090</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144820389.png" alt="image-20240601144820389"></p>
+<p>这里可以选择需要预先安装的框架，我们选择Miniconda，依赖之后再安装</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145116937.png" alt="image-20240601145116937"></p>
+<p>这样就创建成功了，主要登陆的指令在ssh登录里面，我们可以使用<code>Xshell</code>来进行连接，也可以直接点击<code>JupyterLab</code>来进行连接</p>
+<h2 id="连接实例"><a href="#连接实例" class="headerlink" title="连接实例"></a>连接实例</h2><p>我们选择直接点击<code>JupyterLab</code>进行连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145500031.png" alt="image-20240601145500031"></p>
+<p>如图所示，连接成功</p>
+<p>我们也试一下<code>xftp</code>连接</p>
+<p>首先复制连接指令<code>ssh -p 53669 root@connect.yza1.seetacloud.com</code></p>
+<p>这段指令中：</p>
+<ul>
+<li>53669：端口号</li>
+<li>root：用户名</li>
+<li><code>connect.yza1.seetacloud.com</code>：主机host</li>
+<li>密码：在网页上</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601151900110.png" alt="image-20240601151900110"></p>
+<p>按照上图填入xftp中即可</p>
+<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ol>
+<li>输入<code>vim ~/.bashrc</code></li>
+<li>在最后加上<code>source /root/miniconda3/etc/profile.d/conda.sh</code></li>
+<li>输入<code>bash</code>刷新一下实例</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601150102502.png" alt="image-20240601150102502"></p>
+<ol start="4">
+<li>激活环境<code>conda activate base</code></li>
+<li>创建新环境<code>conda create -n happy python=3.10</code>，这里<code>happy</code>是我的环境名称</li>
+<li>进入新环境<code>conda activate happy</code></li>
+</ol>
+<h3 id="下载包"><a href="#下载包" class="headerlink" title="下载包"></a>下载包</h3><p>autodl的官网帮助文档中有关于pytorch安装的说明</p>
+<blockquote>
+<p>注：安装<code>conda install ipykernel</code>，然后输入<code>ipython kernel install --user --name=happy</code>来更新页面</p>
+</blockquote>
+<p>可以将requirement.txt传输到服务器上再下载</p>
+<h3 id="java环境配置"><a href="#java环境配置" class="headerlink" title="java环境配置"></a>java环境配置</h3><p>有些包需要Java环境，因此我们也安装一下java</p>
+<p>首先从官网下载对应的文件<a href="https://www.oracle.com/java/technologies/downloads/#java8">Java Downloads | Oracle</a></p>
+<p>下载好后使用xftp传输到服务器上的<code>/usr/local</code>的位置上，解压</p>
+<p>解压命令为<code>tar -zvxf zulu8.56.0.21-ca-jdk8.0.302-linux_x64.tar.gz </code></p>
+<p>解压后配置环境变量，环境变量在<code>/etc/profile</code>文件中</p>
+<p>输入<code>vim /etc/profile</code>进入编辑模式</p>
+<p>然后输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk1.8.0_321 #自己的安装目录</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib:$CLASSPATH</span><br><span class="line">export JAVA_PATH=$&#123;JAVA_HOME&#125;/bin:$&#123;JRE_HOME&#125;/bin</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_PATH&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存退出，再刷新<code>source /etc/profile</code></p>
+<p>输入<code>java -version</code>来检验是否配置成功</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>archlinux的截图配置</title>
+    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
+<p>在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
+
+<p>截图方式：在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
+<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>archliux</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>archlinux记录</title>
     <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
@@ -25,29 +110,6 @@
       </tags>
   </entry>
   <entry>
-    <title>archlinux的截图配置</title>
-    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
-<p>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
-
-<p>截图方式：在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
-<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>archliux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>conda_set</title>
     <url>/2024/04/19/conda-set/</url>
     <content><![CDATA[<h2 id="conda修改环境路径"><a href="#conda修改环境路径" class="headerlink" title="conda修改环境路径"></a>conda修改环境路径</h2><p>conda 默认的环境路径在<code>C:\Users\用户名\conda</code>中，C盘位置不够，因此希望修改到其余地方</p>
@@ -64,10 +126,30 @@
 <p><img src="/./../image/image-20240420001221183.png" alt="image-20240420001221183"></p>
 <p>将选中区域删除</p>
 <p>配置完成</p>
+<ul>
+<li>如果环境中没有jupyter，那么在终端输入<code>conda install nb_conda</code>即可</li>
+<li>pytorch下载命令<code>pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118</code></li>
+</ul>
+<h2 id="jupyter设置"><a href="#jupyter设置" class="headerlink" title="jupyter设置"></a>jupyter设置</h2><p>新建的环境中没有jupyter，想要使用的话我们需要下载配置</p>
+<p>首先下载</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install jupyter</span><br></pre></td></tr></table></figure>
+
+<p>下载后的界面如图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240602163539892.png" alt="image-20240602163539892"></p>
+<p>比较简陋，我们也无法进行代码自动补全</p>
+<p>因此我们进行一些配置，在anaconda中输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install jupyter_contrib_nbextensions</span><br><span class="line">jupyter contrib nbextensions install --user</span><br><span class="line">pip install jupyter_nbextensions_configurator</span><br><span class="line">jupyter nbextensions_configurator enable --user</span><br></pre></td></tr></table></figure>
+
+<p>安装后界面如下<img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240602164243456.png" alt="image-20240602164243456"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240602164408582.png" alt="image-20240602164408582"></p>
+<p>选中<code>hinterland</code>，设置完成</p>
 ]]></content>
       <categories>
         <category>experient</category>
       </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
   </entry>
   <entry>
     <title>hexo-git报错</title>
@@ -156,6 +238,35 @@
       </tags>
   </entry>
   <entry>
+    <title>openslide安装</title>
+    <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516200241133.png" alt="image-20240516200241133"></p>
+<p>为这个文件夹中的<strong>bin</strong>和<strong>lib</strong>添加环境变量</p>
+<p>激活环境，在命令行中运行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install Openslide-python</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201746994.png"></p>
+<p>出现这行字表示成功安装</p>
+<h2 id="openslide-导入"><a href="#openslide-导入" class="headerlink" title="openslide 导入"></a>openslide 导入</h2><p>在环境中输入python</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201923931.png" alt="image-20240516201923931"></p>
+<p>这个时候直接导入会报错</p>
+<p>我们可以进行如下操作：</p>
+<p>先加载os</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.add_dll_directory(<span class="string">&quot;D:\\Users\\xuhui\\anaconda3\\Library\\openslide-win64-20231011\\bin&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>再进行加载</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516202221041.png" alt="image-20240516202221041"></p>
+<p>成功导入</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>picgo+github</title>
     <url>/2023/07/30/picgo-github/</url>
     <content><![CDATA[<h2 id="picgo下载"><a href="#picgo下载" class="headerlink" title="picgo下载"></a>picgo下载</h2><p>[链接](<a href="http://molunerfinn.com/PicGo/">PicGo (molunerfinn.com)</a>)</p>
@@ -184,6 +295,78 @@
       </tags>
   </entry>
   <entry>
+    <title>tensorflow下载过程</title>
+    <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>之前的笔记中我没有意识到python，tensorflow，cuda，cudnn的对应关系，这次在服务器上安装就掉坑里了，因此在安装前首先要注意需要下载的版本，以及自己的cuda和cudnn版本</p>
+<p>我使用的是<code>python = 3.9</code>，<code>tensorflow==2.10.0</code>，<code>cuda==11.3.1</code>，<code>cudnn==8.2.1</code></p>
+<p>具体步骤为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create -n env_name python=3.9</span><br><span class="line">conda activate env_name</span><br><span class="line">conda install cudatoolkit==11.3.1</span><br><span class="line">conda install cudnn==8.2.1</span><br><span class="line">pip install tensorflow==2.10.0 -i source</span><br></pre></td></tr></table></figure>
+
+<p>这样就初步安装成功了</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>在之前的验证中我只验证了<code>tensorflow</code>是否安装成功，而没有检测能否使用<code>GPU</code>，因此将验证命令更新如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br><span class="line"><span class="built_in">print</span>(tf.test.is_gpu_available())</span><br><span class="line"><span class="built_in">print</span>(tf.test.gpu_device_name())</span><br><span class="line"><span class="built_in">print</span>(tf.config.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num GPUs Available: &quot;</span>,<span class="built_in">len</span>(tf.config.experimental.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240614094327445.png" alt="image-20240614094327445"></p>
+<p>运行结果中出现这个<code>True</code>表示识别成功</p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>torch_geometric安装</title>
+    <url>/2024/05/12/torch-geometric%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h2 id="torch-geometric安装过程"><a href="#torch-geometric安装过程" class="headerlink" title="torch_geometric安装过程"></a>torch_geometric安装过程</h2><h4 id="环境-版本检查"><a href="#环境-版本检查" class="headerlink" title="环境+版本检查"></a>环境+版本检查</h4><p>首先打开anaconda虚拟环境</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512113546223.png" alt="image-20240512113546223"></p>
+<p>我这里已经有一个下载好的pytorch环境，激活并查看相关信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512113846076.png" alt="image-20240512113846076"></p>
+<h4 id="下载必要的依赖"><a href="#下载必要的依赖" class="headerlink" title="下载必要的依赖"></a>下载必要的依赖</h4><p>找到[GitHub](<a href="https://github.com/pyg-team/pytorch_geometric">pyg-team&#x2F;pytorch_geometric: Graph Neural Network Library for PyTorch (github.com)</a>)的地址，点击Additional Libraries中的<a href="https://data.pyg.org/whl">here</a></p>
+<p><img src="/./../image/image-20240512124006928-1715488907105-1-1715488924173-4.png" alt="image-20240512124006928"></p>
+<p>找到对应的pytorch和cuda版本，点击进去</p>
+<p>其中一共有四种依赖，下载下来，如图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512124526032.png" alt="image-20240512124526032"></p>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><p>打开虚拟环境，进入上述四个文件的目录下</p>
+<p>然后依次安装</p>
+<ol>
+<li>torch_scatter</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_scatter-2.0.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>torch_sparse</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_sparse-0.6.12-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>torch_cluster</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_cluster-1.5.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>torch_spline_conv</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_cluster-1.5.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>安装torch_geometric，可以指定版本</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_geometric -i https://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<p>最后验证一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512125706881.png" alt="image-20240512125706881"></p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>-dl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>免费科学上网方法记录</title>
     <url>/2023/08/10/%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>今天在油管上看到一个科学上网方法，记录一下</p>
@@ -206,6 +389,32 @@
       <tags>
         <tag>daily</tag>
         <tag>magic</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>错误1006解决方案</title>
+    <url>/2023/08/01/%E9%94%99%E8%AF%AF1006%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h2 id="记录一下"><a href="#记录一下" class="headerlink" title="记录一下"></a>记录一下</h2><p>今天离开电脑的时候没有关闭watt toolkit软件（并且它还开着GitHub加速），等我回来时电脑自动关机了</p>
+<p>当时意识到大事不妙（以前也遇到过），果然，已经无法上网了，并且watt提示错误代码1006，主机拒绝访问</p>
+<p>于是记录一下解决过程</p>
+<hr>
+<p>首先搜索了一下“电脑连上网络但是无法上网怎么办”</p>
+<p>一个解决方案说可以修改wlan的设置，双击IPv4</p>
+<img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801221357568.png" alt="image-20230801221357568" style="zoom:67%;" />
+
+<p>修改DNS设置（由于并没有用所以我就不贴上来了）</p>
+<hr>
+<p>然后在edge里运行网络检测，提示“远程计算机或设备不接受连接”，搜索这个关键词</p>
+<p>修复方法：打开控制面板（<code>win</code>+<code>R</code>再输入<code>control</code>）–&gt; 连接 –&gt; 局域网设置 –&gt; 只勾选“自动检测设置”</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801222017921.png" alt="image-20230801222017921"></p>
+<p>这样就解决问题了</p>
+]]></content>
+      <categories>
+        <category>daily</category>
+        <category>error</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
       </tags>
   </entry>
   <entry>
@@ -237,32 +446,6 @@
       <tags>
         <tag>daily</tag>
         <tag>experient</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>错误1006解决方案</title>
-    <url>/2023/08/01/%E9%94%99%E8%AF%AF1006%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<h2 id="记录一下"><a href="#记录一下" class="headerlink" title="记录一下"></a>记录一下</h2><p>今天离开电脑的时候没有关闭watt toolkit软件（并且它还开着GitHub加速），等我回来时电脑自动关机了</p>
-<p>当时意识到大事不妙（以前也遇到过），果然，已经无法上网了，并且watt提示错误代码1006，主机拒绝访问</p>
-<p>于是记录一下解决过程</p>
-<hr>
-<p>首先搜索了一下“电脑连上网络但是无法上网怎么办”</p>
-<p>一个解决方案说可以修改wlan的设置，双击IPv4</p>
-<img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801221357568.png" alt="image-20230801221357568" style="zoom:67%;" />
-
-<p>修改DNS设置（由于并没有用所以我就不贴上来了）</p>
-<hr>
-<p>然后在edge里运行网络检测，提示“远程计算机或设备不接受连接”，搜索这个关键词</p>
-<p>修复方法：打开控制面板（<code>win</code>+<code>R</code>再输入<code>control</code>）–&gt; 连接 –&gt; 局域网设置 –&gt; 只勾选“自动检测设置”</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801222017921.png" alt="image-20230801222017921"></p>
-<p>这样就解决问题了</p>
-]]></content>
-      <categories>
-        <category>daily</category>
-        <category>error</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
       </tags>
   </entry>
 </search>
