@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>archlinux的截图配置</title>
-    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
-<p>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
-
-<p>截图方式：在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
-<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>archliux</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Autodl的使用</title>
     <url>/2024/06/01/Autodl%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h2><p>首先登录网页<a href="https://www.autodl.com/home">AutoDL算力云 | 弹性、好用、省钱。租GPU就上AutoDL</a></p>
@@ -110,6 +87,29 @@
       </tags>
   </entry>
   <entry>
+    <title>archlinux的截图配置</title>
+    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
+<p>在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
+
+<p>截图方式：在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
+<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archliux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>conda_set</title>
     <url>/2024/04/19/conda-set/</url>
     <content><![CDATA[<h2 id="conda修改环境路径"><a href="#conda修改环境路径" class="headerlink" title="conda修改环境路径"></a>conda修改环境路径</h2><p>conda 默认的环境路径在<code>C:\Users\用户名\conda</code>中，C盘位置不够，因此希望修改到其余地方</p>
@@ -185,35 +185,6 @@
       </tags>
   </entry>
   <entry>
-    <title>openslide安装</title>
-    <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516200241133.png" alt="image-20240516200241133"></p>
-<p>为这个文件夹中的<strong>bin</strong>和<strong>lib</strong>添加环境变量</p>
-<p>激活环境，在命令行中运行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install Openslide-python</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201746994.png"></p>
-<p>出现这行字表示成功安装</p>
-<h2 id="openslide-导入"><a href="#openslide-导入" class="headerlink" title="openslide 导入"></a>openslide 导入</h2><p>在环境中输入python</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201923931.png" alt="image-20240516201923931"></p>
-<p>这个时候直接导入会报错</p>
-<p>我们可以进行如下操作：</p>
-<p>先加载os</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.add_dll_directory(<span class="string">&quot;D:\\Users\\xuhui\\anaconda3\\Library\\openslide-win64-20231011\\bin&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>再进行加载</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516202221041.png" alt="image-20240516202221041"></p>
-<p>成功导入</p>
-]]></content>
-      <categories>
-        <category>experient</category>
-      </categories>
-      <tags>
-        <tag>dl</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo美化记录</title>
     <url>/2023/07/29/hexo%E7%BE%8E%E5%8C%96%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<hr>
@@ -264,6 +235,35 @@
       </categories>
       <tags>
         <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>openslide安装</title>
+    <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516200241133.png" alt="image-20240516200241133"></p>
+<p>为这个文件夹中的<strong>bin</strong>和<strong>lib</strong>添加环境变量</p>
+<p>激活环境，在命令行中运行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install Openslide-python</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201746994.png"></p>
+<p>出现这行字表示成功安装</p>
+<h2 id="openslide-导入"><a href="#openslide-导入" class="headerlink" title="openslide 导入"></a>openslide 导入</h2><p>在环境中输入python</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201923931.png" alt="image-20240516201923931"></p>
+<p>这个时候直接导入会报错</p>
+<p>我们可以进行如下操作：</p>
+<p>先加载os</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.add_dll_directory(<span class="string">&quot;D:\\Users\\xuhui\\anaconda3\\Library\\openslide-win64-20231011\\bin&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>再进行加载</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516202221041.png" alt="image-20240516202221041"></p>
+<p>成功导入</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
       </tags>
   </entry>
   <entry>
