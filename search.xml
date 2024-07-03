@@ -71,12 +71,68 @@
 <p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
 <p>美化使用了类苹果的主题</p>
 <p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
-<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v 2 ray</p>
+<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v2ray</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
 <p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
 <p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
 <p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
+<hr>
+<p>2024年7月4号</p>
+<p>时隔一年，再次捡起这个帖子，在上个月，参考<a href="https://www.bilibili.com/video/BV1kN411m7w4/?share_source=copy_web&vd_source=262fce51bcecea4097592dd1df9c9958">2023年在移动硬盘上安装 Arch Linux 及网络&#x2F;桌面&#x2F;输入法&#x2F;字体&#x2F;声音&#x2F;蓝牙驱动的配置</a> 的视频，成功将arch安装到我的移动硬盘上，进行了一系列安装美化后，成功挂在了nvidia显卡驱动安装上，现在不仅无法开机，还丢失了在arch上写的笔记（心痛）</p>
+<p>于是在blog上记录一下，重新安装的过程，防止再次丢失</p>
+<p>首先，设置一个虚拟机，要点：</p>
+<ul>
+<li>USB控制器中选择相应的兼容</li>
+<li>选项-高级中应该选择uefi引导，关闭Hyper-V通道缓解</li>
+</ul>
+<p>虚拟机开机后将移动硬盘连接到虚拟机上，进入安装程序</p>
+<h3 id="查看当前硬盘情况"><a href="#查看当前硬盘情况" class="headerlink" title="查看当前硬盘情况"></a>查看当前硬盘情况</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704021507623.png" alt="image-20240704021507623"></p>
+<p>如图所示，其中<code>/dev/sdb</code>为我们的移动硬盘，其中有我之前设置的Linux系统，我们格式化，重新操作</p>
+<h3 id="联网并且验证时钟同步"><a href="#联网并且验证时钟同步" class="headerlink" title="联网并且验证时钟同步"></a>联网并且验证时钟同步</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ip link</span><br><span class="line">ping www.baidu.com</span><br><span class="line">ip link</span><br><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置磁盘空间"><a href="#设置磁盘空间" class="headerlink" title="设置磁盘空间"></a>设置磁盘空间</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sdb</span><br><span class="line">g # 新建分区表</span><br><span class="line">n # 新分区</span><br></pre></td></tr></table></figure>
+
+<p>这里扇区和起始点可以默认，大小需要手动分配，我们分配600M，即输入<code>+600M</code></p>
+<p>此后重复操作，第二个区域我们分配16G，第三个区域我们分配120G，然后输入t，设置分区类型，第一个区域的类型编号为1，第二个为19，第三个为23，然后输入p打印看一下，确认无误后输入w写入</p>
+<h3 id="分区设置"><a href="#分区设置" class="headerlink" title="分区设置"></a>分区设置</h3><p>首先设置文件系统类型</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb3 # 创建文件系统</span><br><span class="line">mkswap /dev/sdb2</span><br><span class="line">mkfs.fat -F 32 /dev/sdb1</span><br></pre></td></tr></table></figure>
+
+<p>然后挂载</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount /dev/sdb3 /mnt</span><br><span class="line">mount /dev/sdb1 /mnt/boot</span><br><span class="line">swapon /dev/sdb2</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="设置镜像"><a href="#设置镜像" class="headerlink" title="设置镜像"></a>设置镜像</h4><p>为了安装更快，我们可以配置一个镜像源（以清华镜像源为例）</p>
+<p>编辑文件<code>/etc/pacman.d/mirrorlist</code>，在顶端添加</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/<span class="variable">$repo</span>/os/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装必备的文件"><a href="#安装必备的文件" class="headerlink" title="安装必备的文件"></a>安装必备的文件</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacstrap -K /mnt base linux linux-firmware sof-firmware netwoekmanager vi vim man-db texinfo gnome</span><br></pre></td></tr></table></figure>
+
+<p>等待片刻即可</p>
+<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fatab</span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment"># 配置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="comment"># 同步时间</span></span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment"># 语言</span></span><br><span class="line">vim /etc/locale.gen <span class="comment"># 取消en_US:utf-8的注释，保存退出</span></span><br><span class="line">locale-gen <span class="comment"># 生成语言</span></span><br><span class="line">vim /etc/locale.conf <span class="comment"># 写入：LANG=en_US.UTF-8</span></span><br><span class="line">vim /etc/hostname <span class="comment"># 写入系统名字，随意取</span></span><br><span class="line">useradd -m username <span class="comment"># 添加一个普通用户</span></span><br><span class="line">passwd username <span class="comment"># 设置这个用户的密码</span></span><br><span class="line">visudo <span class="comment"># 为这个用户添加管理权限，在这个文件中找到ALL，在下面添加一行 username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
+
+<p>安装引导程序</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman -Syu grub efibootmgr amd-ucode intel-ucode</span><br></pre></td></tr></table></figure>
+
+<p>在这里会出现警告信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704033440304.png" alt="image-20240704033440304"></p>
+<p>解决方法：在<code>/etc/pacman.conf</code>中添加源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<p>然后输入</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman-key --recv-keys 7931B6D628C8D3BA</span><br><span class="line">pacman-key --finger 7931B6D628C8D3BA</span><br><span class="line">pacman-key --lsign-key 7931B6D628C8D3BA</span><br><span class="line">yay -S upd72020x-fw</span><br></pre></td></tr></table></figure>
+
+<p>如果由于网速无法下载，那么可以</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/denisandroid/uPD72020x-Firmware ~/Desktop/firmware</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/UPDATE.mem ~/.cache/yay/upd72020x-fw</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/License.rtf ~/.cache/yay/upd72020x-fw</span><br></pre></td></tr></table></figure>
+
+<p>继续我们的安装，接下来是开机引导程序</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grub-install --target=x6_64-efi --efi-directory=/boot/ --bootloader-id=GRUB --removable</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p>开启开机服务</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> gdm</span><br><span class="line">systemctl enabel NetworkManager</span><br></pre></td></tr></table></figure>
+
+<p>安装完成，可以通过BIOS进入系统了</p>
 ]]></content>
       <categories>
         <category>linux</category>
@@ -417,6 +473,8 @@
 <ul>
 <li><code>npx hexo d</code></li>
 </ul>
+<p>有时候可能会出现错误：<code>error: RPC failed; curl 35 OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443</code></p>
+<p>这个时候可以先执行<code>git config --global http.postBuffer 5242880000</code>，再推送到GitHub</p>
 ]]></content>
       <categories>
         <category>hexo</category>
@@ -447,6 +505,67 @@
       <categories>
         <category>daily</category>
         <category>error</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux to go 移动硬盘制作</title>
+    <url>/2024/06/17/linux-to-go-%E7%A7%BB%E5%8A%A8%E7%A1%AC%E7%9B%98%E5%88%B6%E4%BD%9C/</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年曾经购置过一个移动硬盘，希望改装成<code>ArchLinux</code>的启动盘，因为种种原因未能成功，移动硬盘就变成了一个数据盘，今年由于经常使用服务器跑代码，希望重新捡起来Linux系统的操作（wsl也下载了，但是感觉不如Ubuntu-desktop方便），因此又萌生了Linux启动盘的想法，特此记录过程</p>
+<p>操作过程教程来源于<a href="https://blog.csdn.net/m0_64545111/article/details/136131918">【万字详细教程】Linux to go——装在移动硬盘里的Linux系统（Ubuntu22.04）制作流程；一口气解决系统安装&#x2F;引导文件迁移&#x2F;显卡驱动安装等问题-CSDN博客</a></p>
+<p>那么就开始吧</p>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><p>首先是准备好移动硬盘，Linux系统镜像（ubuntu下载地址<a href="https://ubuntu.com/download/desktop">Download Ubuntu Desktop | Ubuntu</a>），分盘工具（<a href="https://www.diskgenius.cn/download.php">DiskGenius – 正式版下载|免费下载</a>）</p>
+<h3 id="分盘"><a href="#分盘" class="headerlink" title="分盘"></a>分盘</h3><p>由于我的硬盘中已经有数据了，所以我先备份数据，再删除分区</p>
+<p>右击磁盘然后删除当前分区</p>
+<p>然后转化分区为<code>GUID</code>格式</p>
+<blockquote>
+<p>怎么看自己的硬盘是不是GUID格式？可以单击硬盘后点击上方的磁盘选项，其中转化为GUID格式是灰色的则表示这个硬盘已经是GUID格式了</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617221149413.png" alt="image-20240617221149413"></p>
+<p>然后建立<code>esp</code>分区</p>
+<p>接下来同样的建立其他分区，注意格式和大小，最后的分区情况如图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617223815292.png" alt="image-20240617223815292"></p>
+<p>然后将备份的数据还原到F盘中</p>
+<h3 id="准备启动U盘"><a href="#准备启动U盘" class="headerlink" title="准备启动U盘"></a>准备启动U盘</h3><p>下载软件<code>UltraISO</code>，地址<a href="https://ultraiso.net/xiazai.html">最新UltraISO官方免费下载 - UltraISO软碟通中文官方网站</a></p>
+<p>将一个空白的U盘插入电脑</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617225021101.png" alt="image-20240617225021101"></p>
+<p>在这里打开下载的镜像文件，然后点击启动-&gt;写入硬盘映像</p>
+<p>依次点击 <code>便捷启动 -&gt; 写入新的驱动器引导扇区 -&gt; Syslinux -&gt; 写入</code></p>
+<p>读条结束后即可</p>
+<h3 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h3><p>这一步由于在BIOS中进行，没有截图显示，仅记录一些要点以及我遇到的问题</p>
+<ul>
+<li>我的电脑为2019款联想拯救者y7000，在重启&#x2F;开机时按F2并不能进入BIOS界面<ul>
+<li>我们可以在Windows中依次点击 设置 -&gt; windows更新 -&gt; 高级选项 -&gt; 恢复 -&gt; 高级启动 -&gt; 立即重启，从而进入BIOS界面</li>
+</ul>
+</li>
+<li>U盘插入但是设备中没有<code>linpus lite</code>，这可能是因为U盘的问题，我换了个U盘就成功了</li>
+<li>安装过程中记得联网，以及一定要检查设置盘时除去之前安排给Linux的四个区域，其余区域都处于<strong>不使用此分区</strong></li>
+<li>安装后会重启，记得拔下U盘后按enter</li>
+<li>这里教程中说应该选择<code>enrool mdk</code>，但是我在这一步的时候无法选择，只能强制关机，再重启后已经没有这个选项了，只有<code>reset mdk</code>，我拿不准这二者是不是一样的，于是选择了<code>continue boot</code>，也启动成功了，不确定这里后续会不会有问题</li>
+<li>重启时可能会进入<code>grub</code>界面，如果想回到Windows系统可以这样操作</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls</span><br><span class="line">ls (hd0,1)/efi/microsoft/boot/bootmgfw.efi</span><br><span class="line">root=(hd1,1)</span><br><span class="line">boot</span><br></pre></td></tr></table></figure>
+
+<p>这里第二行要遍历所有分区找到这个文件再进行下一步</p>
+<p>到这里差不多安装完成，后续是一些设置</p>
+<h3 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h3><p>将系统启动引导转移到移动硬盘上以避免每次都要选择系统</p>
+<p>将硬盘和U盘都插上电脑，开机进入BIOS选择<code>试用unbuntu</code>，连接网络，然后在终端输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-add-repository ppa:yannubuntu/boot-repair</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install boot-repair</span><br><span class="line">boot-repair</span><br></pre></td></tr></table></figure>
+
+<p>选择“推荐修复”，等待程序运行完成即可</p>
+<p>返回Windows系统，可以看到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240618011033111.png" alt="image-20240618011033111"></p>
+<p><code>esp</code>分区中出现了<code>efi</code>，那么我们就可以删除主硬盘中的ubuntu了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240618011231247.png" alt="image-20240618011231247"></p>
+<p>至此便初步大功告成了，之后可以根据需要对Ubuntu安装软件和美化</p>
+<p>后续：在拔下硬盘启动电脑时发生一直在logo界面闪退的现象，进入BIOS发现启动引导中仍然存在<code>linpus lite</code>，尽管我没有插U盘</p>
+<p>解决：使用<code>bootice</code>软件将efi选项中多余的删除，即可正常开机了。</p>
+]]></content>
+      <categories>
+        <category>daily</category>
       </categories>
       <tags>
         <tag>daily</tag>
