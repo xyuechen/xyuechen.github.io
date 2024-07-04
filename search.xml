@@ -101,7 +101,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb3 # 创建文件系统</span><br><span class="line">mkswap /dev/sdb2</span><br><span class="line">mkfs.fat -F 32 /dev/sdb1</span><br></pre></td></tr></table></figure>
 
 <p>然后挂载</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount /dev/sdb3 /mnt</span><br><span class="line">mount /dev/sdb1 /mnt/boot</span><br><span class="line">swapon /dev/sdb2</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount /dev/sdb3 /mnt</span><br><span class="line">mount --mkdir /dev/sdb1 /mnt/boot</span><br><span class="line">swapon /dev/sdb2</span><br></pre></td></tr></table></figure>
 
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="设置镜像"><a href="#设置镜像" class="headerlink" title="设置镜像"></a>设置镜像</h4><p>为了安装更快，我们可以配置一个镜像源（以清华镜像源为例）</p>
 <p>编辑文件<code>/etc/pacman.d/mirrorlist</code>，在顶端添加</p>
@@ -110,7 +110,7 @@
 <h4 id="安装必备的文件"><a href="#安装必备的文件" class="headerlink" title="安装必备的文件"></a>安装必备的文件</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacstrap -K /mnt base linux linux-firmware sof-firmware netwoekmanager vi vim man-db texinfo gnome</span><br></pre></td></tr></table></figure>
 
 <p>等待片刻即可</p>
-<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fatab</span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment"># 配置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="comment"># 同步时间</span></span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment"># 语言</span></span><br><span class="line">vim /etc/locale.gen <span class="comment"># 取消en_US:utf-8的注释，保存退出</span></span><br><span class="line">locale-gen <span class="comment"># 生成语言</span></span><br><span class="line">vim /etc/locale.conf <span class="comment"># 写入：LANG=en_US.UTF-8</span></span><br><span class="line">vim /etc/hostname <span class="comment"># 写入系统名字，随意取</span></span><br><span class="line">useradd -m username <span class="comment"># 添加一个普通用户</span></span><br><span class="line">passwd username <span class="comment"># 设置这个用户的密码</span></span><br><span class="line">visudo <span class="comment"># 为这个用户添加管理权限，在这个文件中找到ALL，在下面添加一行 username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
+<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment"># 配置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="comment"># 同步时间</span></span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment"># 语言</span></span><br><span class="line">vim /etc/locale.gen <span class="comment"># 取消en_US:utf-8的注释，保存退出</span></span><br><span class="line">locale-gen <span class="comment"># 生成语言</span></span><br><span class="line">vim /etc/locale.conf <span class="comment"># 写入：LANG=en_US.UTF-8</span></span><br><span class="line">vim /etc/hostname <span class="comment"># 写入系统名字，随意取</span></span><br><span class="line">pacman -S base-devel</span><br><span class="line">useradd -m username <span class="comment"># 添加一个普通用户</span></span><br><span class="line">passwd username <span class="comment"># 设置这个用户的密码</span></span><br><span class="line">visudo <span class="comment"># 为这个用户添加管理权限，在这个文件中找到ALL，在下面添加一行 username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
 
 <p>安装引导程序</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman -Syu grub efibootmgr amd-ucode intel-ucode</span><br></pre></td></tr></table></figure>
@@ -569,6 +569,35 @@
       </categories>
       <tags>
         <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>arch-install的使用</title>
+    <url>/2024/07/04/arch-install%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="arch-install的使用"><a href="#arch-install的使用" class="headerlink" title="arch-install的使用"></a>arch-install的使用</h2><p>由于arch的安装较为繁琐，因此出现了一种arch-install的工具，今天在虚拟机上试一试</p>
+<p>首先创建一个虚拟机并且连接网络，更换镜像源：编辑文件<code>/etc/pacman.d/mirrorlist</code></p>
+<p>在最上面加上<code>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</code>  </p>
+<p>输入<code>archinstall</code>进入安装程序</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704094012719.png" alt="image-20240704094012719"></p>
+<p>其中，语言中有简体中文，但是直接设置会导致乱码，我们还需要下载字体，因此我们直接使用英文安装</p>
+<p>mirror中我们选择第一个，找到China，空格选中，回车确认</p>
+<p>locale默认即可，不用修改</p>
+<p>disk configuration 我们可以直接选择第一个自动分区，进入后再选择ext4分区</p>
+<p>bootloader可以选默认或grub，由于我希望使用这个虚拟机作用移动系统的试验机，因此我选择grub</p>
+<p>hostname设置机器名称</p>
+<p>rootpasswd设置管理员密码</p>
+<p>usercount设置用户，我们可以在这里新添用户并且赋予管理员权限</p>
+<p>profile可以选择想要的桌面环境，由于硬盘中我选择的是gnome，因此这里也选择gnome，这里还可以选择显卡驱动，我试试nvidia显卡驱动能不能正常安装</p>
+<p>optional repositories中选择第一个</p>
+<p>然后下载安装，等待片刻</p>
+<p>重启后即可进入系统（nvidia还是安装失败了，重新设置了一遍才启动）</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
       </tags>
   </entry>
 </search>
