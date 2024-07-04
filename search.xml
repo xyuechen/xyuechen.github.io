@@ -127,7 +127,7 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/denisandroid/uPD72020x-Firmware ~/Desktop/firmware</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/UPDATE.mem ~/.cache/yay/upd72020x-fw</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/License.rtf ~/.cache/yay/upd72020x-fw</span><br></pre></td></tr></table></figure>
 
 <p>继续我们的安装，接下来是开机引导程序</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grub-install --target=x6_64-efi --efi-directory=/boot/ --bootloader-id=GRUB --removable</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB --removable</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 
 <p>开启开机服务</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> gdm</span><br><span class="line">systemctl enabel NetworkManager</span><br></pre></td></tr></table></figure>
