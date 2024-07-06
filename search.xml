@@ -600,4 +600,26 @@
         <tag>archlinux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>arch之hyprland</title>
+    <url>/2024/07/04/arch%E4%B9%8Bhyprland/</url>
+    <content><![CDATA[<hr>
+<p>之前试图在硬盘arch中安装nvidia驱动再安装hyprland，导致系统直接挂了，现在来试试在虚拟机中直接安装试试</p>
+<p>官网<a href="https://hyprland.org/">Hyprland</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pacman -S hyprland</span><br><span class="line">yay -S hyprland-git</span><br></pre></td></tr></table></figure>
+
+<p>上面两种方法任选一个</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/.config/hyprland</span><br><span class="line">cp /usr/share/hyprland/hyprland.conf ~/.config/hyprland</span><br><span class="line">vim ~/.config/hyprland/hyprland.conf</span><br></pre></td></tr></table></figure>
+
+<p>编辑配置文件</p>
+<p>找到$mainMod这一行，后面都是快捷键配置，其中<code>$</code>的字符表示应该被替换的</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
+      </tags>
+  </entry>
 </search>
