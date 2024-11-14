@@ -652,21 +652,39 @@
       </categories>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/10/31/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+    <title>如何打开并贡献文档仓库</title>
+    <url>/2024/11/14/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E5%B9%B6%E8%B4%A1%E7%8C%AE%E6%96%87%E6%A1%A3%E4%BB%93%E5%BA%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>git作为常用的版本管理工具，我们应该学会如何使用git与文档仓库连接</p>
+<blockquote>
+<p>本文以GitHub为例</p>
+</blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>我们使用git连接github</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>这里的email填入注册GitHub用的邮箱</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>然后将<code>~/.ssh/id_rsa.pub</code>的内容复制到GitHub中，通过下面的命令验证是否连接</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>如果显示“welcome……”就表示连接成功</p>
+<h2 id="打开远程仓库"><a href="#打开远程仓库" class="headerlink" title="打开远程仓库"></a>打开远程仓库</h2><p>我们可以直接clone到本地进行编辑</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Document/</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:respo/respo.git</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>上面的地址根据具体情况填入</p>
+<h2 id="贡献开源代码"><a href="#贡献开源代码" class="headerlink" title="贡献开源代码"></a>贡献开源代码</h2><p>对于自己创建的仓库，可以在本地的项目文件夹运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;the first commit&quot;</span></span><br><span class="line">git remote add origin git@github.com:xyuechen/practice.git //关联远程仓库</span><br><span class="line">git push -u origin master -f</span><br></pre></td></tr></table></figure>
+
+<p>但是对于别人的项目，我们可以先将项目fork一份副本，再拉取请求</p>
+<p>我目前修改了一份文档，并希望将它推送到GitHub这时候可以</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git checkout feat.xutest</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;modified keywords&quot;</span></span><br><span class="line">git push origin feat.xutest:feat.xutest</span><br></pre></td></tr></table></figure>
+
+<p>没报错就表示推送成功了，可以在GitHub查看一下</p>
+<h2 id="保持更新"><a href="#保持更新" class="headerlink" title="保持更新"></a>保持更新</h2><p>如果拉取的远程代码改变了，我们希望本地代码同步变化</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add upstream https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git remote -v</span><br><span class="line">git fetch upstream</span><br></pre></td></tr></table></figure>
 ]]></content>
+      <tags>
+        <tag>daily</tag>
+      </tags>
   </entry>
 </search>
