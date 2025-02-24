@@ -687,4 +687,57 @@
         <tag>daily</tag>
       </tags>
   </entry>
+  <entry>
+    <title>conda环境迁移</title>
+    <url>/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在笔记本上配置好环境后发现同样的步骤在另一个电脑上无论如何都无法成功，于是想有没有一个办法无痛转移环境</p>
+<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>首先将已经配置好并确定可以使用的环境打包压缩，然后发送&#x2F;转移到另一个电脑上</p>
+<p>解压后进行如下操作</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda config --append envs_dirs D:\ProgramAPP\anaconda\envs\<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo_迁移</title>
+    <url>/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<blockquote>
+<p>最近换了电脑，因此想将原始文件夹转移到新电脑上</p>
+</blockquote>
+<h2 id="直接复制"><a href="#直接复制" class="headerlink" title="直接复制"></a>直接复制</h2><p>直接将原电脑上的文件夹打包，利用网盘&#x2F;移动硬盘转移，在新电脑配置好环境后复制过来，这里由于我的博客数量很少，所以可以直接复制，那么当我们的文件夹很大时，最好还是利用GitHub进行迁移</p>
+<h2 id="网络迁移"><a href="#网络迁移" class="headerlink" title="网络迁移"></a>网络迁移</h2><p>首先，我们应该配置新电脑的环境，这一点在之前的hexo配置中介绍过，不再赘述</p>
+<p>然后新建一个文件夹，并初始化为blog文件夹，接着clone你的blog仓库，将<code>source</code>,<code>theme</code>等资源文件复制过来</p>
+<blockquote>
+<p>但是这种操作只能转移内容，而不能转移配置</p>
+</blockquote>
+<p>另一种方法</p>
+<p><strong>原电脑操作</strong>：</p>
+<ul>
+<li>给你的博客仓库新建一个分支，并设为默认分支，例如<code>hexo</code></li>
+<li>找到一个目录，使用<code>git clone</code>将仓库克隆到本地，删除除了<code>.git</code>外的所有内容</li>
+<li>命令行将本地清空的仓库推送到<code>hexo</code>分支</li>
+<li>将清空的仓库中的.git文件夹复制到博客目录下</li>
+<li>将博客目录下的themes中每个主题文件夹下的.git和.gitgnore删掉</li>
+<li>将上述博客目录推送到hexo分支</li>
+</ul>
+<p><strong>新电脑</strong>：</p>
+<ul>
+<li>创建好空文件夹后，<code>git clone</code></li>
+<li>进入目录后，<code>npm install</code>,<code>hexo g</code>,<code>hexo s</code>，如无意外就可以看到原始内容了</li>
+</ul>
+<blockquote>
+<p>🧐</p>
+<p>好复杂啊。。我还是直接复制吧</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
 </search>
