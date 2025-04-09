@@ -740,4 +740,127 @@
         <tag>daily</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AnnData数据结构</title>
+    <url>/2025/04/08/AnnData%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<blockquote>
+<p>AnnData对象几乎可以匹配R语言中单细胞数据分析的Seurat对象，今天试一下对python中AnnData进行数据提取和回吐操作。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/xyuechen/image/main/image-20250408230925682.png" alt="image-20250408230925682"></p>
+<p>这个图来源于AnnData的<a href="https://anndata.readthedocs.io/en/stable/index.html">文档</a></p>
+<h1 id="数据读取"><a href="#数据读取" class="headerlink" title="数据读取"></a>数据读取</h1><p>这里使用单细胞转录组数据<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE163558">GSE163558</a></p>
+<p>这个数据集共10个样本，我们下载网页中的<code>GSE163558_RAW.tar</code>，解压后将文件夹格式处理成下面这样。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">GSE163558</span><br><span class="line">├── GSM5004180_PT1</span><br><span class="line">│   ├── barcodes.tsv.gz</span><br><span class="line">│   ├── features.tsv.gz</span><br><span class="line">│   └── matrix.mtx.gz</span><br><span class="line">├── GSM5004181_PT2</span><br><span class="line">│   ├── barcodes.tsv.gz</span><br><span class="line">│   ├── features.tsv.gz</span><br><span class="line">│   └── matrix.mtx.gz</span><br><span class="line">├── GSM5004182_PT3</span><br><span class="line">│   ├── barcodes.tsv.gz</span><br><span class="line">│   ├── features.tsv.gz</span><br><span class="line">│   └── matrix.mtx.gz</span><br><span class="line">├── GSM5004183_NT1</span><br><span class="line">│   ├── barcodes.tsv.gz</span><br><span class="line">│   ├── features.tsv.gz</span><br><span class="line">│   └── matrix.mtx.gz</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>使用python读取上述文件夹中的数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> scanpy <span class="keyword">as</span> sc</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件夹名称</span></span><br><span class="line"><span class="built_in">dir</span> = os.listdir(<span class="string">&#x27;../data/GSE163558_RAW/&#x27;</span>)</span><br><span class="line"><span class="built_in">dir</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果为一个列表，其中包含所有子文件夹，内容如下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">[&#x27;GSM5004183_NT1&#x27;,</span><br><span class="line"> &#x27;GSM5004182_PT3&#x27;,</span><br><span class="line"> &#x27;GSM5004181_PT2&#x27;,</span><br><span class="line"> &#x27;GSM5004184_LN1&#x27;,</span><br><span class="line"> &#x27;GSM5004189_Li2&#x27;,</span><br><span class="line"> &#x27;GSM5004187_P1&#x27;,</span><br><span class="line"> &#x27;GSM5004180_PT1&#x27;,</span><br><span class="line"> &#x27;GSM5004185_LN2&#x27;,</span><br><span class="line"> &#x27;GSM5004186_O1&#x27;,</span><br><span class="line"> &#x27;GSM5004188_Li1&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>接下来批量读取，并将对象合并在一起</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># for循环读取</span></span><br><span class="line">adata = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(<span class="built_in">dir</span>)):</span><br><span class="line">    data = sc.read_10x_mtx(<span class="string">&#x27;../data/GSE163558_RAW/&#x27;</span> + <span class="built_in">dir</span>[i], var_names=<span class="string">&#x27;gene_symbols&#x27;</span>, cache=<span class="literal">True</span>)</span><br><span class="line">    data.var_names_make_unique()</span><br><span class="line">    adata[<span class="built_in">dir</span>[i]] = data</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">dir</span>[i])</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">adata = sc.concat(adata,label=<span class="string">&#x27;sampleid&#x27;</span>)</span><br><span class="line">adata.obs_names_make_unique()</span><br><span class="line">adata</span><br></pre></td></tr></table></figure>
+
+<p>最后输出的<code>adata</code>是一个只有54687个基因，33538个基因的初始AnnData对象，obs为每一个细胞所属的样本</p>
+<p>输出结果为：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">AnnData object with n_obs × n_vars = 54687 × 33538</span><br><span class="line">    obs: &#x27;sampleid&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>然后进行一些数据探索</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 每个样本里的细胞数量</span></span><br><span class="line">adata.obs.value_counts()</span><br><span class="line"><span class="comment">## 输出结果为：</span></span><br><span class="line"><span class="comment"># sampleid      </span></span><br><span class="line"><span class="comment"># GSM5004189_Li2    11164</span></span><br><span class="line"><span class="comment"># GSM5004181_PT2     9226</span></span><br><span class="line"><span class="comment"># GSM5004185_LN2     7940</span></span><br><span class="line"><span class="comment"># GSM5004186_O1      5937</span></span><br><span class="line"><span class="comment"># GSM5004187_P1      5277</span></span><br><span class="line"><span class="comment"># GSM5004184_LN1     4227</span></span><br><span class="line"><span class="comment"># GSM5004182_PT3     3925</span></span><br><span class="line"><span class="comment"># GSM5004180_PT1     2866</span></span><br><span class="line"><span class="comment"># GSM5004183_NT1     2777</span></span><br><span class="line"><span class="comment"># GSM5004188_Li1     1348</span></span><br><span class="line"><span class="comment"># Name: count, dtype: int64</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 表达矩阵的数值范围</span></span><br><span class="line">np.<span class="built_in">min</span>(adata.X),np.<span class="built_in">max</span>(adata.X)</span><br><span class="line"><span class="comment">## 输出结果为：</span></span><br><span class="line"><span class="comment"># (0.0, 36123.0)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 基本过滤</span></span><br><span class="line"><span class="comment"># 过滤前的细胞数和基因数</span></span><br><span class="line">adata.X.shape</span><br><span class="line"><span class="comment">## 输出结果为：</span></span><br><span class="line"><span class="comment"># (54687, 33538)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 每个细胞中表达多少基因</span></span><br><span class="line">adata.obs.head()</span><br><span class="line"><span class="comment">## 输出结果为一个表格</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>保存上面的每个样本中的细胞数为一个csv文件：</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">temp = adata.obs.sampleid.value_counts()</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>查看感兴趣的基因表达矩阵</strong>：稀疏矩阵不支持直接查看，所以我们转化为数据框</p>
+<blockquote>
+<p>转化为矩阵会丢失行名列名</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">adata[<span class="number">0</span>:<span class="number">6</span>,[<span class="string">&#x27;CD3D&#x27;</span>,<span class="string">&#x27;TCL1A&#x27;</span>,<span class="string">&#x27;MS4A1&#x27;</span>]].to_df()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="数据质控"><a href="#数据质控" class="headerlink" title="数据质控"></a>数据质控</h1><ul>
+<li>主要目的：对低表达基因和低质量细胞进行过滤</li>
+</ul>
+<p>首先计算每个细胞中线粒体基因、核糖体基因、红血细胞基因表达比例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算线粒体基因表达比例</span></span><br><span class="line">adata.var[<span class="string">&#x27;mt&#x27;</span>] = adata.var_names.<span class="built_in">str</span>.startswith(<span class="string">&#x27;MT-&#x27;</span>)</span><br><span class="line"><span class="comment"># 计算核糖体基因表达比例</span></span><br><span class="line">adata.var[<span class="string">&#x27;ribo&#x27;</span>] = adata.var_names.<span class="built_in">str</span>.<span class="keyword">match</span>(<span class="string">&#x27;^RP[SL]&#x27;</span>)</span><br><span class="line"><span class="comment"># 计算红血细胞基因比例</span></span><br><span class="line">adata.var[<span class="string">&#x27;hb&#x27;</span>] = adata.var_names.<span class="built_in">str</span>.<span class="keyword">match</span>(<span class="string">&#x27;^HB[^(P)]&#x27;</span>)</span><br><span class="line"><span class="comment"># 计算</span></span><br><span class="line">sc.pp.calculate_qc_metrics(adata, qc_vars=[<span class="string">&#x27;mt&#x27;</span>, <span class="string">&#x27;ribo&#x27;</span>, <span class="string">&#x27;hb&#x27;</span>], percent_top=<span class="literal">None</span>, log1p=<span class="literal">False</span>, inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看每个基因表达情况</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">adata.var.head()</span><br></pre></td></tr></table></figure>
+
+<p>结果如图：</p>
+<p><img src="https://raw.githubusercontent.com/xyuechen/image/main/image-20250409012610294.png" alt="image-20250409012610294"></p>
+<p>查看每个细胞的比例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">adata.obs.head()</span><br></pre></td></tr></table></figure>
+
+<p>结果如图：</p>
+<p><img src="https://raw.githubusercontent.com/xyuechen/image/main/image-20250409012759632.png" alt="image-20250409012759632"></p>
+<p>可视化上述常见参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sc.pl.violin(adata,[<span class="string">&#x27;n_genes_by_counts&#x27;</span>,<span class="string">&#x27;total_counts&#x27;</span>,<span class="string">&#x27;pct_counts_mt&#x27;</span>],groupby=<span class="string">&#x27;sampleid&#x27;</span>,jitter=<span class="literal">False</span>,rotation=<span class="number">90</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果如图：</p>
+<p><img src="https://raw.githubusercontent.com/xyuechen/image/main/image-20250409012959000.png" alt="image-20250409012959000"></p>
+<h2 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h2><p>接下来对数据进行过滤，代码如下，可以根据具体情况调整参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 过滤细胞，每个细胞中至少有200个基因表达</span></span><br><span class="line">sc.pp.filter_cells(adata, min_genes=<span class="number">200</span>)</span><br><span class="line"><span class="comment"># 过滤基因，至少在5个细胞中表达</span></span><br><span class="line">sc.pp.filter_genes(adata, min_cells=<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 过滤细胞：大于8000个基因过滤</span></span><br><span class="line">adata = adata[adata.obs.n_genes_by_counts &lt; <span class="number">8000</span>, :]</span><br><span class="line"><span class="comment"># 过滤细胞：线粒体基因比例大于0.2过滤</span></span><br><span class="line">adata = adata[adata.obs.pct_counts_mt &lt; <span class="number">20</span>, :].copy()</span><br><span class="line">adata</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">AnnData object with n_obs × n_vars = 44238 × 26480</span><br><span class="line">    obs: &#x27;sampleid&#x27;, &#x27;n_genes_by_counts&#x27;, &#x27;total_counts&#x27;, &#x27;total_counts_mt&#x27;, &#x27;pct_counts_mt&#x27;, &#x27;total_counts_ribo&#x27;, &#x27;pct_counts_ribo&#x27;, &#x27;total_counts_hb&#x27;, &#x27;pct_counts_hb&#x27;, &#x27;n_genes&#x27;</span><br><span class="line">    var: &#x27;mt&#x27;, &#x27;ribo&#x27;, &#x27;hb&#x27;, &#x27;n_cells_by_counts&#x27;, &#x27;mean_counts&#x27;, &#x27;pct_dropout_by_counts&#x27;, &#x27;total_counts&#x27;, &#x27;n_cells&#x27;</span><br><span class="line">    uns: &#x27;sampleid_colors&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>因此，过滤后还剩下：44238个细胞，26480个基因</p>
+<h1 id="降维聚类"><a href="#降维聚类" class="headerlink" title="降维聚类"></a>降维聚类</h1><p>接下来就是标准流程</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 首先将数据矩阵标准化</span></span><br><span class="line">sc.pp.normalize_total(adata, target_sum=<span class="number">1e4</span>)</span><br><span class="line"><span class="comment"># 对数据进行对数转换</span></span><br><span class="line">sc.pp.log1p(adata)</span><br><span class="line">adata.raw = adata.copy()</span><br><span class="line"><span class="comment"># 选择高变基因</span></span><br><span class="line">sc.pp.highly_variable_genes(adata)</span><br><span class="line"><span class="comment"># 归一化</span></span><br><span class="line">sc.pp.scale(adata)</span><br><span class="line"><span class="comment"># PCA降维</span></span><br><span class="line">sc.tl.pca(adata, use_highly_variable=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># harmony 整合</span></span><br><span class="line">sc.external.pp.harmony_integrate(adata, <span class="string">&#x27;sampleid&#x27;</span>)</span><br><span class="line"><span class="comment"># 聚类</span></span><br><span class="line">sc.pp.neighbors(adata, use_rep=<span class="string">&#x27;X_pca_harmony&#x27;</span>,n_pcs=<span class="number">30</span>)</span><br><span class="line">sc.tl.umap(adata)</span><br><span class="line">sc.tl.leiden(adata, flavor=<span class="string">&#x27;igraph&#x27;</span>, n_iterations=<span class="number">2</span>, resolution=<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>到这里基本分析完成，降维聚类分群，harmony去批次，我们再看一下数据变化</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">AnnData object with n_obs × n_vars = 44238 × 26480</span><br><span class="line">    obs: &#x27;sampleid&#x27;, &#x27;n_genes_by_counts&#x27;, &#x27;total_counts&#x27;, &#x27;total_counts_mt&#x27;, &#x27;pct_counts_mt&#x27;, &#x27;total_counts_ribo&#x27;, &#x27;pct_counts_ribo&#x27;, &#x27;total_counts_hb&#x27;, &#x27;pct_counts_hb&#x27;, &#x27;n_genes&#x27;, &#x27;leiden&#x27;</span><br><span class="line">    var: &#x27;mt&#x27;, &#x27;ribo&#x27;, &#x27;hb&#x27;, &#x27;n_cells_by_counts&#x27;, &#x27;mean_counts&#x27;, &#x27;pct_dropout_by_counts&#x27;, &#x27;total_counts&#x27;, &#x27;n_cells&#x27;, &#x27;highly_variable&#x27;, &#x27;means&#x27;, &#x27;dispersions&#x27;, &#x27;dispersions_norm&#x27;, &#x27;mean&#x27;, &#x27;std&#x27;</span><br><span class="line">    uns: &#x27;log1p&#x27;, &#x27;hvg&#x27;, &#x27;pca&#x27;, &#x27;neighbors&#x27;, &#x27;umap&#x27;, &#x27;leiden&#x27;</span><br><span class="line">    obsm: &#x27;X_pca&#x27;, &#x27;X_pca_harmony&#x27;, &#x27;X_umap&#x27;</span><br><span class="line">    varm: &#x27;PCs&#x27;</span><br><span class="line">    obsp: &#x27;distances&#x27;, &#x27;connectivities&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这时候除了obs,var还多了很多其他数据：</p>
+<ul>
+<li>obs:保存每个细胞对应的表型信息，对应Seurat里的metadata</li>
+<li>var:对应每一个基因的相关信息</li>
+<li>uns:对应字典类型的元素，保存了如hvg,umap等信息</li>
+<li>obsm:保存的空间坐标</li>
+</ul>
+<h2 id="常规绘图"><a href="#常规绘图" class="headerlink" title="常规绘图"></a>常规绘图</h2><ol>
+<li><p>相关性：</p>
+<p><code>total_counts</code>和<code>n_genes_by_counts</code>的相关性：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sc.pl.scatter(adata, x=<span class="string">&#x27;total_counts&#x27;</span>, y=<span class="string">&#x27;n_genes_by_counts&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果如图：</p>
+<p><img src="https://raw.githubusercontent.com/xyuechen/image/main/image-20250409015628375.png" alt="image-20250409015628375"></p>
+</li>
+<li><p>绘制聚类图</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 绘制PCA图，并根据sampleid进行着色</span></span><br><span class="line">sc.pl.pca(adata, color=<span class="string">&#x27;sampleid&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/xyuechen/image/main/image-20250409020007003.png" alt="image-20250409020007003"></p>
+</li>
+</ol>
+<p>​	提取坐标和聚类数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">pca_df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&#x27;PC_1&#x27;</span>: adata.obsm[<span class="string">&#x27;X_pca&#x27;</span>][:, <span class="number">0</span>],</span><br><span class="line">    <span class="string">&#x27;PC_2&#x27;</span>: adata.obsm[<span class="string">&#x27;X_pca&#x27;</span>][:, <span class="number">1</span>],</span><br><span class="line">    <span class="string">&#x27;Cluster&#x27;</span>: adata.obs[<span class="string">&#x27;leiden&#x27;</span>]</span><br><span class="line">&#125;)</span><br><span class="line">pca_df.head()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主成分贡献度：</span></span><br><span class="line">sc.pl.pca_variance_ratio(adata, log=<span class="literal">True</span>, n_pcs=<span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li><p>umap图</p>
+<p>绘图代码为：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sc.pl.umap(adata,color=[<span class="string">&#x27;leiden&#x27;</span>],legend_loc=<span class="string">&#x27;on data&#x27;</span>,size=<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 提取umap图的坐标</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">umap_df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&#x27;UMAP_1&#x27;</span>: adata.obsm[<span class="string">&#x27;X_umap&#x27;</span>][:, <span class="number">0</span>],</span><br><span class="line">    <span class="string">&#x27;UMAP_2&#x27;</span>: adata.obsm[<span class="string">&#x27;X_umap&#x27;</span>][:, <span class="number">1</span>],</span><br><span class="line">    <span class="string">&#x27;Cluster&#x27;</span>: adata.obs[<span class="string">&#x27;leiden&#x27;</span>]</span><br><span class="line">&#125;)</span><br><span class="line">umap_df.head()</span><br></pre></td></tr></table></figure>
+
+<p>结果如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/xyuechen/image/main/image-20250409222133634.png" alt="image-20250409222133634"></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>daily</category>
+        <category>experience</category>
+      </categories>
+      <tags>
+        <tag>experience</tag>
+      </tags>
+  </entry>
 </search>
