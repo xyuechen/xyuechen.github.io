@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Autodl的使用</title>
+    <url>/2024/06/01/Autodl%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h2><p>首先登录网页<a href="https://www.autodl.com/home">AutoDL算力云 | 弹性、好用、省钱。租GPU就上AutoDL</a></p>
+<blockquote>
+<p>注：记得进行学生认证</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144233859.png" alt="image-20240601144233859"></p>
+<p>按照自己的需求选择，我希望进行深度学习，同时预算不高，因此我选择按量计费以及3090</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144820389.png" alt="image-20240601144820389"></p>
+<p>这里可以选择需要预先安装的框架，我们选择Miniconda，依赖之后再安装</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145116937.png" alt="image-20240601145116937"></p>
+<p>这样就创建成功了，主要登陆的指令在ssh登录里面，我们可以使用<code>Xshell</code>来进行连接，也可以直接点击<code>JupyterLab</code>来进行连接</p>
+<h2 id="连接实例"><a href="#连接实例" class="headerlink" title="连接实例"></a>连接实例</h2><p>我们选择直接点击<code>JupyterLab</code>进行连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145500031.png" alt="image-20240601145500031"></p>
+<p>如图所示，连接成功</p>
+<p>我们也试一下<code>xftp</code>连接</p>
+<p>首先复制连接指令<code>ssh -p 53669 root@connect.yza1.seetacloud.com</code></p>
+<p>这段指令中：</p>
+<ul>
+<li>53669：端口号</li>
+<li>root：用户名</li>
+<li><code>connect.yza1.seetacloud.com</code>：主机host</li>
+<li>密码：在网页上</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601151900110.png" alt="image-20240601151900110"></p>
+<p>按照上图填入xftp中即可</p>
+<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ol>
+<li>输入<code>vim ~/.bashrc</code></li>
+<li>在最后加上<code>source /root/miniconda3/etc/profile.d/conda.sh</code></li>
+<li>输入<code>bash</code>刷新一下实例</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601150102502.png" alt="image-20240601150102502"></p>
+<ol start="4">
+<li>激活环境<code>conda activate base</code></li>
+<li>创建新环境<code>conda create -n happy python=3.10</code>，这里<code>happy</code>是我的环境名称</li>
+<li>进入新环境<code>conda activate happy</code></li>
+</ol>
+<h3 id="下载包"><a href="#下载包" class="headerlink" title="下载包"></a>下载包</h3><p>autodl的官网帮助文档中有关于pytorch安装的说明</p>
+<blockquote>
+<p>注：安装<code>conda install ipykernel</code>，然后输入<code>ipython kernel install --user --name=happy</code>来更新页面</p>
+</blockquote>
+<p>可以将requirement.txt传输到服务器上再下载</p>
+<h3 id="java环境配置"><a href="#java环境配置" class="headerlink" title="java环境配置"></a>java环境配置</h3><p>有些包需要Java环境，因此我们也安装一下java</p>
+<p>首先从官网下载对应的文件<a href="https://www.oracle.com/java/technologies/downloads/#java8">Java Downloads | Oracle</a></p>
+<p>下载好后使用xftp传输到服务器上的<code>/usr/local</code>的位置上，解压</p>
+<p>解压命令为<code>tar -zvxf zulu8.56.0.21-ca-jdk8.0.302-linux_x64.tar.gz </code></p>
+<p>解压后配置环境变量，环境变量在<code>/etc/profile</code>文件中</p>
+<p>输入<code>vim /etc/profile</code>进入编辑模式</p>
+<p>然后输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk1.8.0_321 #自己的安装目录</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib:$CLASSPATH</span><br><span class="line">export JAVA_PATH=$&#123;JAVA_HOME&#125;/bin:$&#123;JRE_HOME&#125;/bin</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_PATH&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存退出，再刷新<code>source /etc/profile</code></p>
+<p>输入<code>java -version</code>来检验是否配置成功</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AnnData数据结构</title>
     <url>/2025/04/08/AnnData%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<blockquote>
@@ -124,91 +186,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Autodl的使用</title>
-    <url>/2024/06/01/Autodl%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h2 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h2><p>首先登录网页<a href="https://www.autodl.com/home">AutoDL算力云 | 弹性、好用、省钱。租GPU就上AutoDL</a></p>
-<blockquote>
-<p>注：记得进行学生认证</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144233859.png" alt="image-20240601144233859"></p>
-<p>按照自己的需求选择，我希望进行深度学习，同时预算不高，因此我选择按量计费以及3090</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144820389.png" alt="image-20240601144820389"></p>
-<p>这里可以选择需要预先安装的框架，我们选择Miniconda，依赖之后再安装</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145116937.png" alt="image-20240601145116937"></p>
-<p>这样就创建成功了，主要登陆的指令在ssh登录里面，我们可以使用<code>Xshell</code>来进行连接，也可以直接点击<code>JupyterLab</code>来进行连接</p>
-<h2 id="连接实例"><a href="#连接实例" class="headerlink" title="连接实例"></a>连接实例</h2><p>我们选择直接点击<code>JupyterLab</code>进行连接</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145500031.png" alt="image-20240601145500031"></p>
-<p>如图所示，连接成功</p>
-<p>我们也试一下<code>xftp</code>连接</p>
-<p>首先复制连接指令<code>ssh -p 53669 root@connect.yza1.seetacloud.com</code></p>
-<p>这段指令中：</p>
-<ul>
-<li>53669：端口号</li>
-<li>root：用户名</li>
-<li><code>connect.yza1.seetacloud.com</code>：主机host</li>
-<li>密码：在网页上</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601151900110.png" alt="image-20240601151900110"></p>
-<p>按照上图填入xftp中即可</p>
-<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ol>
-<li>输入<code>vim ~/.bashrc</code></li>
-<li>在最后加上<code>source /root/miniconda3/etc/profile.d/conda.sh</code></li>
-<li>输入<code>bash</code>刷新一下实例</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601150102502.png" alt="image-20240601150102502"></p>
-<ol start="4">
-<li>激活环境<code>conda activate base</code></li>
-<li>创建新环境<code>conda create -n happy python=3.10</code>，这里<code>happy</code>是我的环境名称</li>
-<li>进入新环境<code>conda activate happy</code></li>
-</ol>
-<h3 id="下载包"><a href="#下载包" class="headerlink" title="下载包"></a>下载包</h3><p>autodl的官网帮助文档中有关于pytorch安装的说明</p>
-<blockquote>
-<p>注：安装<code>conda install ipykernel</code>，然后输入<code>ipython kernel install --user --name=happy</code>来更新页面</p>
-</blockquote>
-<p>可以将requirement.txt传输到服务器上再下载</p>
-<h3 id="java环境配置"><a href="#java环境配置" class="headerlink" title="java环境配置"></a>java环境配置</h3><p>有些包需要Java环境，因此我们也安装一下java</p>
-<p>首先从官网下载对应的文件<a href="https://www.oracle.com/java/technologies/downloads/#java8">Java Downloads | Oracle</a></p>
-<p>下载好后使用xftp传输到服务器上的<code>/usr/local</code>的位置上，解压</p>
-<p>解压命令为<code>tar -zvxf zulu8.56.0.21-ca-jdk8.0.302-linux_x64.tar.gz </code></p>
-<p>解压后配置环境变量，环境变量在<code>/etc/profile</code>文件中</p>
-<p>输入<code>vim /etc/profile</code>进入编辑模式</p>
-<p>然后输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk1.8.0_321 #自己的安装目录</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib:$CLASSPATH</span><br><span class="line">export JAVA_PATH=$&#123;JAVA_HOME&#125;/bin:$&#123;JRE_HOME&#125;/bin</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_PATH&#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存退出，再刷新<code>source /etc/profile</code></p>
-<p>输入<code>java -version</code>来检验是否配置成功</p>
-]]></content>
-      <categories>
-        <category>experient</category>
-      </categories>
-      <tags>
-        <tag>dl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>archlinux的截图配置</title>
-    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
-<p>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
-
-<p>截图方式：在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
-<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>archliux</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>arch-install的使用</title>
     <url>/2024/07/04/arch-install%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="arch-install的使用"><a href="#arch-install的使用" class="headerlink" title="arch-install的使用"></a>arch-install的使用</h2><p>由于arch的安装较为繁琐，因此出现了一种arch-install的工具，今天在虚拟机上试一试</p>
@@ -238,30 +215,26 @@
       </tags>
   </entry>
   <entry>
-    <title>R多环境管理</title>
-    <url>/2024/07/04/R%E5%A4%9A%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/</url>
-    <content><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>一直想找到一个像anaconda那样管理python环境来管理R环境的工具，今天正好看到一个，尝试一下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">winget install posit.rig</span><br></pre></td></tr></table></figure>
+    <title>archlinux的截图配置</title>
+    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
+<p>在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
 
-<p>在Windows终端中运行上述命令下载，重启终端即可运行</p>
-<p>其他操作系统的命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">macOS</span></span><br><span class="line">brew tap r-lib/rig</span><br><span class="line">brew install --cask rig</span><br><span class="line">brew upgrade --cask rig # 更新命令</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ubuntu和debian</span></span></span><br><span class="line">`which sudo` curl -L https://rig.r-pkg.org/deb/rig.gpg -o /etc/apt/trusted.gpg.d/rig.gpg</span><br><span class="line">`which sudo` sh -c &#x27;echo &quot;deb http://rig.r-pkg.org/deb rig main&quot; &gt; /etc/apt/sources.list.d/rig.list&#x27;</span><br><span class="line">`which sudo` apt update</span><br><span class="line">`which sudo` apt install r-rig</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># rhel、fedora、centOS、Rocky Linux、Almalinux等</span></span></span><br><span class="line">`which sudo` yum install -y https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># opensuse和SLES</span></span></span><br><span class="line">`which sudo` zypper install -y --allow-unsigned-rpm https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 任意Linux发行版</span></span></span><br><span class="line">curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux-$(arch)-latest.tar.gz |</span><br><span class="line">  `which sudo` tar xz -C /usr/local</span><br></pre></td></tr></table></figure>
+<p>截图方式：在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
 
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li>列出当前安装的R：<code>rig list</code>，类似于<code>conda env --list</code></li>
-<li>查看所有命令和示例：<code>rig</code>，类似于<code>conda</code></li>
-<li>查看帮助文档：<code>rig --help</code>，类似于<code>conda --help</code></li>
-</ul>
-<p>命令列表</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rig add        -- install a new R version [<span class="built_in">alias</span>: install]</span><br><span class="line">rig available  -- List R versions available to install.</span><br><span class="line">rig default    -- <span class="built_in">print</span> or <span class="built_in">set</span> default R version [<span class="built_in">alias</span>: switch]</span><br><span class="line">rig library    -- manage package libraries [<span class="built_in">alias</span>: lib] (experimental)</span><br><span class="line">rig list       -- list installed R versions [<span class="built_in">alias</span>: <span class="built_in">ls</span>]</span><br><span class="line">rig resolve    -- resolve a symbolic R version</span><br><span class="line">rig <span class="built_in">rm</span>         -- remove R versions [aliases: del, delete, remove]</span><br><span class="line">rig rstudio    -- start RStudio with the specified R version</span><br><span class="line">rig run        -- Run R, an R script or an R project</span><br><span class="line">rig sysreqs    -- manage R-related system libraries and tools (experimental) (macOS)</span><br><span class="line">rig system     -- manage current installations</span><br><span class="line"><span class="comment"># windows子命令</span></span><br><span class="line">rig system add-pak                 -- install or update pak <span class="keyword">for</span> an R version</span><br><span class="line">rig system clean-registry          -- clean stale R related entries <span class="keyword">in</span> the registry</span><br><span class="line">rig system make-links              -- create R-* quick links</span><br><span class="line">rig system rtools                  -- manage Rtools installations</span><br><span class="line">rig system setup-user-lib          -- <span class="built_in">set</span> up automatic user package libraries [<span class="built_in">alias</span>: create-lib]</span><br><span class="line">rig system update-rtools40         -- update Rtools40 MSYS2 packages</span><br></pre></td></tr></table></figure>
 
-<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>我们可以下载<code>positran</code>来管理切换环境，不过目前还在测试阶段</p>
+
+<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
+<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
 ]]></content>
       <categories>
-        <category>daily</category>
+        <category>linux</category>
       </categories>
       <tags>
-        <tag>R</tag>
+        <tag>linux</tag>
+        <tag>archliux</tag>
       </tags>
   </entry>
   <entry>
@@ -461,6 +434,39 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo-git报错</title>
+    <url>/2024/04/20/hexo-git%E6%8A%A5%E9%94%99/</url>
+    <content><![CDATA[<h2 id="无法连接"><a href="#无法连接" class="headerlink" title="无法连接"></a>无法连接</h2><p>半年没用hexo，今天连接时发现需要输入用户名和密码，输入后报错，无法连接</p>
+<p>遂重新配置一遍</p>
+<ol>
+<li><p>首先配置一下git的用户名和邮箱</p>
+<p><img src="/./../image/image-20240420173725105.png" alt="image-20240420173725105"></p>
+</li>
+<li><p>创建ssh密钥</p>
+<p><img src="/./../image/image-20240420173931385.png" alt="image-20240420173931385"></p>
+<p>在显示的路径下找到文件</p>
+<p><img src="/./../image/image-20240420174042116.png" alt="image-20240420174042116"></p>
+<p>复制里面的内容</p>
+</li>
+<li><p>上传密钥</p>
+<p><img src="/./../image/image-20240420174519454.png" alt="image-20240420174519454"></p>
+<ol start="4">
+<li><p>验证连接</p>
+<p><img src="/./../image/image-20240420174753903.png" alt="image-20240420174753903"></p>
+<p>出现图中”Hi“后面的内容即连接成功</p>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>dairy</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>conda_set</title>
     <url>/2024/04/19/conda-set/</url>
     <content><![CDATA[<h2 id="conda修改环境路径"><a href="#conda修改环境路径" class="headerlink" title="conda修改环境路径"></a>conda修改环境路径</h2><p>conda 默认的环境路径在<code>C:\Users\用户名\conda</code>中，C盘位置不够，因此希望修改到其余地方</p>
@@ -500,92 +506,6 @@
       </categories>
       <tags>
         <tag>dl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>conda环境迁移</title>
-    <url>/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在笔记本上配置好环境后发现同样的步骤在另一个电脑上无论如何都无法成功，于是想有没有一个办法无痛转移环境</p>
-<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>首先将已经配置好并确定可以使用的环境打包压缩，然后发送&#x2F;转移到另一个电脑上</p>
-<p>解压后进行如下操作</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda config --append envs_dirs D:\ProgramAPP\anaconda\envs\<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>daily</tag>
-        <tag>experient</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo-git报错</title>
-    <url>/2024/04/20/hexo-git%E6%8A%A5%E9%94%99/</url>
-    <content><![CDATA[<h2 id="无法连接"><a href="#无法连接" class="headerlink" title="无法连接"></a>无法连接</h2><p>半年没用hexo，今天连接时发现需要输入用户名和密码，输入后报错，无法连接</p>
-<p>遂重新配置一遍</p>
-<ol>
-<li><p>首先配置一下git的用户名和邮箱</p>
-<p><img src="/./../image/image-20240420173725105.png" alt="image-20240420173725105"></p>
-</li>
-<li><p>创建ssh密钥</p>
-<p><img src="/./../image/image-20240420173931385.png" alt="image-20240420173931385"></p>
-<p>在显示的路径下找到文件</p>
-<p><img src="/./../image/image-20240420174042116.png" alt="image-20240420174042116"></p>
-<p>复制里面的内容</p>
-</li>
-<li><p>上传密钥</p>
-<p><img src="/./../image/image-20240420174519454.png" alt="image-20240420174519454"></p>
-<ol start="4">
-<li><p>验证连接</p>
-<p><img src="/./../image/image-20240420174753903.png" alt="image-20240420174753903"></p>
-<p>出现图中”Hi“后面的内容即连接成功</p>
-</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>dairy</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo_迁移</title>
-    <url>/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<blockquote>
-<p>最近换了电脑，因此想将原始文件夹转移到新电脑上</p>
-</blockquote>
-<h2 id="直接复制"><a href="#直接复制" class="headerlink" title="直接复制"></a>直接复制</h2><p>直接将原电脑上的文件夹打包，利用网盘&#x2F;移动硬盘转移，在新电脑配置好环境后复制过来，这里由于我的博客数量很少，所以可以直接复制，那么当我们的文件夹很大时，最好还是利用GitHub进行迁移</p>
-<h2 id="网络迁移"><a href="#网络迁移" class="headerlink" title="网络迁移"></a>网络迁移</h2><p>首先，我们应该配置新电脑的环境，这一点在之前的hexo配置中介绍过，不再赘述</p>
-<p>然后新建一个文件夹，并初始化为blog文件夹，接着clone你的blog仓库，将<code>source</code>,<code>theme</code>等资源文件复制过来</p>
-<blockquote>
-<p>但是这种操作只能转移内容，而不能转移配置</p>
-</blockquote>
-<p>另一种方法</p>
-<p><strong>原电脑操作</strong>：</p>
-<ul>
-<li>给你的博客仓库新建一个分支，并设为默认分支，例如<code>hexo</code></li>
-<li>找到一个目录，使用<code>git clone</code>将仓库克隆到本地，删除除了<code>.git</code>外的所有内容</li>
-<li>命令行将本地清空的仓库推送到<code>hexo</code>分支</li>
-<li>将清空的仓库中的.git文件夹复制到博客目录下</li>
-<li>将博客目录下的themes中每个主题文件夹下的.git和.gitgnore删掉</li>
-<li>将上述博客目录推送到hexo分支</li>
-</ul>
-<p><strong>新电脑</strong>：</p>
-<ul>
-<li>创建好空文件夹后，<code>git clone</code></li>
-<li>进入目录后，<code>npm install</code>,<code>hexo g</code>,<code>hexo s</code>，如无意外就可以看到原始内容了</li>
-</ul>
-<blockquote>
-<p>🧐</p>
-<p>好复杂啊。。我还是直接复制吧</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
       </tags>
   </entry>
   <entry>
@@ -639,6 +559,35 @@
       </categories>
       <tags>
         <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>openslide安装</title>
+    <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516200241133.png" alt="image-20240516200241133"></p>
+<p>为这个文件夹中的<strong>bin</strong>和<strong>lib</strong>添加环境变量</p>
+<p>激活环境，在命令行中运行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install Openslide-python</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201746994.png"></p>
+<p>出现这行字表示成功安装</p>
+<h2 id="openslide-导入"><a href="#openslide-导入" class="headerlink" title="openslide 导入"></a>openslide 导入</h2><p>在环境中输入python</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201923931.png" alt="image-20240516201923931"></p>
+<p>这个时候直接导入会报错</p>
+<p>我们可以进行如下操作：</p>
+<p>先加载os</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.add_dll_directory(<span class="string">&quot;D:\\Users\\xuhui\\anaconda3\\Library\\openslide-win64-20231011\\bin&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>再进行加载</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516202221041.png" alt="image-20240516202221041"></p>
+<p>成功导入</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
       </tags>
   </entry>
   <entry>
@@ -703,33 +652,53 @@
       </tags>
   </entry>
   <entry>
-    <title>openslide安装</title>
-    <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516200241133.png" alt="image-20240516200241133"></p>
-<p>为这个文件夹中的<strong>bin</strong>和<strong>lib</strong>添加环境变量</p>
-<p>激活环境，在命令行中运行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install Openslide-python</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201746994.png"></p>
-<p>出现这行字表示成功安装</p>
-<h2 id="openslide-导入"><a href="#openslide-导入" class="headerlink" title="openslide 导入"></a>openslide 导入</h2><p>在环境中输入python</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201923931.png" alt="image-20240516201923931"></p>
-<p>这个时候直接导入会报错</p>
-<p>我们可以进行如下操作：</p>
-<p>先加载os</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.add_dll_directory(<span class="string">&quot;D:\\Users\\xuhui\\anaconda3\\Library\\openslide-win64-20231011\\bin&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>再进行加载</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516202221041.png" alt="image-20240516202221041"></p>
-<p>成功导入</p>
+    <title>python单元测试</title>
+    <url>/2026/01/06/python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<h2 id="发现规则"><a href="#发现规则" class="headerlink" title="发现规则"></a>发现规则</h2><p><code>pytest</code>默认按照以下规则搜索测试：</p>
+<ul>
+<li><code>test_*.py</code></li>
+<li><code>*_test.py</code></li>
+<li>以<code>test_</code>开头的函数</li>
+<li>以<code>Test</code>开头的类</li>
+</ul>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>首先应该明确测试条件，然后创建一个基本框架：</p>
+<ol>
+<li>创建一个 <code>test_</code> 开头的文件</li>
+<li>创建一个 <code>Test</code> 的类</li>
+<li>创建一个 <code>test_</code> 开头的方法<br>然后可以在命令行输入 <code>pytest</code>，他就会执行对应的测试用例(函数和方法)，例如：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_a</span>():</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">test_b</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+上面的例子中有两个测试用例 <code>test_a</code> 和 <code>test_b</code>，pytest 会输出测试用例执行和汇总信息</li>
+</ol>
+<ul>
+<li>我们可以使用断言抛出错误信息</li>
+<li>测试用例中没有异常即为通过</li>
+<li>测试用例存在异常，判定为失败</li>
+</ul>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><ol>
+<li>mark<br> 标记是为了用例彼此不同，实现用例筛选，使用步骤为<ul>
+<li>注册标记</li>
+<li>使用标记<br> 标记的配置文件在根目录下，命名为 <code>pytest.ini</code>，在里面写入需要的内容，例如： <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">[pytest]</span><br><span class="line">markers = </span><br><span class="line">api</span><br><span class="line">ui</span><br><span class="line">ut</span><br><span class="line">e2e</span><br></pre></td></tr></table></figure>
+ 我们可以在测试用例上加上装饰器 <code>@pytest.mark.xx</code> 其中的 <code>xx</code> 替换为对应的标记</li>
+<li>筛选标记：如果我们只希望之星对应标记的用例，可以这样 <code>pytest -m xx</code>，其中 <code>xx</code> 为对应的标记</li>
+<li>一个用例可以有多个标记</li>
+<li>一次可以筛选多个标记，例如 <code>pytest -m &quot;api or e2e&quot;</code> 就是同时筛选出 <code>api</code> 和 <code>e2e</code> 的标记的用例</li>
+</ul>
+</li>
+<li>fixture<br> 可以实现<strong>自动</strong>在用例之前、之后完成用于测试的环境的构建和销毁<br> 编写一个生成器，并使用 <code>@pytest.fixture()</code> 装饰，在测试用例中使用 <code>@pytest.mark.usefixtures(&#39;生成器名称&#39;)</code>。<ul>
+<li>可以使用 <code>conftest.py</code> 创建全局范围的 fixture</li>
+</ul>
+</li>
+<li>hook<br> 当 pytest 在合适的时机允许进入和退出 pytest 核心部分，可以<strong>改变</strong>原有的运行模式。<br> 我们可以编写 <code>yaml</code> 文件来定义自身的测试</li>
+</ol>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>通过隐藏细节的方式降低使用的复杂度，添加新的功能特性。缺点：没有日志记录<br>可以在 <code>pytest.ini</code> 中设置日志</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">log_file = ./logs/pytest.log</span><br><span class="line">log_file_level = info</span><br><span class="line">log_file_format = %(levelname)-8s %(asctime)s [%(name)s:(lineno)s]  : %(message)s</span><br><span class="line">log_file_date_format = %Y-%m-%d %H:%M:%S</span><br></pre></td></tr></table></figure>
+<p>生成测试报告：修改配置文件，加上一行 <code>addopts = --alluredir=./temps --clean-alluredir</code>，然后在终端执行 <code>allure generate -o report temps</code></p>
+<ul>
+<li>一键执行：创建一个 <code>run.py</code> 的文件，在里面输入<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line">pytest.main()</span><br><span class="line">os.system(<span class="string">&#x27;allure generate -o report temps&#x27;</span>)<span class="comment"># 生成测试报告</span></span><br></pre></td></tr></table></figure></li>
+</ul>
 ]]></content>
       <categories>
-        <category>experient</category>
+        <category>python</category>
       </categories>
-      <tags>
-        <tag>dl</tag>
-      </tags>
   </entry>
   <entry>
     <title>picgo+github</title>
@@ -760,75 +729,42 @@
       </tags>
   </entry>
   <entry>
-    <title>tensorflow下载过程</title>
-    <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
-<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>之前的笔记中我没有意识到python，tensorflow，cuda，cudnn的对应关系，这次在服务器上安装就掉坑里了，因此在安装前首先要注意需要下载的版本，以及自己的cuda和cudnn版本</p>
-<p>我使用的是<code>python = 3.9</code>，<code>tensorflow==2.10.0</code>，<code>cuda==11.3.1</code>，<code>cudnn==8.2.1</code></p>
-<p>具体步骤为</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create -n env_name python=3.9</span><br><span class="line">conda activate env_name</span><br><span class="line">conda install cudatoolkit==11.3.1</span><br><span class="line">conda install cudnn==8.2.1</span><br><span class="line">pip install tensorflow==2.10.0 -i source</span><br></pre></td></tr></table></figure>
-
-<p>这样就初步安装成功了</p>
-<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>在之前的验证中我只验证了<code>tensorflow</code>是否安装成功，而没有检测能否使用<code>GPU</code>，因此将验证命令更新如下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br><span class="line"><span class="built_in">print</span>(tf.test.is_gpu_available())</span><br><span class="line"><span class="built_in">print</span>(tf.test.gpu_device_name())</span><br><span class="line"><span class="built_in">print</span>(tf.config.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num GPUs Available: &quot;</span>,<span class="built_in">len</span>(tf.config.experimental.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>)))</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240614094327445.png" alt="image-20240614094327445"></p>
-<p>运行结果中出现这个<code>True</code>表示识别成功</p>
+    <title>hexo_迁移</title>
+    <url>/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<blockquote>
+<p>最近换了电脑，因此想将原始文件夹转移到新电脑上</p>
+</blockquote>
+<h2 id="直接复制"><a href="#直接复制" class="headerlink" title="直接复制"></a>直接复制</h2><p>直接将原电脑上的文件夹打包，利用网盘&#x2F;移动硬盘转移，在新电脑配置好环境后复制过来，这里由于我的博客数量很少，所以可以直接复制，那么当我们的文件夹很大时，最好还是利用GitHub进行迁移</p>
+<h2 id="网络迁移"><a href="#网络迁移" class="headerlink" title="网络迁移"></a>网络迁移</h2><p>首先，我们应该配置新电脑的环境，这一点在之前的hexo配置中介绍过，不再赘述</p>
+<p>然后新建一个文件夹，并初始化为blog文件夹，接着clone你的blog仓库，将<code>source</code>,<code>theme</code>等资源文件复制过来</p>
+<blockquote>
+<p>但是这种操作只能转移内容，而不能转移配置</p>
+</blockquote>
+<p>另一种方法</p>
+<p><strong>原电脑操作</strong>：</p>
+<ul>
+<li>给你的博客仓库新建一个分支，并设为默认分支，例如<code>hexo</code></li>
+<li>找到一个目录，使用<code>git clone</code>将仓库克隆到本地，删除除了<code>.git</code>外的所有内容</li>
+<li>命令行将本地清空的仓库推送到<code>hexo</code>分支</li>
+<li>将清空的仓库中的.git文件夹复制到博客目录下</li>
+<li>将博客目录下的themes中每个主题文件夹下的.git和.gitgnore删掉</li>
+<li>将上述博客目录推送到hexo分支</li>
+</ul>
+<p><strong>新电脑</strong>：</p>
+<ul>
+<li>创建好空文件夹后，<code>git clone</code></li>
+<li>进入目录后，<code>npm install</code>,<code>hexo g</code>,<code>hexo s</code>，如无意外就可以看到原始内容了</li>
+</ul>
+<blockquote>
+<p>🧐</p>
+<p>好复杂啊。。我还是直接复制吧</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>daily</category>
       </categories>
       <tags>
-        <tag>dl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>torch_geometric安装</title>
-    <url>/2024/05/12/torch-geometric%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<h2 id="torch-geometric安装过程"><a href="#torch-geometric安装过程" class="headerlink" title="torch_geometric安装过程"></a>torch_geometric安装过程</h2><h4 id="环境-版本检查"><a href="#环境-版本检查" class="headerlink" title="环境+版本检查"></a>环境+版本检查</h4><p>首先打开anaconda虚拟环境</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512113546223.png" alt="image-20240512113546223"></p>
-<p>我这里已经有一个下载好的pytorch环境，激活并查看相关信息</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512113846076.png" alt="image-20240512113846076"></p>
-<h4 id="下载必要的依赖"><a href="#下载必要的依赖" class="headerlink" title="下载必要的依赖"></a>下载必要的依赖</h4><p>找到[GitHub](<a href="https://github.com/pyg-team/pytorch_geometric">pyg-team&#x2F;pytorch_geometric: Graph Neural Network Library for PyTorch (github.com)</a>)的地址，点击Additional Libraries中的<a href="https://data.pyg.org/whl">here</a></p>
-<p><img src="/./../image/image-20240512124006928-1715488907105-1-1715488924173-4.png" alt="image-20240512124006928"></p>
-<p>找到对应的pytorch和cuda版本，点击进去</p>
-<p>其中一共有四种依赖，下载下来，如图所示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512124526032.png" alt="image-20240512124526032"></p>
-<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><p>打开虚拟环境，进入上述四个文件的目录下</p>
-<p>然后依次安装</p>
-<ol>
-<li>torch_scatter</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_scatter-2.0.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>torch_sparse</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_sparse-0.6.12-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>torch_cluster</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_cluster-1.5.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>torch_spline_conv</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_cluster-1.5.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>安装torch_geometric，可以指定版本</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_geometric -i https://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
-
-<p>最后验证一下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512125706881.png" alt="image-20240512125706881"></p>
-]]></content>
-      <categories>
-        <category>experient</category>
-      </categories>
-      <tags>
-        <tag>-dl</tag>
+        <tag>daily</tag>
       </tags>
   </entry>
   <entry>
@@ -854,6 +790,233 @@
       <tags>
         <tag>daily</tag>
         <tag>magic</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>conda环境迁移</title>
+    <url>/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在笔记本上配置好环境后发现同样的步骤在另一个电脑上无论如何都无法成功，于是想有没有一个办法无痛转移环境</p>
+<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>首先将已经配置好并确定可以使用的环境打包压缩，然后发送&#x2F;转移到另一个电脑上</p>
+<p>解压后进行如下操作</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda config --append envs_dirs D:\ProgramAPP\anaconda\envs\<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>动态规划</title>
+    <url>/2024/09/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
+    <content><![CDATA[<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>定义状态：确定问题的状态表示</li>
+<li>状态转移方程(核心步骤)：建立状态之间的递推关系。通常，当前状态最优解可通过之前计算的状态最优解得到</li>
+<li>初始化：确定初始状态的值或设置起始条件</li>
+<li>计算最优解：根据状态转移方程，逐步计算所有可能的状态的值</li>
+</ol>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>假设有一个二维的网络，每个单元格中有一个非负整数，目标为从左上角到右下角，每次只能向右或向下移动，要求路径上的数字之和最小</p>
+<ul>
+<li><p>定义状态：定义<code>dp[i][j]</code>为到达第<code>i</code>行第<code>j</code>列的最小路径和</p>
+</li>
+<li><p>状态转移方程：由于只能向右或向下移动，因此，状态转移方程为 $dp[i][j] &#x3D; min(dp[i-1][j],dp[i],[j-1]) + grid[i][j]$</p>
+<p>这里<code>grid[i][j]</code>是网格中第<code>i</code>行第<code>j</code>列的值</p>
+</li>
+<li><p>初始化条件：初始化左上角的值<code>dp[0][0] = grid[0][0]</code>；第一行只能从左边来，所以<code>dp[0][j] = dp[0][j-1] + grid[0][j]</code>；第一列只能从上面来，所以<code>dp[i][0] = dp[i-1][0] + grid[i][0]</code></p>
+</li>
+<li><p>填充DP表：按行或按列迭代填充整个DP表，最终<code>dp[m-1][n-1]</code>将包含从左上角到右下角的最小路径和</p>
+</li>
+</ul>
+<h2 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h2><p>这里使用python代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">minPathSum</span>(<span class="params">grid</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> grid <span class="keyword">or</span> <span class="keyword">not</span> grid[<span class="number">0</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">    dp = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化起点</span></span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化第一行和第一列</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>] + grid[<span class="number">0</span>][j]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 填充剩余的dp表</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            dp[i][j] = <span class="built_in">min</span>(dp[i-<span class="number">1</span>][j], dp[i][j-<span class="number">1</span>]) + grid[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>experience</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>tensorflow下载过程</title>
+    <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>之前的笔记中我没有意识到python，tensorflow，cuda，cudnn的对应关系，这次在服务器上安装就掉坑里了，因此在安装前首先要注意需要下载的版本，以及自己的cuda和cudnn版本</p>
+<p>我使用的是<code>python = 3.9</code>，<code>tensorflow==2.10.0</code>，<code>cuda==11.3.1</code>，<code>cudnn==8.2.1</code></p>
+<p>具体步骤为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create -n env_name python=3.9</span><br><span class="line">conda activate env_name</span><br><span class="line">conda install cudatoolkit==11.3.1</span><br><span class="line">conda install cudnn==8.2.1</span><br><span class="line">pip install tensorflow==2.10.0 -i source</span><br></pre></td></tr></table></figure>
+
+<p>这样就初步安装成功了</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>在之前的验证中我只验证了<code>tensorflow</code>是否安装成功，而没有检测能否使用<code>GPU</code>，因此将验证命令更新如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br><span class="line"><span class="built_in">print</span>(tf.test.is_gpu_available())</span><br><span class="line"><span class="built_in">print</span>(tf.test.gpu_device_name())</span><br><span class="line"><span class="built_in">print</span>(tf.config.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num GPUs Available: &quot;</span>,<span class="built_in">len</span>(tf.config.experimental.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240614094327445.png" alt="image-20240614094327445"></p>
+<p>运行结果中出现这个<code>True</code>表示识别成功</p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何打开并贡献文档仓库</title>
+    <url>/2024/11/14/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E5%B9%B6%E8%B4%A1%E7%8C%AE%E6%96%87%E6%A1%A3%E4%BB%93%E5%BA%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>git作为常用的版本管理工具，我们应该学会如何使用git与文档仓库连接</p>
+<blockquote>
+<p>本文以GitHub为例</p>
+</blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>我们使用git连接github</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这里的email填入注册GitHub用的邮箱</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>然后将<code>~/.ssh/id_rsa.pub</code>的内容复制到GitHub中，通过下面的命令验证是否连接</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果显示“welcome……”就表示连接成功</p>
+<h2 id="打开远程仓库"><a href="#打开远程仓库" class="headerlink" title="打开远程仓库"></a>打开远程仓库</h2><p>我们可以直接clone到本地进行编辑</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Document/</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:respo/respo.git</span><br></pre></td></tr></table></figure>
+
+<p>上面的地址根据具体情况填入</p>
+<h2 id="贡献开源代码"><a href="#贡献开源代码" class="headerlink" title="贡献开源代码"></a>贡献开源代码</h2><p>对于自己创建的仓库，可以在本地的项目文件夹运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;the first commit&quot;</span></span><br><span class="line">git remote add origin git@github.com:xyuechen/practice.git //关联远程仓库</span><br><span class="line">git push -u origin master -f</span><br></pre></td></tr></table></figure>
+
+<p>但是对于别人的项目，我们可以先将项目fork一份副本，再拉取请求</p>
+<p>我目前修改了一份文档，并希望将它推送到GitHub这时候可以</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git checkout feat.xutest</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;modified keywords&quot;</span></span><br><span class="line">git push origin feat.xutest:feat.xutest</span><br></pre></td></tr></table></figure>
+
+<p>没报错就表示推送成功了，可以在GitHub查看一下</p>
+<h2 id="保持更新"><a href="#保持更新" class="headerlink" title="保持更新"></a>保持更新</h2><p>如果拉取的远程代码改变了，我们希望本地代码同步变化</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add upstream https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git remote -v</span><br><span class="line">git fetch upstream</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>错误1006解决方案</title>
+    <url>/2023/08/01/%E9%94%99%E8%AF%AF1006%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h2 id="记录一下"><a href="#记录一下" class="headerlink" title="记录一下"></a>记录一下</h2><p>今天离开电脑的时候没有关闭watt toolkit软件（并且它还开着GitHub加速），等我回来时电脑自动关机了</p>
+<p>当时意识到大事不妙（以前也遇到过），果然，已经无法上网了，并且watt提示错误代码1006，主机拒绝访问</p>
+<p>于是记录一下解决过程</p>
+<hr>
+<p>首先搜索了一下“电脑连上网络但是无法上网怎么办”</p>
+<p>一个解决方案说可以修改wlan的设置，双击IPv4</p>
+<img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801221357568.png" alt="image-20230801221357568" style="zoom:67%;" />
+
+<p>修改DNS设置（由于并没有用所以我就不贴上来了）</p>
+<hr>
+<p>然后在edge里运行网络检测，提示“远程计算机或设备不接受连接”，搜索这个关键词</p>
+<p>修复方法：打开控制面板（<code>win</code>+<code>R</code>再输入<code>control</code>）–&gt; 连接 –&gt; 局域网设置 –&gt; 只勾选“自动检测设置”</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801222017921.png" alt="image-20230801222017921"></p>
+<p>这样就解决问题了</p>
+]]></content>
+      <categories>
+        <category>daily</category>
+        <category>error</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的hexo配置过程</title>
+    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
+<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
+<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
+<p>在网上找到的解决方案：</p>
+<p>建立一个空的blog文件夹，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+
+<p>注：命令在blog文件夹打开终端执行</p>
+<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
+<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
+<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
+<p>上传博客：</p>
+<ul>
+<li><code>npx hexo clean</code></li>
+<li><code>npx hexo g</code></li>
+<li><code>npx hexo s</code></li>
+</ul>
+<p>再打开网页，就可以看到上传的博客了</p>
+<p>上传到<code>github</code>：</p>
+<ul>
+<li><code>npx hexo d</code></li>
+</ul>
+<p>有时候可能会出现错误：<code>error: RPC failed; curl 35 OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443</code></p>
+<p>这个时候可以先执行<code>git config --global http.postBuffer 5242880000</code>，再推送到GitHub</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>R多环境管理</title>
+    <url>/2024/07/04/R%E5%A4%9A%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>一直想找到一个像anaconda那样管理python环境来管理R环境的工具，今天正好看到一个，尝试一下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">winget install posit.rig</span><br></pre></td></tr></table></figure>
+
+<p>在Windows终端中运行上述命令下载，重启终端即可运行</p>
+<p>其他操作系统的命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">macOS</span></span><br><span class="line">brew tap r-lib/rig</span><br><span class="line">brew install --cask rig</span><br><span class="line">brew upgrade --cask rig # 更新命令</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ubuntu和debian</span></span></span><br><span class="line">`which sudo` curl -L https://rig.r-pkg.org/deb/rig.gpg -o /etc/apt/trusted.gpg.d/rig.gpg</span><br><span class="line">`which sudo` sh -c &#x27;echo &quot;deb http://rig.r-pkg.org/deb rig main&quot; &gt; /etc/apt/sources.list.d/rig.list&#x27;</span><br><span class="line">`which sudo` apt update</span><br><span class="line">`which sudo` apt install r-rig</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># rhel、fedora、centOS、Rocky Linux、Almalinux等</span></span></span><br><span class="line">`which sudo` yum install -y https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># opensuse和SLES</span></span></span><br><span class="line">`which sudo` zypper install -y --allow-unsigned-rpm https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 任意Linux发行版</span></span></span><br><span class="line">curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux-$(arch)-latest.tar.gz |</span><br><span class="line">  `which sudo` tar xz -C /usr/local</span><br></pre></td></tr></table></figure>
+
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>列出当前安装的R：<code>rig list</code>，类似于<code>conda env --list</code></li>
+<li>查看所有命令和示例：<code>rig</code>，类似于<code>conda</code></li>
+<li>查看帮助文档：<code>rig --help</code>，类似于<code>conda --help</code></li>
+</ul>
+<p>命令列表</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rig add        -- install a new R version [<span class="built_in">alias</span>: install]</span><br><span class="line">rig available  -- List R versions available to install.</span><br><span class="line">rig default    -- <span class="built_in">print</span> or <span class="built_in">set</span> default R version [<span class="built_in">alias</span>: switch]</span><br><span class="line">rig library    -- manage package libraries [<span class="built_in">alias</span>: lib] (experimental)</span><br><span class="line">rig list       -- list installed R versions [<span class="built_in">alias</span>: <span class="built_in">ls</span>]</span><br><span class="line">rig resolve    -- resolve a symbolic R version</span><br><span class="line">rig <span class="built_in">rm</span>         -- remove R versions [aliases: del, delete, remove]</span><br><span class="line">rig rstudio    -- start RStudio with the specified R version</span><br><span class="line">rig run        -- Run R, an R script or an R project</span><br><span class="line">rig sysreqs    -- manage R-related system libraries and tools (experimental) (macOS)</span><br><span class="line">rig system     -- manage current installations</span><br><span class="line"><span class="comment"># windows子命令</span></span><br><span class="line">rig system add-pak                 -- install or update pak <span class="keyword">for</span> an R version</span><br><span class="line">rig system clean-registry          -- clean stale R related entries <span class="keyword">in</span> the registry</span><br><span class="line">rig system make-links              -- create R-* quick links</span><br><span class="line">rig system rtools                  -- manage Rtools installations</span><br><span class="line">rig system setup-user-lib          -- <span class="built_in">set</span> up automatic user package libraries [<span class="built_in">alias</span>: create-lib]</span><br><span class="line">rig system update-rtools40         -- update Rtools40 MSYS2 packages</span><br></pre></td></tr></table></figure>
+
+<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>我们可以下载<code>positran</code>来管理切换环境，不过目前还在测试阶段</p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>R</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode远程通道</title>
+    <url>/2025/04/10/vscode%E8%BF%9C%E7%A8%8B%E9%80%9A%E9%81%93/</url>
+    <content><![CDATA[<h1 id="windows做服务器"><a href="#windows做服务器" class="headerlink" title="windows做服务器"></a>windows做服务器</h1><p>以Linux做远程服务器的教程很多，但是有时候需要Windows系统做服务器，这种情况的设置我也想记录一下。</p>
+<h2 id="安装Windows中的openssh"><a href="#安装Windows中的openssh" class="headerlink" title="安装Windows中的openssh"></a>安装Windows中的openssh</h2><p>用ssh连接时，本地称为client，远程主机称为host。</p>
+<p>我们以Windows系统做host，需要安装一个连接工具，这里使用openssh。</p>
+<p>启动<code>设置</code>，然后转到<code>应用</code>&gt;<code>应用和功能</code>&gt;<code>管理可选功能</code>。</p>
+<p>扫描列表后，查看OpenSSH客户端是否已安装，如果没有，在页面顶部选择“添加功能”，然后：</p>
+<ul>
+<li>若要安装OpenSSH客户端，请找到“OpenSSH客户端”，然后单击“安装”。</li>
+<li>若要安装OpenSSH服务器，请找到“OpenSSH服务器”，然后单击“安装”。</li>
+</ul>
+<p>安装完成后，就可以看到列出的OpenSSH组件。</p>
+<h2 id="SSH的初始设置"><a href="#SSH的初始设置" class="headerlink" title="SSH的初始设置"></a>SSH的初始设置</h2><p>若要配置OpenSSH，以管理员身份启动PowerShell，然后运行一下命令来启动SSHD服务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Start-Service sshd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OPTIONAL but recommended:</span></span><br><span class="line">Set-Service -Name sshd -StartupType &#x27;Automatic&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Confirm the Firewall rule is configured. It should be created automatically by setup.</span> </span><br><span class="line">Get-NetFirewallRule -Name *ssh*</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">There should be a firewall rule named <span class="string">&quot;OpenSSH-Server-In-TCP&quot;</span>, <span class="built_in">which</span> should be enabled</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If the firewall does not exist, create one</span></span><br><span class="line">New-NetFirewallRule -Name sshd -DisplayName &#x27;OpenSSH Server (sshd)&#x27; -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22</span><br></pre></td></tr></table></figure>
+
+<p>在Windows服务器中，username可以用激活电脑时使用的用户名，即文件资源管理器中<code>C:\Users\username</code>中的username。而servername则是<code>设置</code>&gt;<code>系统</code>&gt;<code>关于</code>中的“设备名称”。</p>
+<p>然后在管理员运行的powerShell中输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ssh username@servername</span><br></pre></td></tr></table></figure>
+
+<p>第一次运行时会弹出</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">The authenticity of host &#x27;servername (10.00.00.001)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:(<span class="tag">&lt;<span class="name">a</span> <span class="attr">large</span> <span class="attr">string</span>&gt;</span>).</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
+
+<p>回答<code>yes</code>后输入开机密码，密码不会显示出来</p>
+<blockquote>
+<p>?由于我使用的是Mac，暂时没找到连接win的方法，搁置</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>experience</tag>
       </tags>
   </entry>
   <entry>
@@ -915,166 +1078,52 @@
       </tags>
   </entry>
   <entry>
-    <title>动态规划</title>
-    <url>/2024/09/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
-    <content><![CDATA[<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
-<li>定义状态：确定问题的状态表示</li>
-<li>状态转移方程(核心步骤)：建立状态之间的递推关系。通常，当前状态最优解可通过之前计算的状态最优解得到</li>
-<li>初始化：确定初始状态的值或设置起始条件</li>
-<li>计算最优解：根据状态转移方程，逐步计算所有可能的状态的值</li>
+    <title>torch_geometric安装</title>
+    <url>/2024/05/12/torch-geometric%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h2 id="torch-geometric安装过程"><a href="#torch-geometric安装过程" class="headerlink" title="torch_geometric安装过程"></a>torch_geometric安装过程</h2><h4 id="环境-版本检查"><a href="#环境-版本检查" class="headerlink" title="环境+版本检查"></a>环境+版本检查</h4><p>首先打开anaconda虚拟环境</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512113546223.png" alt="image-20240512113546223"></p>
+<p>我这里已经有一个下载好的pytorch环境，激活并查看相关信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512113846076.png" alt="image-20240512113846076"></p>
+<h4 id="下载必要的依赖"><a href="#下载必要的依赖" class="headerlink" title="下载必要的依赖"></a>下载必要的依赖</h4><p>找到[GitHub](<a href="https://github.com/pyg-team/pytorch_geometric">pyg-team&#x2F;pytorch_geometric: Graph Neural Network Library for PyTorch (github.com)</a>)的地址，点击Additional Libraries中的<a href="https://data.pyg.org/whl">here</a></p>
+<p><img src="/./../image/image-20240512124006928-1715488907105-1-1715488924173-4.png" alt="image-20240512124006928"></p>
+<p>找到对应的pytorch和cuda版本，点击进去</p>
+<p>其中一共有四种依赖，下载下来，如图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512124526032.png" alt="image-20240512124526032"></p>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><p>打开虚拟环境，进入上述四个文件的目录下</p>
+<p>然后依次安装</p>
+<ol>
+<li>torch_scatter</li>
 </ol>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>假设有一个二维的网络，每个单元格中有一个非负整数，目标为从左上角到右下角，每次只能向右或向下移动，要求路径上的数字之和最小</p>
-<ul>
-<li><p>定义状态：定义<code>dp[i][j]</code>为到达第<code>i</code>行第<code>j</code>列的最小路径和</p>
-</li>
-<li><p>状态转移方程：由于只能向右或向下移动，因此，状态转移方程为 $dp[i][j] &#x3D; min(dp[i-1][j],dp[i],[j-1]) + grid[i][j]$</p>
-<p>这里<code>grid[i][j]</code>是网格中第<code>i</code>行第<code>j</code>列的值</p>
-</li>
-<li><p>初始化条件：初始化左上角的值<code>dp[0][0] = grid[0][0]</code>；第一行只能从左边来，所以<code>dp[0][j] = dp[0][j-1] + grid[0][j]</code>；第一列只能从上面来，所以<code>dp[i][0] = dp[i-1][0] + grid[i][0]</code></p>
-</li>
-<li><p>填充DP表：按行或按列迭代填充整个DP表，最终<code>dp[m-1][n-1]</code>将包含从左上角到右下角的最小路径和</p>
-</li>
-</ul>
-<h2 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h2><p>这里使用python代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">minPathSum</span>(<span class="params">grid</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> grid <span class="keyword">or</span> <span class="keyword">not</span> grid[<span class="number">0</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">    dp = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化起点</span></span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化第一行和第一列</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>] + grid[<span class="number">0</span>][j]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 填充剩余的dp表</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            dp[i][j] = <span class="built_in">min</span>(dp[i-<span class="number">1</span>][j], dp[i][j-<span class="number">1</span>]) + grid[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_scatter-2.0.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
 
+<ol start="2">
+<li>torch_sparse</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_sparse-0.6.12-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>torch_cluster</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_cluster-1.5.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>torch_spline_conv</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_cluster-1.5.9-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>安装torch_geometric，可以指定版本</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install torch_geometric -i https://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<p>最后验证一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240512125706881.png" alt="image-20240512125706881"></p>
 ]]></content>
       <categories>
-        <category>experience</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>vscode远程通道</title>
-    <url>/2025/04/10/vscode%E8%BF%9C%E7%A8%8B%E9%80%9A%E9%81%93/</url>
-    <content><![CDATA[<h1 id="windows做服务器"><a href="#windows做服务器" class="headerlink" title="windows做服务器"></a>windows做服务器</h1><p>以Linux做远程服务器的教程很多，但是有时候需要Windows系统做服务器，这种情况的设置我也想记录一下。</p>
-<h2 id="安装Windows中的openssh"><a href="#安装Windows中的openssh" class="headerlink" title="安装Windows中的openssh"></a>安装Windows中的openssh</h2><p>用ssh连接时，本地称为client，远程主机称为host。</p>
-<p>我们以Windows系统做host，需要安装一个连接工具，这里使用openssh。</p>
-<p>启动<code>设置</code>，然后转到<code>应用</code>&gt;<code>应用和功能</code>&gt;<code>管理可选功能</code>。</p>
-<p>扫描列表后，查看OpenSSH客户端是否已安装，如果没有，在页面顶部选择“添加功能”，然后：</p>
-<ul>
-<li>若要安装OpenSSH客户端，请找到“OpenSSH客户端”，然后单击“安装”。</li>
-<li>若要安装OpenSSH服务器，请找到“OpenSSH服务器”，然后单击“安装”。</li>
-</ul>
-<p>安装完成后，就可以看到列出的OpenSSH组件。</p>
-<h2 id="SSH的初始设置"><a href="#SSH的初始设置" class="headerlink" title="SSH的初始设置"></a>SSH的初始设置</h2><p>若要配置OpenSSH，以管理员身份启动PowerShell，然后运行一下命令来启动SSHD服务：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Start-Service sshd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OPTIONAL but recommended:</span></span><br><span class="line">Set-Service -Name sshd -StartupType &#x27;Automatic&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Confirm the Firewall rule is configured. It should be created automatically by setup.</span> </span><br><span class="line">Get-NetFirewallRule -Name *ssh*</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">There should be a firewall rule named <span class="string">&quot;OpenSSH-Server-In-TCP&quot;</span>, <span class="built_in">which</span> should be enabled</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If the firewall does not exist, create one</span></span><br><span class="line">New-NetFirewallRule -Name sshd -DisplayName &#x27;OpenSSH Server (sshd)&#x27; -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22</span><br></pre></td></tr></table></figure>
-
-<p>在Windows服务器中，username可以用激活电脑时使用的用户名，即文件资源管理器中<code>C:\Users\username</code>中的username。而servername则是<code>设置</code>&gt;<code>系统</code>&gt;<code>关于</code>中的“设备名称”。</p>
-<p>然后在管理员运行的powerShell中输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ssh username@servername</span><br></pre></td></tr></table></figure>
-
-<p>第一次运行时会弹出</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">The authenticity of host &#x27;servername (10.00.00.001)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:(<span class="tag">&lt;<span class="name">a</span> <span class="attr">large</span> <span class="attr">string</span>&gt;</span>).</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
-
-<p>回答<code>yes</code>后输入开机密码，密码不会显示出来</p>
-<blockquote>
-<p>?由于我使用的是Mac，暂时没找到连接win的方法，搁置</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>daily</category>
+        <category>experient</category>
       </categories>
       <tags>
-        <tag>experience</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何打开并贡献文档仓库</title>
-    <url>/2024/11/14/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E5%B9%B6%E8%B4%A1%E7%8C%AE%E6%96%87%E6%A1%A3%E4%BB%93%E5%BA%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>git作为常用的版本管理工具，我们应该学会如何使用git与文档仓库连接</p>
-<blockquote>
-<p>本文以GitHub为例</p>
-</blockquote>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>我们使用git连接github</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
-
-<p>这里的email填入注册GitHub用的邮箱</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-
-<p>然后将<code>~/.ssh/id_rsa.pub</code>的内容复制到GitHub中，通过下面的命令验证是否连接</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>如果显示“welcome……”就表示连接成功</p>
-<h2 id="打开远程仓库"><a href="#打开远程仓库" class="headerlink" title="打开远程仓库"></a>打开远程仓库</h2><p>我们可以直接clone到本地进行编辑</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Document/</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:respo/respo.git</span><br></pre></td></tr></table></figure>
-
-<p>上面的地址根据具体情况填入</p>
-<h2 id="贡献开源代码"><a href="#贡献开源代码" class="headerlink" title="贡献开源代码"></a>贡献开源代码</h2><p>对于自己创建的仓库，可以在本地的项目文件夹运行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;the first commit&quot;</span></span><br><span class="line">git remote add origin git@github.com:xyuechen/practice.git //关联远程仓库</span><br><span class="line">git push -u origin master -f</span><br></pre></td></tr></table></figure>
-
-<p>但是对于别人的项目，我们可以先将项目fork一份副本，再拉取请求</p>
-<p>我目前修改了一份文档，并希望将它推送到GitHub这时候可以</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git checkout feat.xutest</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;modified keywords&quot;</span></span><br><span class="line">git push origin feat.xutest:feat.xutest</span><br></pre></td></tr></table></figure>
-
-<p>没报错就表示推送成功了，可以在GitHub查看一下</p>
-<h2 id="保持更新"><a href="#保持更新" class="headerlink" title="保持更新"></a>保持更新</h2><p>如果拉取的远程代码改变了，我们希望本地代码同步变化</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add upstream https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git remote -v</span><br><span class="line">git fetch upstream</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的hexo配置过程</title>
-    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
-<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
-<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
-<p>在网上找到的解决方案：</p>
-<p>建立一个空的blog文件夹，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
-
-<p>注：命令在blog文件夹打开终端执行</p>
-<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
-<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
-<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
-<p>上传博客：</p>
-<ul>
-<li><code>npx hexo clean</code></li>
-<li><code>npx hexo g</code></li>
-<li><code>npx hexo s</code></li>
-</ul>
-<p>再打开网页，就可以看到上传的博客了</p>
-<p>上传到<code>github</code>：</p>
-<ul>
-<li><code>npx hexo d</code></li>
-</ul>
-<p>有时候可能会出现错误：<code>error: RPC failed; curl 35 OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443</code></p>
-<p>这个时候可以先执行<code>git config --global http.postBuffer 5242880000</code>，再推送到GitHub</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-        <tag>experient</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>错误1006解决方案</title>
-    <url>/2023/08/01/%E9%94%99%E8%AF%AF1006%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<h2 id="记录一下"><a href="#记录一下" class="headerlink" title="记录一下"></a>记录一下</h2><p>今天离开电脑的时候没有关闭watt toolkit软件（并且它还开着GitHub加速），等我回来时电脑自动关机了</p>
-<p>当时意识到大事不妙（以前也遇到过），果然，已经无法上网了，并且watt提示错误代码1006，主机拒绝访问</p>
-<p>于是记录一下解决过程</p>
-<hr>
-<p>首先搜索了一下“电脑连上网络但是无法上网怎么办”</p>
-<p>一个解决方案说可以修改wlan的设置，双击IPv4</p>
-<img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801221357568.png" alt="image-20230801221357568" style="zoom:67%;" />
-
-<p>修改DNS设置（由于并没有用所以我就不贴上来了）</p>
-<hr>
-<p>然后在edge里运行网络检测，提示“远程计算机或设备不接受连接”，搜索这个关键词</p>
-<p>修复方法：打开控制面板（<code>win</code>+<code>R</code>再输入<code>control</code>）–&gt; 连接 –&gt; 局域网设置 –&gt; 只勾选“自动检测设置”</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20230801222017921.png" alt="image-20230801222017921"></p>
-<p>这样就解决问题了</p>
-]]></content>
-      <categories>
-        <category>daily</category>
-        <category>error</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
+        <tag>-dl</tag>
       </tags>
   </entry>
 </search>
