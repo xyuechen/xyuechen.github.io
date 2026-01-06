@@ -186,6 +186,29 @@
       </tags>
   </entry>
   <entry>
+    <title>archlinux的截图配置</title>
+    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
+<p>在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
+
+<p>截图方式：在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
+<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>archliux</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>arch-install的使用</title>
     <url>/2024/07/04/arch-install%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="arch-install的使用"><a href="#arch-install的使用" class="headerlink" title="arch-install的使用"></a>arch-install的使用</h2><p>由于arch的安装较为繁琐，因此出现了一种arch-install的工具，今天在虚拟机上试一试</p>
@@ -212,6 +235,33 @@
       <tags>
         <tag>linux</tag>
         <tag>archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>R多环境管理</title>
+    <url>/2024/07/04/R%E5%A4%9A%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>一直想找到一个像anaconda那样管理python环境来管理R环境的工具，今天正好看到一个，尝试一下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">winget install posit.rig</span><br></pre></td></tr></table></figure>
+
+<p>在Windows终端中运行上述命令下载，重启终端即可运行</p>
+<p>其他操作系统的命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">macOS</span></span><br><span class="line">brew tap r-lib/rig</span><br><span class="line">brew install --cask rig</span><br><span class="line">brew upgrade --cask rig # 更新命令</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ubuntu和debian</span></span></span><br><span class="line">`which sudo` curl -L https://rig.r-pkg.org/deb/rig.gpg -o /etc/apt/trusted.gpg.d/rig.gpg</span><br><span class="line">`which sudo` sh -c &#x27;echo &quot;deb http://rig.r-pkg.org/deb rig main&quot; &gt; /etc/apt/sources.list.d/rig.list&#x27;</span><br><span class="line">`which sudo` apt update</span><br><span class="line">`which sudo` apt install r-rig</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># rhel、fedora、centOS、Rocky Linux、Almalinux等</span></span></span><br><span class="line">`which sudo` yum install -y https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># opensuse和SLES</span></span></span><br><span class="line">`which sudo` zypper install -y --allow-unsigned-rpm https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 任意Linux发行版</span></span></span><br><span class="line">curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux-$(arch)-latest.tar.gz |</span><br><span class="line">  `which sudo` tar xz -C /usr/local</span><br></pre></td></tr></table></figure>
+
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>列出当前安装的R：<code>rig list</code>，类似于<code>conda env --list</code></li>
+<li>查看所有命令和示例：<code>rig</code>，类似于<code>conda</code></li>
+<li>查看帮助文档：<code>rig --help</code>，类似于<code>conda --help</code></li>
+</ul>
+<p>命令列表</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rig add        -- install a new R version [<span class="built_in">alias</span>: install]</span><br><span class="line">rig available  -- List R versions available to install.</span><br><span class="line">rig default    -- <span class="built_in">print</span> or <span class="built_in">set</span> default R version [<span class="built_in">alias</span>: switch]</span><br><span class="line">rig library    -- manage package libraries [<span class="built_in">alias</span>: lib] (experimental)</span><br><span class="line">rig list       -- list installed R versions [<span class="built_in">alias</span>: <span class="built_in">ls</span>]</span><br><span class="line">rig resolve    -- resolve a symbolic R version</span><br><span class="line">rig <span class="built_in">rm</span>         -- remove R versions [aliases: del, delete, remove]</span><br><span class="line">rig rstudio    -- start RStudio with the specified R version</span><br><span class="line">rig run        -- Run R, an R script or an R project</span><br><span class="line">rig sysreqs    -- manage R-related system libraries and tools (experimental) (macOS)</span><br><span class="line">rig system     -- manage current installations</span><br><span class="line"><span class="comment"># windows子命令</span></span><br><span class="line">rig system add-pak                 -- install or update pak <span class="keyword">for</span> an R version</span><br><span class="line">rig system clean-registry          -- clean stale R related entries <span class="keyword">in</span> the registry</span><br><span class="line">rig system make-links              -- create R-* quick links</span><br><span class="line">rig system rtools                  -- manage Rtools installations</span><br><span class="line">rig system setup-user-lib          -- <span class="built_in">set</span> up automatic user package libraries [<span class="built_in">alias</span>: create-lib]</span><br><span class="line">rig system update-rtools40         -- update Rtools40 MSYS2 packages</span><br></pre></td></tr></table></figure>
+
+<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>我们可以下载<code>positran</code>来管理切换环境，不过目前还在测试阶段</p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>R</tag>
       </tags>
   </entry>
   <entry>
@@ -295,29 +345,6 @@
       </tags>
   </entry>
   <entry>
-    <title>archlinux的截图配置</title>
-    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
-<p>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
-
-<p>截图方式：在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
-<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>archliux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>arch之hyprland</title>
     <url>/2024/07/04/arch%E4%B9%8Bhyprland/</url>
     <content><![CDATA[<hr>
@@ -340,30 +367,97 @@
       </tags>
   </entry>
   <entry>
-    <title>R多环境管理</title>
-    <url>/2024/07/04/R%E5%A4%9A%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/</url>
-    <content><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>一直想找到一个像anaconda那样管理python环境来管理R环境的工具，今天正好看到一个，尝试一下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">winget install posit.rig</span><br></pre></td></tr></table></figure>
+    <title>arch软件安装以及美化</title>
+    <url>/2024/07/04/arch%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E7%BE%8E%E5%8C%96/</url>
+    <content><![CDATA[<hr>
+<h3 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h3><h4 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo pacman -Syu firefox</span><br></pre></td></tr></table></figure>
 
-<p>在Windows终端中运行上述命令下载，重启终端即可运行</p>
-<p>其他操作系统的命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">macOS</span></span><br><span class="line">brew tap r-lib/rig</span><br><span class="line">brew install --cask rig</span><br><span class="line">brew upgrade --cask rig # 更新命令</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ubuntu和debian</span></span></span><br><span class="line">`which sudo` curl -L https://rig.r-pkg.org/deb/rig.gpg -o /etc/apt/trusted.gpg.d/rig.gpg</span><br><span class="line">`which sudo` sh -c &#x27;echo &quot;deb http://rig.r-pkg.org/deb rig main&quot; &gt; /etc/apt/sources.list.d/rig.list&#x27;</span><br><span class="line">`which sudo` apt update</span><br><span class="line">`which sudo` apt install r-rig</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># rhel、fedora、centOS、Rocky Linux、Almalinux等</span></span></span><br><span class="line">`which sudo` yum install -y https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># opensuse和SLES</span></span></span><br><span class="line">`which sudo` zypper install -y --allow-unsigned-rpm https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 任意Linux发行版</span></span></span><br><span class="line">curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux-$(arch)-latest.tar.gz |</span><br><span class="line">  `which sudo` tar xz -C /usr/local</span><br></pre></td></tr></table></figure>
+<p>安装后中文无法显示，我们可以安装中文字体</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo pacman -Syu noto-fonts-cjk</span><br></pre></td></tr></table></figure>
 
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li>列出当前安装的R：<code>rig list</code>，类似于<code>conda env --list</code></li>
-<li>查看所有命令和示例：<code>rig</code>，类似于<code>conda</code></li>
-<li>查看帮助文档：<code>rig --help</code>，类似于<code>conda --help</code></li>
+<p>登出后再重新登录即可看到正常的中文</p>
+<h4 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h4><p>我们选择fcitx5的输入法</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo pacman -S fcitx5-im</span><br><span class="line">sudo pacman -S fcitx5-chinese-addons fcitx5-rime qt5-wayland</span><br></pre></td></tr></table></figure>
+
+<p>安装后编辑环境变量文件<code>/etc/environment</code>，在其中添加</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/environment</span></span><br><span class="line">QT_QPA_PLATFORM=wayland</span><br><span class="line">GTK_IM_MODULE=fcitx</span><br><span class="line">QT_IM_MODULE=fcitx</span><br><span class="line">XMODIFIERS=@im=fcitx</span><br><span class="line">SDL_IM_MODULE=fcitx</span><br></pre></td></tr></table></figure>
+
+<p>打开fcitx5-configuration这个软件，将右边的input_method中的pinyin加入到左边</p>
+<h4 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo pacman -S bluez</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> bluetooth</span><br></pre></td></tr></table></figure>
+
+<h4 id="visual-studio-code"><a href="#visual-studio-code" class="headerlink" title="visual studio code"></a>visual studio code</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">yay visual-studio-code-bin</span><br></pre></td></tr></table></figure>
+
+<p>提示没有yay，那么我们安装一下yay</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line">sudo git <span class="built_in">clone</span> https://aur.archlinux.org/yay.git</span><br><span class="line"><span class="built_in">cd</span> /opt/yay</span><br><span class="line">sudo <span class="built_in">chown</span> -R username:username .</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://proxy.golang.com.cn,direct</span><br><span class="line">makepkg -si</span><br><span class="line">yay</span><br><span class="line">yay -Yc</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">sudo <span class="built_in">rm</span> -rf yay/</span><br></pre></td></tr></table></figure>
+
+<p>安装成功后再安装vscode，即可成功</p>
+<h4 id="音乐"><a href="#音乐" class="headerlink" title="音乐"></a>音乐</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay yesplaymusic</span><br></pre></td></tr></table></figure>
+
+<h4 id="terminal"><a href="#terminal" class="headerlink" title="terminal"></a>terminal</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S gnome-terminal-transparency</span><br></pre></td></tr></table></figure>
+<h4 id="微信和wps"><a href="#微信和wps" class="headerlink" title="微信和wps"></a>微信和wps</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay wechat-universal-bwrap</span><br><span class="line">yay wps-office</span><br></pre></td></tr></table></figure>
+
+<h4 id="deb安装包"><a href="#deb安装包" class="headerlink" title="deb安装包"></a>deb安装包</h4><p>有时候第三方软件会以deb的格式出现，这种文件在arch中的安装步骤如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yay debtap</span><br><span class="line">sudo debtap -u</span><br><span class="line">cd Downloads</span><br><span class="line">debtap *.deb</span><br><span class="line">sudo pacman -U package_name</span><br></pre></td></tr></table></figure>
+<p>或者还可以</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yay -S dpkg</span><br><span class="line">dpkg -i *.deb</span><br></pre></td></tr></table></figure>
+
+<h4 id="下载助手"><a href="#下载助手" class="headerlink" title="下载助手"></a>下载助手</h4><p>windows上的internet download manager可以实现多线程快速下载，但是这个软件在linux上无法使用，我们可以使用替代品fdm</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yay freedownloadmanager</span><br></pre></td></tr></table></figure>
+
+<h4 id="java"><a href="#java" class="headerlink" title="java"></a>java</h4><blockquote>
+<p>注：</p>
+<ol>
+<li>archlinux官方只支持openjdk</li>
+<li>刚安装的java环境需要 source &#x2F;etc&#x2F;profile 或者注销重新登陆来完成识别</li>
+<li><strong>务必</strong>使用 <code>archlinux-java</code>编辑 <code>/usr/lib/jvm/default</code> 和 <code>/usr/lib/jvm/default-runtime</code> 这两个链接</li>
+</ol>
+</blockquote>
+<p>下载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo pacman -S jdk-openjdk</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>archlinux-java</code>管理java环境</p>
+<ul>
+<li>查看环境：<code>archlinux-java status</code></li>
+<li>切换环境：<code>archlinux-java set &lt;JAVA_ENV_NAME&gt;</code></li>
 </ul>
-<p>命令列表</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rig add        -- install a new R version [<span class="built_in">alias</span>: install]</span><br><span class="line">rig available  -- List R versions available to install.</span><br><span class="line">rig default    -- <span class="built_in">print</span> or <span class="built_in">set</span> default R version [<span class="built_in">alias</span>: switch]</span><br><span class="line">rig library    -- manage package libraries [<span class="built_in">alias</span>: lib] (experimental)</span><br><span class="line">rig list       -- list installed R versions [<span class="built_in">alias</span>: <span class="built_in">ls</span>]</span><br><span class="line">rig resolve    -- resolve a symbolic R version</span><br><span class="line">rig <span class="built_in">rm</span>         -- remove R versions [aliases: del, delete, remove]</span><br><span class="line">rig rstudio    -- start RStudio with the specified R version</span><br><span class="line">rig run        -- Run R, an R script or an R project</span><br><span class="line">rig sysreqs    -- manage R-related system libraries and tools (experimental) (macOS)</span><br><span class="line">rig system     -- manage current installations</span><br><span class="line"><span class="comment"># windows子命令</span></span><br><span class="line">rig system add-pak                 -- install or update pak <span class="keyword">for</span> an R version</span><br><span class="line">rig system clean-registry          -- clean stale R related entries <span class="keyword">in</span> the registry</span><br><span class="line">rig system make-links              -- create R-* quick links</span><br><span class="line">rig system rtools                  -- manage Rtools installations</span><br><span class="line">rig system setup-user-lib          -- <span class="built_in">set</span> up automatic user package libraries [<span class="built_in">alias</span>: create-lib]</span><br><span class="line">rig system update-rtools40         -- update Rtools40 MSYS2 packages</span><br></pre></td></tr></table></figure>
+<h4 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo timedatectl set-ntp true</span><br></pre></td></tr></table></figure>
 
-<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>我们可以下载<code>positran</code>来管理切换环境，不过目前还在测试阶段</p>
+<h3 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h3><h4 id="gnome拓展"><a href="#gnome拓展" class="headerlink" title="gnome拓展"></a>gnome拓展</h4><p>首先要下载必要的一些软件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pacman -S gnome-extensions</span><br><span class="line">sudo pacman -S gnome-tweaks</span><br><span class="line">yay ocs-url</span><br><span class="line">git clone https://aur.archlinux.org/chrome-gnome-shell.git</span><br><span class="line">cd chrome-gnome-shell</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
+<p>进入gnome拓展官网 <a href="https://extensions.gnome.org/">https://extensions.gnome.org/</a> </p>
+<blockquote>
+<p>我们可以在tweaks中打开gnome的最大化和最小化</p>
+</blockquote>
+<p>首先安装<em>input method panel</em> 美化输入法<br>安装的几个插件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">input method panel</span><br><span class="line">blur my shell</span><br><span class="line">AppIndicator and KStatusNotifierItem Support</span><br><span class="line">Compiz alike magic lamp effect</span><br><span class="line">dash to dock</span><br><span class="line">just perfection</span><br><span class="line">hide topbar</span><br></pre></td></tr></table></figure>
+
+<h4 id="还原点"><a href="#还原点" class="headerlink" title="还原点"></a>还原点</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay aura-bin</span><br></pre></td></tr></table></figure>
+<p>我们可以使用<code>aura -b</code>设置还原点，通过<code>aura -b restore</code>来回到之前的还原点</p>
+<h4 id="终端美化"><a href="#终端美化" class="headerlink" title="终端美化"></a>终端美化</h4><p>首先下载<code>zsh</code>及相关软件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pacman -S zsh zsh-theme-powerlevel10k zsh-autosuggestions zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里powerlevel10k找不到，因为已经移到了aur库中，可以通过yay 下载</p>
+</blockquote>
+<p>下载不了，我们直接从github下载<br>首先对github加速</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global url.&quot;https://gitclone.com/&quot;.insteadOf &quot;https://github.com/&quot;</span><br></pre></td></tr></table></figure>
+<p>配置文件在<code>~/.gitconfig</code>中<br>但是使用yay的时候我们必须取消加速</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global --<span class="built_in">unset</span> url.https://github.com/.insteadOf</span><br></pre></td></tr></table></figure>
+<p>配置好了加速后下载</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://gitee.com/romkatv/powerlevel10k.git ~/powerlevel10k</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;source ~/powerlevel10k/powerlevel10k.zsh-theme&#x27;</span> &gt;&gt;~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>在<code>~/.zshrc</code>中输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel10k/powerlevel10k&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>下载成功后更换默认shell</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -l</span><br><span class="line">chsh -s /bin/zsh # 换成自己的路径</span><br></pre></td></tr></table></figure>
+<p>然后按指引配置就行</p>
 ]]></content>
       <categories>
-        <category>daily</category>
+        <category>linux</category>
       </categories>
       <tags>
-        <tag>R</tag>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
       </tags>
   </entry>
   <entry>
@@ -666,64 +760,6 @@
       </tags>
   </entry>
   <entry>
-    <title>python工具uv</title>
-    <url>/2025/04/28/python%E5%B7%A5%E5%85%B7uv/</url>
-    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在此之前常使用conda管理python环境和包，但是conda体积较大，而<code>uv</code>是一个用<code>Rust</code>写的工具，其优势在于速度快，兼容性强；当然，他不能处理发布包、运行脚本、管理项目元数据的，这是<code>poetry</code>的长处。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>他的安装很简单。</p>
-<ol>
-<li>使用<code>curl</code>（推荐）<ol>
-<li>在Linux或者Mac上：<code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></li>
-<li>在window上，可以使用powershell：<code>powershell -ExecutionPolicy ByPass -c &quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</code></li>
-</ol>
-</li>
-<li>使用<code>pipx</code>：命令为<code>pipx install uv</code></li>
-</ol>
-<p>安装后可以在终端使用<code>uv --version</code>来验证安装是否成功</p>
-<h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><ol>
-<li><p>创建虚拟环境</p>
-<p>在开始安装前，通常需要先创建一个独立的环境以避免依赖冲突，<code>uv</code>创建环境的命令为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">uv venv env_name</span><br></pre></td></tr></table></figure>
-
-<p>其中可以给自己的环境换一个名字，这个命令将查找系统中可用的python解释器，如果需要指定python版本，可以加一个参数：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">uv venv env_name --python 3.x</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>激活虚拟环境</p>
-<p>激活方式取决于使用的shell：</p>
-<ul>
-<li><strong>Bash&#x2F;zsh</strong>：<code>source .venv/bin/activate</code></li>
-<li><strong>Fish</strong>：<code>source .venv/bin/activate.fish</code></li>
-<li><strong>Nushell</strong>：<code>source .venv/bin/activate.nu</code></li>
-<li><strong>PowerShell</strong>：<code>.venv/Scripts/Activate.ps1</code></li>
-<li><strong>cmd</strong>：<code>.venv/Scripts/activate.bat</code></li>
-</ul>
-</li>
-<li><p>安装依赖</p>
-<p>激活环境后就是安装需要的依赖包，<code>uv</code>是兼容<code>pip</code>安装命令的，优势在于更快，下面是一些命令的解释</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装一个包</span></span><br><span class="line">uv pip instal requests</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装多个包</span></span><br><span class="line">uv pip install requests flask</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装指定版本的包</span></span><br><span class="line">uv pip install &quot;requests==2.28.1&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从requirement安装</span></span><br><span class="line">uv pip install -r requirement.txt</span><br></pre></td></tr></table></figure>
-
-<p>卸载包可以将<code>install</code>换成<code>uninstall</code>，但是这样会导致虚拟环境和<code>requirement.txt</code>不同步，更好的做法是：修改<code>reqirement.txt</code>，然后运行<code>uv pip compile</code>更新，最后运行<code>uv pip sync</code>来清理环境。</p>
-<blockquote>
-<p><code>uv add</code>也可以下载依赖，区别在于这个命令可以自动更新依赖到<code>.pyproject.toml</code>中</p>
-</blockquote>
-</li>
-<li><p>其他命令</p>
-<p>还有一些可以使用的命令如下：</p>
-<ul>
-<li><code>uv tree</code>：查看项目的依赖关系树</li>
-<li><code>uv init</code>：初始化一个项目，新项目的目录下会生成<code>pyproject.toml</code>，<code>.python-version</code>等文件</li>
-</ul>
-</li>
-</ol>
-<p>更多具体内容可见<a href="https://docs.astral.sh/uv/">官方文档</a></p>
-]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>tensorflow下载过程</title>
     <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
@@ -796,6 +832,118 @@
       </tags>
   </entry>
   <entry>
+    <title>免费科学上网方法记录</title>
+    <url>/2023/08/10/%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>今天在油管上看到一个科学上网方法，记录一下</p>
+<p>首先是[下载链接](<a href="https://1.1.1.1/">1.1.1.1 — The free app that makes your Internet faster.</a>)，这是一个名为warp的软件，下载后可以免费获得1G的科学流量</p>
+<p>但是这显然不够用</p>
+<p>免费获取永久资格的方法有两种：</p>
+<ul>
+<li>使用信用卡或者paypal注册一个CloudFlare的账号，选择团队套餐，$0的那个，就可以获得免费的流量</li>
+<li>关注warp的telegram</li>
+</ul>
+<p>我选择的是第二种</p>
+<p>先使用免费的1G流量注册一个telegram账号（国内手机号可以使用），然后搜索<code>warp+bot</code></p>
+<p><img src="/./../image/image-20230810221713595.png" alt="image-20230810221713595"></p>
+<p>如图所示，选择这个账号，进入后点击”&#x2F;generate“，他会提醒你关注两个账号，关注后点击第三个”我已关注“，它会返给你几个计算题，算好后就会生成密钥，最后回到warp软件偏好设置中更换密钥，就可以获得花不完的流量啦</p>
+<p>原视频链接：<a href="https://www.youtube.com/watch?v=mkv6MRzvjPE">(10) 免费VPN的杀手！Warp+ 速度贼快，不限制流量，由大名鼎鼎的CloudFlare 提供，放心白嫖 | 零度解说 - YouTube</a></p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+        <tag>magic</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python工具uv</title>
+    <url>/2025/04/28/python%E5%B7%A5%E5%85%B7uv/</url>
+    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在此之前常使用conda管理python环境和包，但是conda体积较大，而<code>uv</code>是一个用<code>Rust</code>写的工具，其优势在于速度快，兼容性强；当然，他不能处理发布包、运行脚本、管理项目元数据的，这是<code>poetry</code>的长处。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>他的安装很简单。</p>
+<ol>
+<li>使用<code>curl</code>（推荐）<ol>
+<li>在Linux或者Mac上：<code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></li>
+<li>在window上，可以使用powershell：<code>powershell -ExecutionPolicy ByPass -c &quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</code></li>
+</ol>
+</li>
+<li>使用<code>pipx</code>：命令为<code>pipx install uv</code></li>
+</ol>
+<p>安装后可以在终端使用<code>uv --version</code>来验证安装是否成功</p>
+<h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><ol>
+<li><p>创建虚拟环境</p>
+<p>在开始安装前，通常需要先创建一个独立的环境以避免依赖冲突，<code>uv</code>创建环境的命令为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">uv venv env_name</span><br></pre></td></tr></table></figure>
+
+<p>其中可以给自己的环境换一个名字，这个命令将查找系统中可用的python解释器，如果需要指定python版本，可以加一个参数：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">uv venv env_name --python 3.x</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>激活虚拟环境</p>
+<p>激活方式取决于使用的shell：</p>
+<ul>
+<li><strong>Bash&#x2F;zsh</strong>：<code>source .venv/bin/activate</code></li>
+<li><strong>Fish</strong>：<code>source .venv/bin/activate.fish</code></li>
+<li><strong>Nushell</strong>：<code>source .venv/bin/activate.nu</code></li>
+<li><strong>PowerShell</strong>：<code>.venv/Scripts/Activate.ps1</code></li>
+<li><strong>cmd</strong>：<code>.venv/Scripts/activate.bat</code></li>
+</ul>
+</li>
+<li><p>安装依赖</p>
+<p>激活环境后就是安装需要的依赖包，<code>uv</code>是兼容<code>pip</code>安装命令的，优势在于更快，下面是一些命令的解释</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装一个包</span></span><br><span class="line">uv pip instal requests</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装多个包</span></span><br><span class="line">uv pip install requests flask</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装指定版本的包</span></span><br><span class="line">uv pip install &quot;requests==2.28.1&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从requirement安装</span></span><br><span class="line">uv pip install -r requirement.txt</span><br></pre></td></tr></table></figure>
+
+<p>卸载包可以将<code>install</code>换成<code>uninstall</code>，但是这样会导致虚拟环境和<code>requirement.txt</code>不同步，更好的做法是：修改<code>reqirement.txt</code>，然后运行<code>uv pip compile</code>更新，最后运行<code>uv pip sync</code>来清理环境。</p>
+<blockquote>
+<p><code>uv add</code>也可以下载依赖，区别在于这个命令可以自动更新依赖到<code>.pyproject.toml</code>中</p>
+</blockquote>
+</li>
+<li><p>其他命令</p>
+<p>还有一些可以使用的命令如下：</p>
+<ul>
+<li><code>uv tree</code>：查看项目的依赖关系树</li>
+<li><code>uv init</code>：初始化一个项目，新项目的目录下会生成<code>pyproject.toml</code>，<code>.python-version</code>等文件</li>
+</ul>
+</li>
+</ol>
+<p>更多具体内容可见<a href="https://docs.astral.sh/uv/">官方文档</a></p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>动态规划</title>
+    <url>/2024/09/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
+    <content><![CDATA[<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>定义状态：确定问题的状态表示</li>
+<li>状态转移方程(核心步骤)：建立状态之间的递推关系。通常，当前状态最优解可通过之前计算的状态最优解得到</li>
+<li>初始化：确定初始状态的值或设置起始条件</li>
+<li>计算最优解：根据状态转移方程，逐步计算所有可能的状态的值</li>
+</ol>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>假设有一个二维的网络，每个单元格中有一个非负整数，目标为从左上角到右下角，每次只能向右或向下移动，要求路径上的数字之和最小</p>
+<ul>
+<li><p>定义状态：定义<code>dp[i][j]</code>为到达第<code>i</code>行第<code>j</code>列的最小路径和</p>
+</li>
+<li><p>状态转移方程：由于只能向右或向下移动，因此，状态转移方程为 $dp[i][j] &#x3D; min(dp[i-1][j],dp[i],[j-1]) + grid[i][j]$</p>
+<p>这里<code>grid[i][j]</code>是网格中第<code>i</code>行第<code>j</code>列的值</p>
+</li>
+<li><p>初始化条件：初始化左上角的值<code>dp[0][0] = grid[0][0]</code>；第一行只能从左边来，所以<code>dp[0][j] = dp[0][j-1] + grid[0][j]</code>；第一列只能从上面来，所以<code>dp[i][0] = dp[i-1][0] + grid[i][0]</code></p>
+</li>
+<li><p>填充DP表：按行或按列迭代填充整个DP表，最终<code>dp[m-1][n-1]</code>将包含从左上角到右下角的最小路径和</p>
+</li>
+</ul>
+<h2 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h2><p>这里使用python代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">minPathSum</span>(<span class="params">grid</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> grid <span class="keyword">or</span> <span class="keyword">not</span> grid[<span class="number">0</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">    dp = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化起点</span></span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化第一行和第一列</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>] + grid[<span class="number">0</span>][j]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 填充剩余的dp表</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            dp[i][j] = <span class="built_in">min</span>(dp[i-<span class="number">1</span>][j], dp[i][j-<span class="number">1</span>]) + grid[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>experience</category>
+      </categories>
+  </entry>
+  <entry>
     <title>vscode远程通道</title>
     <url>/2025/04/10/vscode%E8%BF%9C%E7%A8%8B%E9%80%9A%E9%81%93/</url>
     <content><![CDATA[<h1 id="windows做服务器"><a href="#windows做服务器" class="headerlink" title="windows做服务器"></a>windows做服务器</h1><p>以Linux做远程服务器的教程很多，但是有时候需要Windows系统做服务器，这种情况的设置我也想记录一下。</p>
@@ -828,31 +976,6 @@
       </categories>
       <tags>
         <tag>experience</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>免费科学上网方法记录</title>
-    <url>/2023/08/10/%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>今天在油管上看到一个科学上网方法，记录一下</p>
-<p>首先是[下载链接](<a href="https://1.1.1.1/">1.1.1.1 — The free app that makes your Internet faster.</a>)，这是一个名为warp的软件，下载后可以免费获得1G的科学流量</p>
-<p>但是这显然不够用</p>
-<p>免费获取永久资格的方法有两种：</p>
-<ul>
-<li>使用信用卡或者paypal注册一个CloudFlare的账号，选择团队套餐，$0的那个，就可以获得免费的流量</li>
-<li>关注warp的telegram</li>
-</ul>
-<p>我选择的是第二种</p>
-<p>先使用免费的1G流量注册一个telegram账号（国内手机号可以使用），然后搜索<code>warp+bot</code></p>
-<p><img src="/./../image/image-20230810221713595.png" alt="image-20230810221713595"></p>
-<p>如图所示，选择这个账号，进入后点击”&#x2F;generate“，他会提醒你关注两个账号，关注后点击第三个”我已关注“，它会返给你几个计算题，算好后就会生成密钥，最后回到warp软件偏好设置中更换密钥，就可以获得花不完的流量啦</p>
-<p>原视频链接：<a href="https://www.youtube.com/watch?v=mkv6MRzvjPE">(10) 免费VPN的杀手！Warp+ 速度贼快，不限制流量，由大名鼎鼎的CloudFlare 提供，放心白嫖 | 零度解说 - YouTube</a></p>
-]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-        <tag>magic</tag>
       </tags>
   </entry>
   <entry>
@@ -890,35 +1013,6 @@
       <tags>
         <tag>daily</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>动态规划</title>
-    <url>/2024/09/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
-    <content><![CDATA[<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
-<li>定义状态：确定问题的状态表示</li>
-<li>状态转移方程(核心步骤)：建立状态之间的递推关系。通常，当前状态最优解可通过之前计算的状态最优解得到</li>
-<li>初始化：确定初始状态的值或设置起始条件</li>
-<li>计算最优解：根据状态转移方程，逐步计算所有可能的状态的值</li>
-</ol>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>假设有一个二维的网络，每个单元格中有一个非负整数，目标为从左上角到右下角，每次只能向右或向下移动，要求路径上的数字之和最小</p>
-<ul>
-<li><p>定义状态：定义<code>dp[i][j]</code>为到达第<code>i</code>行第<code>j</code>列的最小路径和</p>
-</li>
-<li><p>状态转移方程：由于只能向右或向下移动，因此，状态转移方程为 $dp[i][j] &#x3D; min(dp[i-1][j],dp[i],[j-1]) + grid[i][j]$</p>
-<p>这里<code>grid[i][j]</code>是网格中第<code>i</code>行第<code>j</code>列的值</p>
-</li>
-<li><p>初始化条件：初始化左上角的值<code>dp[0][0] = grid[0][0]</code>；第一行只能从左边来，所以<code>dp[0][j] = dp[0][j-1] + grid[0][j]</code>；第一列只能从上面来，所以<code>dp[i][0] = dp[i-1][0] + grid[i][0]</code></p>
-</li>
-<li><p>填充DP表：按行或按列迭代填充整个DP表，最终<code>dp[m-1][n-1]</code>将包含从左上角到右下角的最小路径和</p>
-</li>
-</ul>
-<h2 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h2><p>这里使用python代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">minPathSum</span>(<span class="params">grid</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> grid <span class="keyword">or</span> <span class="keyword">not</span> grid[<span class="number">0</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">    dp = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化起点</span></span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化第一行和第一列</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">        dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>] + grid[<span class="number">0</span>][j]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 填充剩余的dp表</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            dp[i][j] = <span class="built_in">min</span>(dp[i-<span class="number">1</span>][j], dp[i][j-<span class="number">1</span>]) + grid[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>experience</category>
-      </categories>
   </entry>
   <entry>
     <title>我的hexo配置过程</title>
