@@ -242,6 +242,109 @@
       </tags>
   </entry>
   <entry>
+    <title>archlinux记录</title>
+    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
+<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
+<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
+<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
+<p>美化使用了类苹果的主题</p>
+<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
+<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v2ray</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
+<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
+<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
+<hr>
+<p>2024年7月4号</p>
+<p>时隔一年，再次捡起这个帖子，在上个月，参考<a href="https://www.bilibili.com/video/BV1kN411m7w4/?share_source=copy_web&vd_source=262fce51bcecea4097592dd1df9c9958">2023年在移动硬盘上安装 Arch Linux 及网络&#x2F;桌面&#x2F;输入法&#x2F;字体&#x2F;声音&#x2F;蓝牙驱动的配置</a> 的视频，成功将arch安装到我的移动硬盘上，进行了一系列安装美化后，成功挂在了nvidia显卡驱动安装上，现在不仅无法开机，还丢失了在arch上写的笔记（心痛）</p>
+<p>于是在blog上记录一下，重新安装的过程，防止再次丢失</p>
+<p>首先，设置一个虚拟机，要点：</p>
+<ul>
+<li>USB控制器中选择相应的兼容</li>
+<li>选项-高级中应该选择uefi引导，关闭Hyper-V通道缓解</li>
+</ul>
+<p>虚拟机开机后将移动硬盘连接到虚拟机上，进入安装程序</p>
+<h3 id="查看当前硬盘情况"><a href="#查看当前硬盘情况" class="headerlink" title="查看当前硬盘情况"></a>查看当前硬盘情况</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704021507623.png" alt="image-20240704021507623"></p>
+<p>如图所示，其中<code>/dev/sdb</code>为我们的移动硬盘，其中有我之前设置的Linux系统，我们格式化，重新操作</p>
+<h3 id="联网并且验证时钟同步"><a href="#联网并且验证时钟同步" class="headerlink" title="联网并且验证时钟同步"></a>联网并且验证时钟同步</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ip link</span><br><span class="line">ping www.baidu.com</span><br><span class="line">ip link</span><br><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置磁盘空间"><a href="#设置磁盘空间" class="headerlink" title="设置磁盘空间"></a>设置磁盘空间</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sdb</span><br><span class="line">g # 新建分区表</span><br><span class="line">n # 新分区</span><br></pre></td></tr></table></figure>
+
+<p>这里扇区和起始点可以默认，大小需要手动分配，我们分配600M，即输入<code>+600M</code></p>
+<p>此后重复操作，第二个区域我们分配16G，第三个区域我们分配120G，然后输入t，设置分区类型，第一个区域的类型编号为1，第二个为19，第三个为23，然后输入p打印看一下，确认无误后输入w写入</p>
+<h3 id="分区设置"><a href="#分区设置" class="headerlink" title="分区设置"></a>分区设置</h3><p>首先设置文件系统类型</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb3 # 创建文件系统</span><br><span class="line">mkswap /dev/sdb2</span><br><span class="line">mkfs.fat -F 32 /dev/sdb1</span><br></pre></td></tr></table></figure>
+
+<p>然后挂载</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount /dev/sdb3 /mnt</span><br><span class="line">mount --mkdir /dev/sdb1 /mnt/boot</span><br><span class="line">swapon /dev/sdb2</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="设置镜像"><a href="#设置镜像" class="headerlink" title="设置镜像"></a>设置镜像</h4><p>为了安装更快，我们可以配置一个镜像源（以清华镜像源为例）</p>
+<p>编辑文件<code>/etc/pacman.d/mirrorlist</code>，在顶端添加</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/<span class="variable">$repo</span>/os/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装必备的文件"><a href="#安装必备的文件" class="headerlink" title="安装必备的文件"></a>安装必备的文件</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacstrap -K /mnt base linux linux-firmware sof-firmware netwoekmanager vi vim man-db texinfo gnome</span><br></pre></td></tr></table></figure>
+
+<p>等待片刻即可</p>
+<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment"># 配置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="comment"># 同步时间</span></span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment"># 语言</span></span><br><span class="line">vim /etc/locale.gen <span class="comment"># 取消en_US:utf-8的注释，保存退出</span></span><br><span class="line">locale-gen <span class="comment"># 生成语言</span></span><br><span class="line">vim /etc/locale.conf <span class="comment"># 写入：LANG=en_US.UTF-8</span></span><br><span class="line">vim /etc/hostname <span class="comment"># 写入系统名字，随意取</span></span><br><span class="line">pacman -S base-devel</span><br><span class="line">useradd -m username <span class="comment"># 添加一个普通用户</span></span><br><span class="line">passwd username <span class="comment"># 设置这个用户的密码</span></span><br><span class="line">visudo <span class="comment"># 为这个用户添加管理权限，在这个文件中找到ALL，在下面添加一行 username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
+
+<p>安装引导程序</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman -Syu grub efibootmgr amd-ucode intel-ucode</span><br></pre></td></tr></table></figure>
+
+<p>在这里会出现警告信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704033440304.png" alt="image-20240704033440304"></p>
+<p>解决方法：在<code>/etc/pacman.conf</code>中添加源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<p>然后输入</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman-key --recv-keys 7931B6D628C8D3BA</span><br><span class="line">pacman-key --finger 7931B6D628C8D3BA</span><br><span class="line">pacman-key --lsign-key 7931B6D628C8D3BA</span><br><span class="line">yay -S upd72020x-fw</span><br></pre></td></tr></table></figure>
+
+<p>如果由于网速无法下载，那么可以</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/denisandroid/uPD72020x-Firmware ~/Desktop/firmware</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/UPDATE.mem ~/.cache/yay/upd72020x-fw</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/License.rtf ~/.cache/yay/upd72020x-fw</span><br></pre></td></tr></table></figure>
+
+<p>继续我们的安装，接下来是开机引导程序</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB --removable</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p>开启开机服务</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> gdm</span><br><span class="line">systemctl enabel NetworkManager</span><br></pre></td></tr></table></figure>
+
+<p>安装完成，可以通过BIOS进入系统了</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>archlinux的截图配置</title>
+    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
+<p>在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
+
+<p>截图方式：在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
+<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archliux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>arch之hyprland</title>
     <url>/2024/07/04/arch%E4%B9%8Bhyprland/</url>
     <content><![CDATA[<hr>
@@ -358,133 +461,6 @@
       </tags>
   </entry>
   <entry>
-    <title>conda环境迁移</title>
-    <url>/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在笔记本上配置好环境后发现同样的步骤在另一个电脑上无论如何都无法成功，于是想有没有一个办法无痛转移环境</p>
-<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>首先将已经配置好并确定可以使用的环境打包压缩，然后发送&#x2F;转移到另一个电脑上</p>
-<p>解压后进行如下操作</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda config --append envs_dirs D:\ProgramAPP\anaconda\envs\<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>daily</tag>
-        <tag>experient</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>archlinux记录</title>
-    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
-<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
-<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
-<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
-<p>美化使用了类苹果的主题</p>
-<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
-<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v2ray</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
-<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
-<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
-<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
-<hr>
-<p>2024年7月4号</p>
-<p>时隔一年，再次捡起这个帖子，在上个月，参考<a href="https://www.bilibili.com/video/BV1kN411m7w4/?share_source=copy_web&vd_source=262fce51bcecea4097592dd1df9c9958">2023年在移动硬盘上安装 Arch Linux 及网络&#x2F;桌面&#x2F;输入法&#x2F;字体&#x2F;声音&#x2F;蓝牙驱动的配置</a> 的视频，成功将arch安装到我的移动硬盘上，进行了一系列安装美化后，成功挂在了nvidia显卡驱动安装上，现在不仅无法开机，还丢失了在arch上写的笔记（心痛）</p>
-<p>于是在blog上记录一下，重新安装的过程，防止再次丢失</p>
-<p>首先，设置一个虚拟机，要点：</p>
-<ul>
-<li>USB控制器中选择相应的兼容</li>
-<li>选项-高级中应该选择uefi引导，关闭Hyper-V通道缓解</li>
-</ul>
-<p>虚拟机开机后将移动硬盘连接到虚拟机上，进入安装程序</p>
-<h3 id="查看当前硬盘情况"><a href="#查看当前硬盘情况" class="headerlink" title="查看当前硬盘情况"></a>查看当前硬盘情况</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704021507623.png" alt="image-20240704021507623"></p>
-<p>如图所示，其中<code>/dev/sdb</code>为我们的移动硬盘，其中有我之前设置的Linux系统，我们格式化，重新操作</p>
-<h3 id="联网并且验证时钟同步"><a href="#联网并且验证时钟同步" class="headerlink" title="联网并且验证时钟同步"></a>联网并且验证时钟同步</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ip link</span><br><span class="line">ping www.baidu.com</span><br><span class="line">ip link</span><br><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
-
-<h3 id="设置磁盘空间"><a href="#设置磁盘空间" class="headerlink" title="设置磁盘空间"></a>设置磁盘空间</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sdb</span><br><span class="line">g # 新建分区表</span><br><span class="line">n # 新分区</span><br></pre></td></tr></table></figure>
-
-<p>这里扇区和起始点可以默认，大小需要手动分配，我们分配600M，即输入<code>+600M</code></p>
-<p>此后重复操作，第二个区域我们分配16G，第三个区域我们分配120G，然后输入t，设置分区类型，第一个区域的类型编号为1，第二个为19，第三个为23，然后输入p打印看一下，确认无误后输入w写入</p>
-<h3 id="分区设置"><a href="#分区设置" class="headerlink" title="分区设置"></a>分区设置</h3><p>首先设置文件系统类型</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb3 # 创建文件系统</span><br><span class="line">mkswap /dev/sdb2</span><br><span class="line">mkfs.fat -F 32 /dev/sdb1</span><br></pre></td></tr></table></figure>
-
-<p>然后挂载</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount /dev/sdb3 /mnt</span><br><span class="line">mount --mkdir /dev/sdb1 /mnt/boot</span><br><span class="line">swapon /dev/sdb2</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="设置镜像"><a href="#设置镜像" class="headerlink" title="设置镜像"></a>设置镜像</h4><p>为了安装更快，我们可以配置一个镜像源（以清华镜像源为例）</p>
-<p>编辑文件<code>/etc/pacman.d/mirrorlist</code>，在顶端添加</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/<span class="variable">$repo</span>/os/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="安装必备的文件"><a href="#安装必备的文件" class="headerlink" title="安装必备的文件"></a>安装必备的文件</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacstrap -K /mnt base linux linux-firmware sof-firmware netwoekmanager vi vim man-db texinfo gnome</span><br></pre></td></tr></table></figure>
-
-<p>等待片刻即可</p>
-<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment"># 配置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="comment"># 同步时间</span></span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment"># 语言</span></span><br><span class="line">vim /etc/locale.gen <span class="comment"># 取消en_US:utf-8的注释，保存退出</span></span><br><span class="line">locale-gen <span class="comment"># 生成语言</span></span><br><span class="line">vim /etc/locale.conf <span class="comment"># 写入：LANG=en_US.UTF-8</span></span><br><span class="line">vim /etc/hostname <span class="comment"># 写入系统名字，随意取</span></span><br><span class="line">pacman -S base-devel</span><br><span class="line">useradd -m username <span class="comment"># 添加一个普通用户</span></span><br><span class="line">passwd username <span class="comment"># 设置这个用户的密码</span></span><br><span class="line">visudo <span class="comment"># 为这个用户添加管理权限，在这个文件中找到ALL，在下面添加一行 username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
-
-<p>安装引导程序</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman -Syu grub efibootmgr amd-ucode intel-ucode</span><br></pre></td></tr></table></figure>
-
-<p>在这里会出现警告信息</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704033440304.png" alt="image-20240704033440304"></p>
-<p>解决方法：在<code>/etc/pacman.conf</code>中添加源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
-
-<p>然后输入</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman-key --recv-keys 7931B6D628C8D3BA</span><br><span class="line">pacman-key --finger 7931B6D628C8D3BA</span><br><span class="line">pacman-key --lsign-key 7931B6D628C8D3BA</span><br><span class="line">yay -S upd72020x-fw</span><br></pre></td></tr></table></figure>
-
-<p>如果由于网速无法下载，那么可以</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/denisandroid/uPD72020x-Firmware ~/Desktop/firmware</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/UPDATE.mem ~/.cache/yay/upd72020x-fw</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/License.rtf ~/.cache/yay/upd72020x-fw</span><br></pre></td></tr></table></figure>
-
-<p>继续我们的安装，接下来是开机引导程序</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB --removable</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-
-<p>开启开机服务</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> gdm</span><br><span class="line">systemctl enabel NetworkManager</span><br></pre></td></tr></table></figure>
-
-<p>安装完成，可以通过BIOS进入系统了</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>archlinux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo-git报错</title>
-    <url>/2024/04/20/hexo-git%E6%8A%A5%E9%94%99/</url>
-    <content><![CDATA[<h2 id="无法连接"><a href="#无法连接" class="headerlink" title="无法连接"></a>无法连接</h2><p>半年没用hexo，今天连接时发现需要输入用户名和密码，输入后报错，无法连接</p>
-<p>遂重新配置一遍</p>
-<ol>
-<li><p>首先配置一下git的用户名和邮箱</p>
-<p><img src="/./../image/image-20240420173725105.png" alt="image-20240420173725105"></p>
-</li>
-<li><p>创建ssh密钥</p>
-<p><img src="/./../image/image-20240420173931385.png" alt="image-20240420173931385"></p>
-<p>在显示的路径下找到文件</p>
-<p><img src="/./../image/image-20240420174042116.png" alt="image-20240420174042116"></p>
-<p>复制里面的内容</p>
-</li>
-<li><p>上传密钥</p>
-<p><img src="/./../image/image-20240420174519454.png" alt="image-20240420174519454"></p>
-<ol start="4">
-<li><p>验证连接</p>
-<p><img src="/./../image/image-20240420174753903.png" alt="image-20240420174753903"></p>
-<p>出现图中”Hi“后面的内容即连接成功</p>
-</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>dairy</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>conda_set</title>
     <url>/2024/04/19/conda-set/</url>
     <content><![CDATA[<h2 id="conda修改环境路径"><a href="#conda修改环境路径" class="headerlink" title="conda修改环境路径"></a>conda修改环境路径</h2><p>conda 默认的环境路径在<code>C:\Users\用户名\conda</code>中，C盘位置不够，因此希望修改到其余地方</p>
@@ -524,6 +500,92 @@
       </categories>
       <tags>
         <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>conda环境迁移</title>
+    <url>/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在笔记本上配置好环境后发现同样的步骤在另一个电脑上无论如何都无法成功，于是想有没有一个办法无痛转移环境</p>
+<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>首先将已经配置好并确定可以使用的环境打包压缩，然后发送&#x2F;转移到另一个电脑上</p>
+<p>解压后进行如下操作</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda config --append envs_dirs D:\ProgramAPP\anaconda\envs\<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo-git报错</title>
+    <url>/2024/04/20/hexo-git%E6%8A%A5%E9%94%99/</url>
+    <content><![CDATA[<h2 id="无法连接"><a href="#无法连接" class="headerlink" title="无法连接"></a>无法连接</h2><p>半年没用hexo，今天连接时发现需要输入用户名和密码，输入后报错，无法连接</p>
+<p>遂重新配置一遍</p>
+<ol>
+<li><p>首先配置一下git的用户名和邮箱</p>
+<p><img src="/./../image/image-20240420173725105.png" alt="image-20240420173725105"></p>
+</li>
+<li><p>创建ssh密钥</p>
+<p><img src="/./../image/image-20240420173931385.png" alt="image-20240420173931385"></p>
+<p>在显示的路径下找到文件</p>
+<p><img src="/./../image/image-20240420174042116.png" alt="image-20240420174042116"></p>
+<p>复制里面的内容</p>
+</li>
+<li><p>上传密钥</p>
+<p><img src="/./../image/image-20240420174519454.png" alt="image-20240420174519454"></p>
+<ol start="4">
+<li><p>验证连接</p>
+<p><img src="/./../image/image-20240420174753903.png" alt="image-20240420174753903"></p>
+<p>出现图中”Hi“后面的内容即连接成功</p>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>dairy</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo_迁移</title>
+    <url>/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<blockquote>
+<p>最近换了电脑，因此想将原始文件夹转移到新电脑上</p>
+</blockquote>
+<h2 id="直接复制"><a href="#直接复制" class="headerlink" title="直接复制"></a>直接复制</h2><p>直接将原电脑上的文件夹打包，利用网盘&#x2F;移动硬盘转移，在新电脑配置好环境后复制过来，这里由于我的博客数量很少，所以可以直接复制，那么当我们的文件夹很大时，最好还是利用GitHub进行迁移</p>
+<h2 id="网络迁移"><a href="#网络迁移" class="headerlink" title="网络迁移"></a>网络迁移</h2><p>首先，我们应该配置新电脑的环境，这一点在之前的hexo配置中介绍过，不再赘述</p>
+<p>然后新建一个文件夹，并初始化为blog文件夹，接着clone你的blog仓库，将<code>source</code>,<code>theme</code>等资源文件复制过来</p>
+<blockquote>
+<p>但是这种操作只能转移内容，而不能转移配置</p>
+</blockquote>
+<p>另一种方法</p>
+<p><strong>原电脑操作</strong>：</p>
+<ul>
+<li>给你的博客仓库新建一个分支，并设为默认分支，例如<code>hexo</code></li>
+<li>找到一个目录，使用<code>git clone</code>将仓库克隆到本地，删除除了<code>.git</code>外的所有内容</li>
+<li>命令行将本地清空的仓库推送到<code>hexo</code>分支</li>
+<li>将清空的仓库中的.git文件夹复制到博客目录下</li>
+<li>将博客目录下的themes中每个主题文件夹下的.git和.gitgnore删掉</li>
+<li>将上述博客目录推送到hexo分支</li>
+</ul>
+<p><strong>新电脑</strong>：</p>
+<ul>
+<li>创建好空文件夹后，<code>git clone</code></li>
+<li>进入目录后，<code>npm install</code>,<code>hexo g</code>,<code>hexo s</code>，如无意外就可以看到原始内容了</li>
+</ul>
+<blockquote>
+<p>🧐</p>
+<p>好复杂啊。。我还是直接复制吧</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
       </tags>
   </entry>
   <entry>
@@ -577,74 +639,6 @@
       </categories>
       <tags>
         <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo_迁移</title>
-    <url>/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<blockquote>
-<p>最近换了电脑，因此想将原始文件夹转移到新电脑上</p>
-</blockquote>
-<h2 id="直接复制"><a href="#直接复制" class="headerlink" title="直接复制"></a>直接复制</h2><p>直接将原电脑上的文件夹打包，利用网盘&#x2F;移动硬盘转移，在新电脑配置好环境后复制过来，这里由于我的博客数量很少，所以可以直接复制，那么当我们的文件夹很大时，最好还是利用GitHub进行迁移</p>
-<h2 id="网络迁移"><a href="#网络迁移" class="headerlink" title="网络迁移"></a>网络迁移</h2><p>首先，我们应该配置新电脑的环境，这一点在之前的hexo配置中介绍过，不再赘述</p>
-<p>然后新建一个文件夹，并初始化为blog文件夹，接着clone你的blog仓库，将<code>source</code>,<code>theme</code>等资源文件复制过来</p>
-<blockquote>
-<p>但是这种操作只能转移内容，而不能转移配置</p>
-</blockquote>
-<p>另一种方法</p>
-<p><strong>原电脑操作</strong>：</p>
-<ul>
-<li>给你的博客仓库新建一个分支，并设为默认分支，例如<code>hexo</code></li>
-<li>找到一个目录，使用<code>git clone</code>将仓库克隆到本地，删除除了<code>.git</code>外的所有内容</li>
-<li>命令行将本地清空的仓库推送到<code>hexo</code>分支</li>
-<li>将清空的仓库中的.git文件夹复制到博客目录下</li>
-<li>将博客目录下的themes中每个主题文件夹下的.git和.gitgnore删掉</li>
-<li>将上述博客目录推送到hexo分支</li>
-</ul>
-<p><strong>新电脑</strong>：</p>
-<ul>
-<li>创建好空文件夹后，<code>git clone</code></li>
-<li>进入目录后，<code>npm install</code>,<code>hexo g</code>,<code>hexo s</code>，如无意外就可以看到原始内容了</li>
-</ul>
-<blockquote>
-<p>🧐</p>
-<p>好复杂啊。。我还是直接复制吧</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>openslide安装</title>
-    <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516200241133.png" alt="image-20240516200241133"></p>
-<p>为这个文件夹中的<strong>bin</strong>和<strong>lib</strong>添加环境变量</p>
-<p>激活环境，在命令行中运行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install Openslide-python</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201746994.png"></p>
-<p>出现这行字表示成功安装</p>
-<h2 id="openslide-导入"><a href="#openslide-导入" class="headerlink" title="openslide 导入"></a>openslide 导入</h2><p>在环境中输入python</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201923931.png" alt="image-20240516201923931"></p>
-<p>这个时候直接导入会报错</p>
-<p>我们可以进行如下操作：</p>
-<p>先加载os</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.add_dll_directory(<span class="string">&quot;D:\\Users\\xuhui\\anaconda3\\Library\\openslide-win64-20231011\\bin&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>再进行加载</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516202221041.png" alt="image-20240516202221041"></p>
-<p>成功导入</p>
-]]></content>
-      <categories>
-        <category>experient</category>
-      </categories>
-      <tags>
-        <tag>dl</tag>
       </tags>
   </entry>
   <entry>
@@ -706,6 +700,35 @@
       </categories>
       <tags>
         <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>openslide安装</title>
+    <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516200241133.png" alt="image-20240516200241133"></p>
+<p>为这个文件夹中的<strong>bin</strong>和<strong>lib</strong>添加环境变量</p>
+<p>激活环境，在命令行中运行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install Openslide-python</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201746994.png"></p>
+<p>出现这行字表示成功安装</p>
+<h2 id="openslide-导入"><a href="#openslide-导入" class="headerlink" title="openslide 导入"></a>openslide 导入</h2><p>在环境中输入python</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516201923931.png" alt="image-20240516201923931"></p>
+<p>这个时候直接导入会报错</p>
+<p>我们可以进行如下操作：</p>
+<p>先加载os</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.add_dll_directory(<span class="string">&quot;D:\\Users\\xuhui\\anaconda3\\Library\\openslide-win64-20231011\\bin&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>再进行加载</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240516202221041.png" alt="image-20240516202221041"></p>
+<p>成功导入</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
       </tags>
   </entry>
   <entry>
@@ -844,26 +867,26 @@
       </tags>
   </entry>
   <entry>
-    <title>archlinux的截图配置</title>
-    <url>/2023/07/30/archlinux%E7%9A%84%E6%88%AA%E5%9B%BE%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>选择的是flameshot</p>
-<p>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S flameshot-git</span><br></pre></td></tr></table></figure>
+    <title>tensorflow下载过程</title>
+    <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>之前的笔记中我没有意识到python，tensorflow，cuda，cudnn的对应关系，这次在服务器上安装就掉坑里了，因此在安装前首先要注意需要下载的版本，以及自己的cuda和cudnn版本</p>
+<p>我使用的是<code>python = 3.9</code>，<code>tensorflow==2.10.0</code>，<code>cuda==11.3.1</code>，<code>cudnn==8.2.1</code></p>
+<p>具体步骤为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create -n env_name python=3.9</span><br><span class="line">conda activate env_name</span><br><span class="line">conda install cudatoolkit==11.3.1</span><br><span class="line">conda install cudnn==8.2.1</span><br><span class="line">pip install tensorflow==2.10.0 -i source</span><br></pre></td></tr></table></figure>
 
-<p>截图方式：在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flameshot gui</span><br></pre></td></tr></table></figure>
+<p>这样就初步安装成功了</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>在之前的验证中我只验证了<code>tensorflow</code>是否安装成功，而没有检测能否使用<code>GPU</code>，因此将验证命令更新如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br><span class="line"><span class="built_in">print</span>(tf.test.is_gpu_available())</span><br><span class="line"><span class="built_in">print</span>(tf.test.gpu_device_name())</span><br><span class="line"><span class="built_in">print</span>(tf.config.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num GPUs Available: &quot;</span>,<span class="built_in">len</span>(tf.config.experimental.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>)))</span><br></pre></td></tr></table></figure>
 
-
-
-<h3 id="快捷键配置"><a href="#快捷键配置" class="headerlink" title="快捷键配置"></a>快捷键配置</h3><p><img src="/image/image-20230730223313668.png" alt="image-20230730223313668"></p>
-<p>如上图所示，选择一个自己喜欢的快捷键即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240614094327445.png" alt="image-20240614094327445"></p>
+<p>运行结果中出现这个<code>True</code>表示识别成功</p>
 ]]></content>
       <categories>
-        <category>linux</category>
+        <category>daily</category>
       </categories>
       <tags>
-        <tag>linux</tag>
-        <tag>archliux</tag>
+        <tag>dl</tag>
       </tags>
   </entry>
   <entry>
@@ -916,61 +939,76 @@
       </tags>
   </entry>
   <entry>
-    <title>vscode远程通道</title>
-    <url>/2025/04/10/vscode%E8%BF%9C%E7%A8%8B%E9%80%9A%E9%81%93/</url>
-    <content><![CDATA[<h1 id="windows做服务器"><a href="#windows做服务器" class="headerlink" title="windows做服务器"></a>windows做服务器</h1><p>以Linux做远程服务器的教程很多，但是有时候需要Windows系统做服务器，这种情况的设置我也想记录一下。</p>
-<h2 id="安装Windows中的openssh"><a href="#安装Windows中的openssh" class="headerlink" title="安装Windows中的openssh"></a>安装Windows中的openssh</h2><p>用ssh连接时，本地称为client，远程主机称为host。</p>
-<p>我们以Windows系统做host，需要安装一个连接工具，这里使用openssh。</p>
-<p>启动<code>设置</code>，然后转到<code>应用</code>&gt;<code>应用和功能</code>&gt;<code>管理可选功能</code>。</p>
-<p>扫描列表后，查看OpenSSH客户端是否已安装，如果没有，在页面顶部选择“添加功能”，然后：</p>
-<ul>
-<li>若要安装OpenSSH客户端，请找到“OpenSSH客户端”，然后单击“安装”。</li>
-<li>若要安装OpenSSH服务器，请找到“OpenSSH服务器”，然后单击“安装”。</li>
-</ul>
-<p>安装完成后，就可以看到列出的OpenSSH组件。</p>
-<h2 id="SSH的初始设置"><a href="#SSH的初始设置" class="headerlink" title="SSH的初始设置"></a>SSH的初始设置</h2><p>若要配置OpenSSH，以管理员身份启动PowerShell，然后运行一下命令来启动SSHD服务：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Start-Service sshd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OPTIONAL but recommended:</span></span><br><span class="line">Set-Service -Name sshd -StartupType &#x27;Automatic&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Confirm the Firewall rule is configured. It should be created automatically by setup.</span> </span><br><span class="line">Get-NetFirewallRule -Name *ssh*</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">There should be a firewall rule named <span class="string">&quot;OpenSSH-Server-In-TCP&quot;</span>, <span class="built_in">which</span> should be enabled</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If the firewall does not exist, create one</span></span><br><span class="line">New-NetFirewallRule -Name sshd -DisplayName &#x27;OpenSSH Server (sshd)&#x27; -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22</span><br></pre></td></tr></table></figure>
-
-<p>在Windows服务器中，username可以用激活电脑时使用的用户名，即文件资源管理器中<code>C:\Users\username</code>中的username。而servername则是<code>设置</code>&gt;<code>系统</code>&gt;<code>关于</code>中的“设备名称”。</p>
-<p>然后在管理员运行的powerShell中输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ssh username@servername</span><br></pre></td></tr></table></figure>
-
-<p>第一次运行时会弹出</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">The authenticity of host &#x27;servername (10.00.00.001)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:(<span class="tag">&lt;<span class="name">a</span> <span class="attr">large</span> <span class="attr">string</span>&gt;</span>).</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
-
-<p>回答<code>yes</code>后输入开机密码，密码不会显示出来</p>
+    <title>如何打开并贡献文档仓库</title>
+    <url>/2024/11/14/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E5%B9%B6%E8%B4%A1%E7%8C%AE%E6%96%87%E6%A1%A3%E4%BB%93%E5%BA%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>git作为常用的版本管理工具，我们应该学会如何使用git与文档仓库连接</p>
 <blockquote>
-<p>?由于我使用的是Mac，暂时没找到连接win的方法，搁置</p>
+<p>本文以GitHub为例</p>
 </blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>我们使用git连接github</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这里的email填入注册GitHub用的邮箱</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>然后将<code>~/.ssh/id_rsa.pub</code>的内容复制到GitHub中，通过下面的命令验证是否连接</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果显示“welcome……”就表示连接成功</p>
+<h2 id="打开远程仓库"><a href="#打开远程仓库" class="headerlink" title="打开远程仓库"></a>打开远程仓库</h2><p>我们可以直接clone到本地进行编辑</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Document/</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:respo/respo.git</span><br></pre></td></tr></table></figure>
+
+<p>上面的地址根据具体情况填入</p>
+<h2 id="贡献开源代码"><a href="#贡献开源代码" class="headerlink" title="贡献开源代码"></a>贡献开源代码</h2><p>对于自己创建的仓库，可以在本地的项目文件夹运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;the first commit&quot;</span></span><br><span class="line">git remote add origin git@github.com:xyuechen/practice.git //关联远程仓库</span><br><span class="line">git push -u origin master -f</span><br></pre></td></tr></table></figure>
+
+<p>但是对于别人的项目，我们可以先将项目fork一份副本，再拉取请求</p>
+<p>我目前修改了一份文档，并希望将它推送到GitHub这时候可以</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git checkout feat.xutest</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;modified keywords&quot;</span></span><br><span class="line">git push origin feat.xutest:feat.xutest</span><br></pre></td></tr></table></figure>
+
+<p>没报错就表示推送成功了，可以在GitHub查看一下</p>
+<h2 id="保持更新"><a href="#保持更新" class="headerlink" title="保持更新"></a>保持更新</h2><p>如果拉取的远程代码改变了，我们希望本地代码同步变化</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add upstream https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git remote -v</span><br><span class="line">git fetch upstream</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
       <tags>
-        <tag>experience</tag>
+        <tag>daily</tag>
       </tags>
   </entry>
   <entry>
-    <title>tensorflow下载过程</title>
-    <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
-<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>之前的笔记中我没有意识到python，tensorflow，cuda，cudnn的对应关系，这次在服务器上安装就掉坑里了，因此在安装前首先要注意需要下载的版本，以及自己的cuda和cudnn版本</p>
-<p>我使用的是<code>python = 3.9</code>，<code>tensorflow==2.10.0</code>，<code>cuda==11.3.1</code>，<code>cudnn==8.2.1</code></p>
-<p>具体步骤为</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create -n env_name python=3.9</span><br><span class="line">conda activate env_name</span><br><span class="line">conda install cudatoolkit==11.3.1</span><br><span class="line">conda install cudnn==8.2.1</span><br><span class="line">pip install tensorflow==2.10.0 -i source</span><br></pre></td></tr></table></figure>
+    <title>我的hexo配置过程</title>
+    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
+<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
+<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
+<p>在网上找到的解决方案：</p>
+<p>建立一个空的blog文件夹，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
 
-<p>这样就初步安装成功了</p>
-<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>在之前的验证中我只验证了<code>tensorflow</code>是否安装成功，而没有检测能否使用<code>GPU</code>，因此将验证命令更新如下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br><span class="line"><span class="built_in">print</span>(tf.test.is_gpu_available())</span><br><span class="line"><span class="built_in">print</span>(tf.test.gpu_device_name())</span><br><span class="line"><span class="built_in">print</span>(tf.config.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num GPUs Available: &quot;</span>,<span class="built_in">len</span>(tf.config.experimental.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>)))</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240614094327445.png" alt="image-20240614094327445"></p>
-<p>运行结果中出现这个<code>True</code>表示识别成功</p>
+<p>注：命令在blog文件夹打开终端执行</p>
+<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
+<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
+<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
+<p>上传博客：</p>
+<ul>
+<li><code>npx hexo clean</code></li>
+<li><code>npx hexo g</code></li>
+<li><code>npx hexo s</code></li>
+</ul>
+<p>再打开网页，就可以看到上传的博客了</p>
+<p>上传到<code>github</code>：</p>
+<ul>
+<li><code>npx hexo d</code></li>
+</ul>
+<p>有时候可能会出现错误：<code>error: RPC failed; curl 35 OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443</code></p>
+<p>这个时候可以先执行<code>git config --global http.postBuffer 5242880000</code>，再推送到GitHub</p>
 ]]></content>
       <categories>
-        <category>daily</category>
+        <category>hexo</category>
       </categories>
       <tags>
-        <tag>dl</tag>
+        <tag>daily</tag>
+        <tag>experient</tag>
       </tags>
   </entry>
   <entry>
@@ -1028,40 +1066,38 @@
       </tags>
   </entry>
   <entry>
-    <title>我的hexo配置过程</title>
-    <url>/2023/07/29/%E6%88%91%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>前两天配置了一个archlinux，过程中遇到很多问题，想记录一下，忽然想起两年前做过的个人博客实验，于是打算重新捡起来</p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当初的实验并没有成功，于是我重新尝试了一下</p>
-<p>遇到的问题：<code>git bash</code>中无法执行<code>hexo</code>,即使修改了环境变量也没用</p>
-<p><img src="/image/hexo%E9%94%99%E8%AF%AF.jpg" alt="image-20230729095144582"></p>
-<p>在网上找到的解决方案：</p>
-<p>建立一个空的blog文件夹，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+    <title>vscode远程通道</title>
+    <url>/2025/04/10/vscode%E8%BF%9C%E7%A8%8B%E9%80%9A%E9%81%93/</url>
+    <content><![CDATA[<h1 id="windows做服务器"><a href="#windows做服务器" class="headerlink" title="windows做服务器"></a>windows做服务器</h1><p>以Linux做远程服务器的教程很多，但是有时候需要Windows系统做服务器，这种情况的设置我也想记录一下。</p>
+<h2 id="安装Windows中的openssh"><a href="#安装Windows中的openssh" class="headerlink" title="安装Windows中的openssh"></a>安装Windows中的openssh</h2><p>用ssh连接时，本地称为client，远程主机称为host。</p>
+<p>我们以Windows系统做host，需要安装一个连接工具，这里使用openssh。</p>
+<p>启动<code>设置</code>，然后转到<code>应用</code>&gt;<code>应用和功能</code>&gt;<code>管理可选功能</code>。</p>
+<p>扫描列表后，查看OpenSSH客户端是否已安装，如果没有，在页面顶部选择“添加功能”，然后：</p>
+<ul>
+<li>若要安装OpenSSH客户端，请找到“OpenSSH客户端”，然后单击“安装”。</li>
+<li>若要安装OpenSSH服务器，请找到“OpenSSH服务器”，然后单击“安装”。</li>
+</ul>
+<p>安装完成后，就可以看到列出的OpenSSH组件。</p>
+<h2 id="SSH的初始设置"><a href="#SSH的初始设置" class="headerlink" title="SSH的初始设置"></a>SSH的初始设置</h2><p>若要配置OpenSSH，以管理员身份启动PowerShell，然后运行一下命令来启动SSHD服务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Start-Service sshd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OPTIONAL but recommended:</span></span><br><span class="line">Set-Service -Name sshd -StartupType &#x27;Automatic&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Confirm the Firewall rule is configured. It should be created automatically by setup.</span> </span><br><span class="line">Get-NetFirewallRule -Name *ssh*</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">There should be a firewall rule named <span class="string">&quot;OpenSSH-Server-In-TCP&quot;</span>, <span class="built_in">which</span> should be enabled</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If the firewall does not exist, create one</span></span><br><span class="line">New-NetFirewallRule -Name sshd -DisplayName &#x27;OpenSSH Server (sshd)&#x27; -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22</span><br></pre></td></tr></table></figure>
 
-<p>注：命令在blog文件夹打开终端执行</p>
-<p>执行后打开 <a href="http://localhost:4000/">http://localhost:4000</a> 就可以看到博客界面了</p>
-<p>停止服务：在终端按下<code>CTRL</code>+<code>C</code></p>
-<p>新建博客：在终端输入<code>npx hexo n &quot;博客名字&quot;</code></p>
-<p>上传博客：</p>
-<ul>
-<li><code>npx hexo clean</code></li>
-<li><code>npx hexo g</code></li>
-<li><code>npx hexo s</code></li>
-</ul>
-<p>再打开网页，就可以看到上传的博客了</p>
-<p>上传到<code>github</code>：</p>
-<ul>
-<li><code>npx hexo d</code></li>
-</ul>
-<p>有时候可能会出现错误：<code>error: RPC failed; curl 35 OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443</code></p>
-<p>这个时候可以先执行<code>git config --global http.postBuffer 5242880000</code>，再推送到GitHub</p>
+<p>在Windows服务器中，username可以用激活电脑时使用的用户名，即文件资源管理器中<code>C:\Users\username</code>中的username。而servername则是<code>设置</code>&gt;<code>系统</code>&gt;<code>关于</code>中的“设备名称”。</p>
+<p>然后在管理员运行的powerShell中输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ssh username@servername</span><br></pre></td></tr></table></figure>
+
+<p>第一次运行时会弹出</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">The authenticity of host &#x27;servername (10.00.00.001)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:(<span class="tag">&lt;<span class="name">a</span> <span class="attr">large</span> <span class="attr">string</span>&gt;</span>).</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
+
+<p>回答<code>yes</code>后输入开机密码，密码不会显示出来</p>
+<blockquote>
+<p>?由于我使用的是Mac，暂时没找到连接win的方法，搁置</p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>hexo</category>
+        <category>daily</category>
       </categories>
       <tags>
-        <tag>daily</tag>
-        <tag>experient</tag>
+        <tag>experience</tag>
       </tags>
   </entry>
   <entry>
@@ -1086,42 +1122,6 @@
         <category>daily</category>
         <category>error</category>
       </categories>
-      <tags>
-        <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何打开并贡献文档仓库</title>
-    <url>/2024/11/14/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E5%B9%B6%E8%B4%A1%E7%8C%AE%E6%96%87%E6%A1%A3%E4%BB%93%E5%BA%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>git作为常用的版本管理工具，我们应该学会如何使用git与文档仓库连接</p>
-<blockquote>
-<p>本文以GitHub为例</p>
-</blockquote>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>我们使用git连接github</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
-
-<p>这里的email填入注册GitHub用的邮箱</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-
-<p>然后将<code>~/.ssh/id_rsa.pub</code>的内容复制到GitHub中，通过下面的命令验证是否连接</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>如果显示“welcome……”就表示连接成功</p>
-<h2 id="打开远程仓库"><a href="#打开远程仓库" class="headerlink" title="打开远程仓库"></a>打开远程仓库</h2><p>我们可以直接clone到本地进行编辑</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Document/</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:respo/respo.git</span><br></pre></td></tr></table></figure>
-
-<p>上面的地址根据具体情况填入</p>
-<h2 id="贡献开源代码"><a href="#贡献开源代码" class="headerlink" title="贡献开源代码"></a>贡献开源代码</h2><p>对于自己创建的仓库，可以在本地的项目文件夹运行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;the first commit&quot;</span></span><br><span class="line">git remote add origin git@github.com:xyuechen/practice.git //关联远程仓库</span><br><span class="line">git push -u origin master -f</span><br></pre></td></tr></table></figure>
-
-<p>但是对于别人的项目，我们可以先将项目fork一份副本，再拉取请求</p>
-<p>我目前修改了一份文档，并希望将它推送到GitHub这时候可以</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add origin https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git checkout feat.xutest</span><br><span class="line">git add .</span><br><span class="line">git commit -m<span class="string">&quot;modified keywords&quot;</span></span><br><span class="line">git push origin feat.xutest:feat.xutest</span><br></pre></td></tr></table></figure>
-
-<p>没报错就表示推送成功了，可以在GitHub查看一下</p>
-<h2 id="保持更新"><a href="#保持更新" class="headerlink" title="保持更新"></a>保持更新</h2><p>如果拉取的远程代码改变了，我们希望本地代码同步变化</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add upstream https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git remote -v</span><br><span class="line">git fetch upstream</span><br></pre></td></tr></table></figure>
-]]></content>
       <tags>
         <tag>daily</tag>
       </tags>
