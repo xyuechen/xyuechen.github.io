@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Autodl的使用</title>
+    <url>/2024/06/01/Autodl%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h2><p>首先登录网页<a href="https://www.autodl.com/home">AutoDL算力云 | 弹性、好用、省钱。租GPU就上AutoDL</a></p>
+<blockquote>
+<p>注：记得进行学生认证</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144233859.png" alt="image-20240601144233859"></p>
+<p>按照自己的需求选择，我希望进行深度学习，同时预算不高，因此我选择按量计费以及3090</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144820389.png" alt="image-20240601144820389"></p>
+<p>这里可以选择需要预先安装的框架，我们选择Miniconda，依赖之后再安装</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145116937.png" alt="image-20240601145116937"></p>
+<p>这样就创建成功了，主要登陆的指令在ssh登录里面，我们可以使用<code>Xshell</code>来进行连接，也可以直接点击<code>JupyterLab</code>来进行连接</p>
+<h2 id="连接实例"><a href="#连接实例" class="headerlink" title="连接实例"></a>连接实例</h2><p>我们选择直接点击<code>JupyterLab</code>进行连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145500031.png" alt="image-20240601145500031"></p>
+<p>如图所示，连接成功</p>
+<p>我们也试一下<code>xftp</code>连接</p>
+<p>首先复制连接指令<code>ssh -p 53669 root@connect.yza1.seetacloud.com</code></p>
+<p>这段指令中：</p>
+<ul>
+<li>53669：端口号</li>
+<li>root：用户名</li>
+<li><code>connect.yza1.seetacloud.com</code>：主机host</li>
+<li>密码：在网页上</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601151900110.png" alt="image-20240601151900110"></p>
+<p>按照上图填入xftp中即可</p>
+<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ol>
+<li>输入<code>vim ~/.bashrc</code></li>
+<li>在最后加上<code>source /root/miniconda3/etc/profile.d/conda.sh</code></li>
+<li>输入<code>bash</code>刷新一下实例</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601150102502.png" alt="image-20240601150102502"></p>
+<ol start="4">
+<li>激活环境<code>conda activate base</code></li>
+<li>创建新环境<code>conda create -n happy python=3.10</code>，这里<code>happy</code>是我的环境名称</li>
+<li>进入新环境<code>conda activate happy</code></li>
+</ol>
+<h3 id="下载包"><a href="#下载包" class="headerlink" title="下载包"></a>下载包</h3><p>autodl的官网帮助文档中有关于pytorch安装的说明</p>
+<blockquote>
+<p>注：安装<code>conda install ipykernel</code>，然后输入<code>ipython kernel install --user --name=happy</code>来更新页面</p>
+</blockquote>
+<p>可以将requirement.txt传输到服务器上再下载</p>
+<h3 id="java环境配置"><a href="#java环境配置" class="headerlink" title="java环境配置"></a>java环境配置</h3><p>有些包需要Java环境，因此我们也安装一下java</p>
+<p>首先从官网下载对应的文件<a href="https://www.oracle.com/java/technologies/downloads/#java8">Java Downloads | Oracle</a></p>
+<p>下载好后使用xftp传输到服务器上的<code>/usr/local</code>的位置上，解压</p>
+<p>解压命令为<code>tar -zvxf zulu8.56.0.21-ca-jdk8.0.302-linux_x64.tar.gz </code></p>
+<p>解压后配置环境变量，环境变量在<code>/etc/profile</code>文件中</p>
+<p>输入<code>vim /etc/profile</code>进入编辑模式</p>
+<p>然后输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk1.8.0_321 #自己的安装目录</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib:$CLASSPATH</span><br><span class="line">export JAVA_PATH=$&#123;JAVA_HOME&#125;/bin:$&#123;JRE_HOME&#125;/bin</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_PATH&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存退出，再刷新<code>source /etc/profile</code></p>
+<p>输入<code>java -version</code>来检验是否配置成功</p>
+]]></content>
+      <categories>
+        <category>experient</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AnnData数据结构</title>
     <url>/2025/04/08/AnnData%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<blockquote>
@@ -124,65 +186,30 @@
       </tags>
   </entry>
   <entry>
-    <title>Autodl的使用</title>
-    <url>/2024/06/01/Autodl%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h2 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h2><p>首先登录网页<a href="https://www.autodl.com/home">AutoDL算力云 | 弹性、好用、省钱。租GPU就上AutoDL</a></p>
-<blockquote>
-<p>注：记得进行学生认证</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144233859.png" alt="image-20240601144233859"></p>
-<p>按照自己的需求选择，我希望进行深度学习，同时预算不高，因此我选择按量计费以及3090</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601144820389.png" alt="image-20240601144820389"></p>
-<p>这里可以选择需要预先安装的框架，我们选择Miniconda，依赖之后再安装</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145116937.png" alt="image-20240601145116937"></p>
-<p>这样就创建成功了，主要登陆的指令在ssh登录里面，我们可以使用<code>Xshell</code>来进行连接，也可以直接点击<code>JupyterLab</code>来进行连接</p>
-<h2 id="连接实例"><a href="#连接实例" class="headerlink" title="连接实例"></a>连接实例</h2><p>我们选择直接点击<code>JupyterLab</code>进行连接</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601145500031.png" alt="image-20240601145500031"></p>
-<p>如图所示，连接成功</p>
-<p>我们也试一下<code>xftp</code>连接</p>
-<p>首先复制连接指令<code>ssh -p 53669 root@connect.yza1.seetacloud.com</code></p>
-<p>这段指令中：</p>
-<ul>
-<li>53669：端口号</li>
-<li>root：用户名</li>
-<li><code>connect.yza1.seetacloud.com</code>：主机host</li>
-<li>密码：在网页上</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601151900110.png" alt="image-20240601151900110"></p>
-<p>按照上图填入xftp中即可</p>
-<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ol>
-<li>输入<code>vim ~/.bashrc</code></li>
-<li>在最后加上<code>source /root/miniconda3/etc/profile.d/conda.sh</code></li>
-<li>输入<code>bash</code>刷新一下实例</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240601150102502.png" alt="image-20240601150102502"></p>
-<ol start="4">
-<li>激活环境<code>conda activate base</code></li>
-<li>创建新环境<code>conda create -n happy python=3.10</code>，这里<code>happy</code>是我的环境名称</li>
-<li>进入新环境<code>conda activate happy</code></li>
-</ol>
-<h3 id="下载包"><a href="#下载包" class="headerlink" title="下载包"></a>下载包</h3><p>autodl的官网帮助文档中有关于pytorch安装的说明</p>
-<blockquote>
-<p>注：安装<code>conda install ipykernel</code>，然后输入<code>ipython kernel install --user --name=happy</code>来更新页面</p>
-</blockquote>
-<p>可以将requirement.txt传输到服务器上再下载</p>
-<h3 id="java环境配置"><a href="#java环境配置" class="headerlink" title="java环境配置"></a>java环境配置</h3><p>有些包需要Java环境，因此我们也安装一下java</p>
-<p>首先从官网下载对应的文件<a href="https://www.oracle.com/java/technologies/downloads/#java8">Java Downloads | Oracle</a></p>
-<p>下载好后使用xftp传输到服务器上的<code>/usr/local</code>的位置上，解压</p>
-<p>解压命令为<code>tar -zvxf zulu8.56.0.21-ca-jdk8.0.302-linux_x64.tar.gz </code></p>
-<p>解压后配置环境变量，环境变量在<code>/etc/profile</code>文件中</p>
-<p>输入<code>vim /etc/profile</code>进入编辑模式</p>
-<p>然后输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk1.8.0_321 #自己的安装目录</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib:$CLASSPATH</span><br><span class="line">export JAVA_PATH=$&#123;JAVA_HOME&#125;/bin:$&#123;JRE_HOME&#125;/bin</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_PATH&#125;</span><br></pre></td></tr></table></figure>
+    <title>R多环境管理</title>
+    <url>/2024/07/04/R%E5%A4%9A%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>一直想找到一个像anaconda那样管理python环境来管理R环境的工具，今天正好看到一个，尝试一下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">winget install posit.rig</span><br></pre></td></tr></table></figure>
 
-<p>保存退出，再刷新<code>source /etc/profile</code></p>
-<p>输入<code>java -version</code>来检验是否配置成功</p>
+<p>在Windows终端中运行上述命令下载，重启终端即可运行</p>
+<p>其他操作系统的命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">macOS</span></span><br><span class="line">brew tap r-lib/rig</span><br><span class="line">brew install --cask rig</span><br><span class="line">brew upgrade --cask rig # 更新命令</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ubuntu和debian</span></span></span><br><span class="line">`which sudo` curl -L https://rig.r-pkg.org/deb/rig.gpg -o /etc/apt/trusted.gpg.d/rig.gpg</span><br><span class="line">`which sudo` sh -c &#x27;echo &quot;deb http://rig.r-pkg.org/deb rig main&quot; &gt; /etc/apt/sources.list.d/rig.list&#x27;</span><br><span class="line">`which sudo` apt update</span><br><span class="line">`which sudo` apt install r-rig</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># rhel、fedora、centOS、Rocky Linux、Almalinux等</span></span></span><br><span class="line">`which sudo` yum install -y https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># opensuse和SLES</span></span></span><br><span class="line">`which sudo` zypper install -y --allow-unsigned-rpm https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 任意Linux发行版</span></span></span><br><span class="line">curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux-$(arch)-latest.tar.gz |</span><br><span class="line">  `which sudo` tar xz -C /usr/local</span><br></pre></td></tr></table></figure>
+
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>列出当前安装的R：<code>rig list</code>，类似于<code>conda env --list</code></li>
+<li>查看所有命令和示例：<code>rig</code>，类似于<code>conda</code></li>
+<li>查看帮助文档：<code>rig --help</code>，类似于<code>conda --help</code></li>
+</ul>
+<p>命令列表</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rig add        -- install a new R version [<span class="built_in">alias</span>: install]</span><br><span class="line">rig available  -- List R versions available to install.</span><br><span class="line">rig default    -- <span class="built_in">print</span> or <span class="built_in">set</span> default R version [<span class="built_in">alias</span>: switch]</span><br><span class="line">rig library    -- manage package libraries [<span class="built_in">alias</span>: lib] (experimental)</span><br><span class="line">rig list       -- list installed R versions [<span class="built_in">alias</span>: <span class="built_in">ls</span>]</span><br><span class="line">rig resolve    -- resolve a symbolic R version</span><br><span class="line">rig <span class="built_in">rm</span>         -- remove R versions [aliases: del, delete, remove]</span><br><span class="line">rig rstudio    -- start RStudio with the specified R version</span><br><span class="line">rig run        -- Run R, an R script or an R project</span><br><span class="line">rig sysreqs    -- manage R-related system libraries and tools (experimental) (macOS)</span><br><span class="line">rig system     -- manage current installations</span><br><span class="line"><span class="comment"># windows子命令</span></span><br><span class="line">rig system add-pak                 -- install or update pak <span class="keyword">for</span> an R version</span><br><span class="line">rig system clean-registry          -- clean stale R related entries <span class="keyword">in</span> the registry</span><br><span class="line">rig system make-links              -- create R-* quick links</span><br><span class="line">rig system rtools                  -- manage Rtools installations</span><br><span class="line">rig system setup-user-lib          -- <span class="built_in">set</span> up automatic user package libraries [<span class="built_in">alias</span>: create-lib]</span><br><span class="line">rig system update-rtools40         -- update Rtools40 MSYS2 packages</span><br></pre></td></tr></table></figure>
+
+<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>我们可以下载<code>positran</code>来管理切换环境，不过目前还在测试阶段</p>
 ]]></content>
       <categories>
-        <category>experient</category>
+        <category>daily</category>
       </categories>
       <tags>
-        <tag>dl</tag>
+        <tag>R</tag>
       </tags>
   </entry>
   <entry>
@@ -209,6 +236,35 @@
       </tags>
   </entry>
   <entry>
+    <title>arch-install的使用</title>
+    <url>/2024/07/04/arch-install%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="arch-install的使用"><a href="#arch-install的使用" class="headerlink" title="arch-install的使用"></a>arch-install的使用</h2><p>由于arch的安装较为繁琐，因此出现了一种arch-install的工具，今天在虚拟机上试一试</p>
+<p>首先创建一个虚拟机并且连接网络，更换镜像源：编辑文件<code>/etc/pacman.d/mirrorlist</code></p>
+<p>在最上面加上<code>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</code>  </p>
+<p>输入<code>archinstall</code>进入安装程序</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704094012719.png" alt="image-20240704094012719"></p>
+<p>其中，语言中有简体中文，但是直接设置会导致乱码，我们还需要下载字体，因此我们直接使用英文安装</p>
+<p>mirror中我们选择第一个，找到China，空格选中，回车确认</p>
+<p>locale默认即可，不用修改</p>
+<p>disk configuration 我们可以直接选择第一个自动分区，进入后再选择ext4分区</p>
+<p>bootloader可以选默认或grub，由于我希望使用这个虚拟机作用移动系统的试验机，因此我选择grub</p>
+<p>hostname设置机器名称</p>
+<p>rootpasswd设置管理员密码</p>
+<p>usercount设置用户，我们可以在这里新添用户并且赋予管理员权限</p>
+<p>profile可以选择想要的桌面环境，由于硬盘中我选择的是gnome，因此这里也选择gnome，这里还可以选择显卡驱动，我试试nvidia显卡驱动能不能正常安装</p>
+<p>optional repositories中选择第一个</p>
+<p>然后下载安装，等待片刻</p>
+<p>重启后即可进入系统（nvidia还是安装失败了，重新设置了一遍才启动）</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>arch之hyprland</title>
     <url>/2024/07/04/arch%E4%B9%8Bhyprland/</url>
     <content><![CDATA[<hr>
@@ -221,6 +277,86 @@
 
 <p>编辑配置文件</p>
 <p>找到$mainMod这一行，后面都是快捷键配置，其中<code>$</code>的字符表示应该被替换的</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>archlinux记录</title>
+    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
+<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
+<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
+<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
+<p>美化使用了类苹果的主题</p>
+<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
+<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v2ray</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
+<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
+<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
+<hr>
+<p>2024年7月4号</p>
+<p>时隔一年，再次捡起这个帖子，在上个月，参考<a href="https://www.bilibili.com/video/BV1kN411m7w4/?share_source=copy_web&vd_source=262fce51bcecea4097592dd1df9c9958">2023年在移动硬盘上安装 Arch Linux 及网络&#x2F;桌面&#x2F;输入法&#x2F;字体&#x2F;声音&#x2F;蓝牙驱动的配置</a> 的视频，成功将arch安装到我的移动硬盘上，进行了一系列安装美化后，成功挂在了nvidia显卡驱动安装上，现在不仅无法开机，还丢失了在arch上写的笔记（心痛）</p>
+<p>于是在blog上记录一下，重新安装的过程，防止再次丢失</p>
+<p>首先，设置一个虚拟机，要点：</p>
+<ul>
+<li>USB控制器中选择相应的兼容</li>
+<li>选项-高级中应该选择uefi引导，关闭Hyper-V通道缓解</li>
+</ul>
+<p>虚拟机开机后将移动硬盘连接到虚拟机上，进入安装程序</p>
+<h3 id="查看当前硬盘情况"><a href="#查看当前硬盘情况" class="headerlink" title="查看当前硬盘情况"></a>查看当前硬盘情况</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704021507623.png" alt="image-20240704021507623"></p>
+<p>如图所示，其中<code>/dev/sdb</code>为我们的移动硬盘，其中有我之前设置的Linux系统，我们格式化，重新操作</p>
+<h3 id="联网并且验证时钟同步"><a href="#联网并且验证时钟同步" class="headerlink" title="联网并且验证时钟同步"></a>联网并且验证时钟同步</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ip link</span><br><span class="line">ping www.baidu.com</span><br><span class="line">ip link</span><br><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置磁盘空间"><a href="#设置磁盘空间" class="headerlink" title="设置磁盘空间"></a>设置磁盘空间</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sdb</span><br><span class="line">g # 新建分区表</span><br><span class="line">n # 新分区</span><br></pre></td></tr></table></figure>
+
+<p>这里扇区和起始点可以默认，大小需要手动分配，我们分配600M，即输入<code>+600M</code></p>
+<p>此后重复操作，第二个区域我们分配16G，第三个区域我们分配120G，然后输入t，设置分区类型，第一个区域的类型编号为1，第二个为19，第三个为23，然后输入p打印看一下，确认无误后输入w写入</p>
+<h3 id="分区设置"><a href="#分区设置" class="headerlink" title="分区设置"></a>分区设置</h3><p>首先设置文件系统类型</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb3 # 创建文件系统</span><br><span class="line">mkswap /dev/sdb2</span><br><span class="line">mkfs.fat -F 32 /dev/sdb1</span><br></pre></td></tr></table></figure>
+
+<p>然后挂载</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount /dev/sdb3 /mnt</span><br><span class="line">mount --mkdir /dev/sdb1 /mnt/boot</span><br><span class="line">swapon /dev/sdb2</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="设置镜像"><a href="#设置镜像" class="headerlink" title="设置镜像"></a>设置镜像</h4><p>为了安装更快，我们可以配置一个镜像源（以清华镜像源为例）</p>
+<p>编辑文件<code>/etc/pacman.d/mirrorlist</code>，在顶端添加</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/<span class="variable">$repo</span>/os/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装必备的文件"><a href="#安装必备的文件" class="headerlink" title="安装必备的文件"></a>安装必备的文件</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacstrap -K /mnt base linux linux-firmware sof-firmware netwoekmanager vi vim man-db texinfo gnome</span><br></pre></td></tr></table></figure>
+
+<p>等待片刻即可</p>
+<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment"># 配置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="comment"># 同步时间</span></span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment"># 语言</span></span><br><span class="line">vim /etc/locale.gen <span class="comment"># 取消en_US:utf-8的注释，保存退出</span></span><br><span class="line">locale-gen <span class="comment"># 生成语言</span></span><br><span class="line">vim /etc/locale.conf <span class="comment"># 写入：LANG=en_US.UTF-8</span></span><br><span class="line">vim /etc/hostname <span class="comment"># 写入系统名字，随意取</span></span><br><span class="line">pacman -S base-devel</span><br><span class="line">useradd -m username <span class="comment"># 添加一个普通用户</span></span><br><span class="line">passwd username <span class="comment"># 设置这个用户的密码</span></span><br><span class="line">visudo <span class="comment"># 为这个用户添加管理权限，在这个文件中找到ALL，在下面添加一行 username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
+
+<p>安装引导程序</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman -Syu grub efibootmgr amd-ucode intel-ucode</span><br></pre></td></tr></table></figure>
+
+<p>在这里会出现警告信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704033440304.png" alt="image-20240704033440304"></p>
+<p>解决方法：在<code>/etc/pacman.conf</code>中添加源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<p>然后输入</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman-key --recv-keys 7931B6D628C8D3BA</span><br><span class="line">pacman-key --finger 7931B6D628C8D3BA</span><br><span class="line">pacman-key --lsign-key 7931B6D628C8D3BA</span><br><span class="line">yay -S upd72020x-fw</span><br></pre></td></tr></table></figure>
+
+<p>如果由于网速无法下载，那么可以</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/denisandroid/uPD72020x-Firmware ~/Desktop/firmware</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/UPDATE.mem ~/.cache/yay/upd72020x-fw</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/License.rtf ~/.cache/yay/upd72020x-fw</span><br></pre></td></tr></table></figure>
+
+<p>继续我们的安装，接下来是开机引导程序</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB --removable</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p>开启开机服务</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> gdm</span><br><span class="line">systemctl enabel NetworkManager</span><br></pre></td></tr></table></figure>
+
+<p>安装完成，可以通过BIOS进入系统了</p>
 ]]></content>
       <categories>
         <category>linux</category>
@@ -325,86 +461,6 @@
       </tags>
   </entry>
   <entry>
-    <title>archlinux记录</title>
-    <url>/2023/07/29/archlinux%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>2023 年 7 月 26 日<br>买的移动硬盘到了，于是决定搞个 archlinux 系统玩玩</p>
-<p>遇到第一个错误<br>虚拟机进入不了安装界面<br>原因：内存分配太少了<br>解决：多加点内存</p>
-<p>安装过程参考 b 站的文章 <a href="https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0">https://www.bilibili.com/read/cv20753052?spm_id_from=333.999.0.0</a><br>过程很详尽，可以直接对着操作</p>
-<p>我使用的是 kde 的桌面<br>于是遇到第二个错误：中文输入法<br>fcitx 5 虽然很多人推荐，但是不知道什么毛病死活用不了<br>最后还是下载了 ibus</p>
-<p>美化使用了类苹果的主题</p>
-<p>后来尝试下载 ohmyzsh<br>遇到第三个问题：浏览器的文字不能复制到 vim 中<br>(字数那么多全部打上去要我死)<br>解决：<code>sudo pacman -S gvim</code><br>这样就可以复制了(必须使用 gvim)</p>
-<p>接下来是最麻烦的一个问题，无法从 github 下载文件<br>还在解决中<br>clash 失败了<br>最后使用的还是 v2ray</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S v2raya-bin</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
-<p>这样就成功安装了，再使用 KDE 菜单打开浏览器地址，导入代理<br>行吧，还是不能科学上网，ohmyzsh 也还是下载不了</p>
-<p>2023 年 7 月 28 日<br>今天继续美化<br>oh-my-zsh 下载成功<br>具体操作：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
-<p>第一步并没有 git 成功，我是直接在 github 把这个项目打包下载，再在 <code>/home/xu</code> 下复制并重命名为 <code>.oh-my-zsh</code><br>第三步其实也没有成功，我是直接在图形界面修改的<br>接着编辑 <code>/.zshrc</code> 配置文件修改主题<br>我选择的是 <code>ys</code>，也可以设置为 <code>random</code>，这样每次都是不一样的主题</p>
-<hr>
-<p>2024年7月4号</p>
-<p>时隔一年，再次捡起这个帖子，在上个月，参考<a href="https://www.bilibili.com/video/BV1kN411m7w4/?share_source=copy_web&vd_source=262fce51bcecea4097592dd1df9c9958">2023年在移动硬盘上安装 Arch Linux 及网络&#x2F;桌面&#x2F;输入法&#x2F;字体&#x2F;声音&#x2F;蓝牙驱动的配置</a> 的视频，成功将arch安装到我的移动硬盘上，进行了一系列安装美化后，成功挂在了nvidia显卡驱动安装上，现在不仅无法开机，还丢失了在arch上写的笔记（心痛）</p>
-<p>于是在blog上记录一下，重新安装的过程，防止再次丢失</p>
-<p>首先，设置一个虚拟机，要点：</p>
-<ul>
-<li>USB控制器中选择相应的兼容</li>
-<li>选项-高级中应该选择uefi引导，关闭Hyper-V通道缓解</li>
-</ul>
-<p>虚拟机开机后将移动硬盘连接到虚拟机上，进入安装程序</p>
-<h3 id="查看当前硬盘情况"><a href="#查看当前硬盘情况" class="headerlink" title="查看当前硬盘情况"></a>查看当前硬盘情况</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704021507623.png" alt="image-20240704021507623"></p>
-<p>如图所示，其中<code>/dev/sdb</code>为我们的移动硬盘，其中有我之前设置的Linux系统，我们格式化，重新操作</p>
-<h3 id="联网并且验证时钟同步"><a href="#联网并且验证时钟同步" class="headerlink" title="联网并且验证时钟同步"></a>联网并且验证时钟同步</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ip link</span><br><span class="line">ping www.baidu.com</span><br><span class="line">ip link</span><br><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
-
-<h3 id="设置磁盘空间"><a href="#设置磁盘空间" class="headerlink" title="设置磁盘空间"></a>设置磁盘空间</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sdb</span><br><span class="line">g # 新建分区表</span><br><span class="line">n # 新分区</span><br></pre></td></tr></table></figure>
-
-<p>这里扇区和起始点可以默认，大小需要手动分配，我们分配600M，即输入<code>+600M</code></p>
-<p>此后重复操作，第二个区域我们分配16G，第三个区域我们分配120G，然后输入t，设置分区类型，第一个区域的类型编号为1，第二个为19，第三个为23，然后输入p打印看一下，确认无误后输入w写入</p>
-<h3 id="分区设置"><a href="#分区设置" class="headerlink" title="分区设置"></a>分区设置</h3><p>首先设置文件系统类型</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb3 # 创建文件系统</span><br><span class="line">mkswap /dev/sdb2</span><br><span class="line">mkfs.fat -F 32 /dev/sdb1</span><br></pre></td></tr></table></figure>
-
-<p>然后挂载</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount /dev/sdb3 /mnt</span><br><span class="line">mount --mkdir /dev/sdb1 /mnt/boot</span><br><span class="line">swapon /dev/sdb2</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="设置镜像"><a href="#设置镜像" class="headerlink" title="设置镜像"></a>设置镜像</h4><p>为了安装更快，我们可以配置一个镜像源（以清华镜像源为例）</p>
-<p>编辑文件<code>/etc/pacman.d/mirrorlist</code>，在顶端添加</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/<span class="variable">$repo</span>/os/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="安装必备的文件"><a href="#安装必备的文件" class="headerlink" title="安装必备的文件"></a>安装必备的文件</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacstrap -K /mnt base linux linux-firmware sof-firmware netwoekmanager vi vim man-db texinfo gnome</span><br></pre></td></tr></table></figure>
-
-<p>等待片刻即可</p>
-<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line">arch-chroot /mnt</span><br><span class="line"><span class="comment"># 配置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="comment"># 同步时间</span></span><br><span class="line">hwclock --systohc</span><br><span class="line"><span class="comment"># 语言</span></span><br><span class="line">vim /etc/locale.gen <span class="comment"># 取消en_US:utf-8的注释，保存退出</span></span><br><span class="line">locale-gen <span class="comment"># 生成语言</span></span><br><span class="line">vim /etc/locale.conf <span class="comment"># 写入：LANG=en_US.UTF-8</span></span><br><span class="line">vim /etc/hostname <span class="comment"># 写入系统名字，随意取</span></span><br><span class="line">pacman -S base-devel</span><br><span class="line">useradd -m username <span class="comment"># 添加一个普通用户</span></span><br><span class="line">passwd username <span class="comment"># 设置这个用户的密码</span></span><br><span class="line">visudo <span class="comment"># 为这个用户添加管理权限，在这个文件中找到ALL，在下面添加一行 username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
-
-<p>安装引导程序</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman -Syu grub efibootmgr amd-ucode intel-ucode</span><br></pre></td></tr></table></figure>
-
-<p>在这里会出现警告信息</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704033440304.png" alt="image-20240704033440304"></p>
-<p>解决方法：在<code>/etc/pacman.conf</code>中添加源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
-
-<p>然后输入</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pacman-key --recv-keys 7931B6D628C8D3BA</span><br><span class="line">pacman-key --finger 7931B6D628C8D3BA</span><br><span class="line">pacman-key --lsign-key 7931B6D628C8D3BA</span><br><span class="line">yay -S upd72020x-fw</span><br></pre></td></tr></table></figure>
-
-<p>如果由于网速无法下载，那么可以</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/denisandroid/uPD72020x-Firmware ~/Desktop/firmware</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/UPDATE.mem ~/.cache/yay/upd72020x-fw</span><br><span class="line"><span class="built_in">cp</span> ~/Desktop/firmware/License.rtf ~/.cache/yay/upd72020x-fw</span><br></pre></td></tr></table></figure>
-
-<p>继续我们的安装，接下来是开机引导程序</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB --removable</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-
-<p>开启开机服务</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> gdm</span><br><span class="line">systemctl enabel NetworkManager</span><br></pre></td></tr></table></figure>
-
-<p>安装完成，可以通过BIOS进入系统了</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>archlinux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>conda_set</title>
     <url>/2024/04/19/conda-set/</url>
     <content><![CDATA[<h2 id="conda修改环境路径"><a href="#conda修改环境路径" class="headerlink" title="conda修改环境路径"></a>conda修改环境路径</h2><p>conda 默认的环境路径在<code>C:\Users\用户名\conda</code>中，C盘位置不够，因此希望修改到其余地方</p>
@@ -447,20 +503,6 @@
       </tags>
   </entry>
   <entry>
-    <title>conda环境迁移</title>
-    <url>/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在笔记本上配置好环境后发现同样的步骤在另一个电脑上无论如何都无法成功，于是想有没有一个办法无痛转移环境</p>
-<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>首先将已经配置好并确定可以使用的环境打包压缩，然后发送&#x2F;转移到另一个电脑上</p>
-<p>解压后进行如下操作</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda config --append envs_dirs D:\ProgramAPP\anaconda\envs\<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>daily</tag>
-        <tag>experient</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo-git报错</title>
     <url>/2024/04/20/hexo-git%E6%8A%A5%E9%94%99/</url>
     <content><![CDATA[<h2 id="无法连接"><a href="#无法连接" class="headerlink" title="无法连接"></a>无法连接</h2><p>半年没用hexo，今天连接时发现需要输入用户名和密码，输入后报错，无法连接</p>
@@ -491,6 +533,59 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>conda环境迁移</title>
+    <url>/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在笔记本上配置好环境后发现同样的步骤在另一个电脑上无论如何都无法成功，于是想有没有一个办法无痛转移环境</p>
+<h2 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h2><p>首先将已经配置好并确定可以使用的环境打包压缩，然后发送&#x2F;转移到另一个电脑上</p>
+<p>解压后进行如下操作</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda config --append envs_dirs D:\ProgramAPP\anaconda\envs\<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>daily</tag>
+        <tag>experient</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo_迁移</title>
+    <url>/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<blockquote>
+<p>最近换了电脑，因此想将原始文件夹转移到新电脑上</p>
+</blockquote>
+<h2 id="直接复制"><a href="#直接复制" class="headerlink" title="直接复制"></a>直接复制</h2><p>直接将原电脑上的文件夹打包，利用网盘&#x2F;移动硬盘转移，在新电脑配置好环境后复制过来，这里由于我的博客数量很少，所以可以直接复制，那么当我们的文件夹很大时，最好还是利用GitHub进行迁移</p>
+<h2 id="网络迁移"><a href="#网络迁移" class="headerlink" title="网络迁移"></a>网络迁移</h2><p>首先，我们应该配置新电脑的环境，这一点在之前的hexo配置中介绍过，不再赘述</p>
+<p>然后新建一个文件夹，并初始化为blog文件夹，接着clone你的blog仓库，将<code>source</code>,<code>theme</code>等资源文件复制过来</p>
+<blockquote>
+<p>但是这种操作只能转移内容，而不能转移配置</p>
+</blockquote>
+<p>另一种方法</p>
+<p><strong>原电脑操作</strong>：</p>
+<ul>
+<li>给你的博客仓库新建一个分支，并设为默认分支，例如<code>hexo</code></li>
+<li>找到一个目录，使用<code>git clone</code>将仓库克隆到本地，删除除了<code>.git</code>外的所有内容</li>
+<li>命令行将本地清空的仓库推送到<code>hexo</code>分支</li>
+<li>将清空的仓库中的.git文件夹复制到博客目录下</li>
+<li>将博客目录下的themes中每个主题文件夹下的.git和.gitgnore删掉</li>
+<li>将上述博客目录推送到hexo分支</li>
+</ul>
+<p><strong>新电脑</strong>：</p>
+<ul>
+<li>创建好空文件夹后，<code>git clone</code></li>
+<li>进入目录后，<code>npm install</code>,<code>hexo g</code>,<code>hexo s</code>，如无意外就可以看到原始内容了</li>
+</ul>
+<blockquote>
+<p>🧐</p>
+<p>好复杂啊。。我还是直接复制吧</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
       </tags>
   </entry>
   <entry>
@@ -547,33 +642,6 @@
       </tags>
   </entry>
   <entry>
-    <title>R多环境管理</title>
-    <url>/2024/07/04/R%E5%A4%9A%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/</url>
-    <content><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>一直想找到一个像anaconda那样管理python环境来管理R环境的工具，今天正好看到一个，尝试一下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">winget install posit.rig</span><br></pre></td></tr></table></figure>
-
-<p>在Windows终端中运行上述命令下载，重启终端即可运行</p>
-<p>其他操作系统的命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">macOS</span></span><br><span class="line">brew tap r-lib/rig</span><br><span class="line">brew install --cask rig</span><br><span class="line">brew upgrade --cask rig # 更新命令</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ubuntu和debian</span></span></span><br><span class="line">`which sudo` curl -L https://rig.r-pkg.org/deb/rig.gpg -o /etc/apt/trusted.gpg.d/rig.gpg</span><br><span class="line">`which sudo` sh -c &#x27;echo &quot;deb http://rig.r-pkg.org/deb rig main&quot; &gt; /etc/apt/sources.list.d/rig.list&#x27;</span><br><span class="line">`which sudo` apt update</span><br><span class="line">`which sudo` apt install r-rig</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># rhel、fedora、centOS、Rocky Linux、Almalinux等</span></span></span><br><span class="line">`which sudo` yum install -y https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># opensuse和SLES</span></span></span><br><span class="line">`which sudo` zypper install -y --allow-unsigned-rpm https://github.com/r-lib/rig/releases/download/latest/r-rig-latest-1.$(arch).rpm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 任意Linux发行版</span></span></span><br><span class="line">curl -Ls https://github.com/r-lib/rig/releases/download/latest/rig-linux-$(arch)-latest.tar.gz |</span><br><span class="line">  `which sudo` tar xz -C /usr/local</span><br></pre></td></tr></table></figure>
-
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li>列出当前安装的R：<code>rig list</code>，类似于<code>conda env --list</code></li>
-<li>查看所有命令和示例：<code>rig</code>，类似于<code>conda</code></li>
-<li>查看帮助文档：<code>rig --help</code>，类似于<code>conda --help</code></li>
-</ul>
-<p>命令列表</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rig add        -- install a new R version [<span class="built_in">alias</span>: install]</span><br><span class="line">rig available  -- List R versions available to install.</span><br><span class="line">rig default    -- <span class="built_in">print</span> or <span class="built_in">set</span> default R version [<span class="built_in">alias</span>: switch]</span><br><span class="line">rig library    -- manage package libraries [<span class="built_in">alias</span>: lib] (experimental)</span><br><span class="line">rig list       -- list installed R versions [<span class="built_in">alias</span>: <span class="built_in">ls</span>]</span><br><span class="line">rig resolve    -- resolve a symbolic R version</span><br><span class="line">rig <span class="built_in">rm</span>         -- remove R versions [aliases: del, delete, remove]</span><br><span class="line">rig rstudio    -- start RStudio with the specified R version</span><br><span class="line">rig run        -- Run R, an R script or an R project</span><br><span class="line">rig sysreqs    -- manage R-related system libraries and tools (experimental) (macOS)</span><br><span class="line">rig system     -- manage current installations</span><br><span class="line"><span class="comment"># windows子命令</span></span><br><span class="line">rig system add-pak                 -- install or update pak <span class="keyword">for</span> an R version</span><br><span class="line">rig system clean-registry          -- clean stale R related entries <span class="keyword">in</span> the registry</span><br><span class="line">rig system make-links              -- create R-* quick links</span><br><span class="line">rig system rtools                  -- manage Rtools installations</span><br><span class="line">rig system setup-user-lib          -- <span class="built_in">set</span> up automatic user package libraries [<span class="built_in">alias</span>: create-lib]</span><br><span class="line">rig system update-rtools40         -- update Rtools40 MSYS2 packages</span><br></pre></td></tr></table></figure>
-
-<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>我们可以下载<code>positran</code>来管理切换环境，不过目前还在测试阶段</p>
-]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
-      <tags>
-        <tag>R</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>openslide安装</title>
     <url>/2024/05/16/openslide%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h2 id="openslide-下载"><a href="#openslide-下载" class="headerlink" title="openslide 下载"></a>openslide 下载</h2><p>在(<a href="https://openslide.org/download/">Downloading OpenSlide</a>)下载对应操作系统的二进制包，解压</p>
@@ -603,36 +671,58 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo_迁移</title>
-    <url>/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<blockquote>
-<p>最近换了电脑，因此想将原始文件夹转移到新电脑上</p>
-</blockquote>
-<h2 id="直接复制"><a href="#直接复制" class="headerlink" title="直接复制"></a>直接复制</h2><p>直接将原电脑上的文件夹打包，利用网盘&#x2F;移动硬盘转移，在新电脑配置好环境后复制过来，这里由于我的博客数量很少，所以可以直接复制，那么当我们的文件夹很大时，最好还是利用GitHub进行迁移</p>
-<h2 id="网络迁移"><a href="#网络迁移" class="headerlink" title="网络迁移"></a>网络迁移</h2><p>首先，我们应该配置新电脑的环境，这一点在之前的hexo配置中介绍过，不再赘述</p>
-<p>然后新建一个文件夹，并初始化为blog文件夹，接着clone你的blog仓库，将<code>source</code>,<code>theme</code>等资源文件复制过来</p>
+    <title>linux to go 移动硬盘制作</title>
+    <url>/2024/06/17/linux-to-go-%E7%A7%BB%E5%8A%A8%E7%A1%AC%E7%9B%98%E5%88%B6%E4%BD%9C/</url>
+    <content><![CDATA[<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年曾经购置过一个移动硬盘，希望改装成<code>ArchLinux</code>的启动盘，因为种种原因未能成功，移动硬盘就变成了一个数据盘，今年由于经常使用服务器跑代码，希望重新捡起来Linux系统的操作（wsl也下载了，但是感觉不如Ubuntu-desktop方便），因此又萌生了Linux启动盘的想法，特此记录过程</p>
+<p>操作过程教程来源于<a href="https://blog.csdn.net/m0_64545111/article/details/136131918">【万字详细教程】Linux to go——装在移动硬盘里的Linux系统（Ubuntu22.04）制作流程；一口气解决系统安装&#x2F;引导文件迁移&#x2F;显卡驱动安装等问题-CSDN博客</a></p>
+<p>那么就开始吧</p>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><p>首先是准备好移动硬盘，Linux系统镜像（ubuntu下载地址<a href="https://ubuntu.com/download/desktop">Download Ubuntu Desktop | Ubuntu</a>），分盘工具（<a href="https://www.diskgenius.cn/download.php">DiskGenius – 正式版下载|免费下载</a>）</p>
+<h3 id="分盘"><a href="#分盘" class="headerlink" title="分盘"></a>分盘</h3><p>由于我的硬盘中已经有数据了，所以我先备份数据，再删除分区</p>
+<p>右击磁盘然后删除当前分区</p>
+<p>然后转化分区为<code>GUID</code>格式</p>
 <blockquote>
-<p>但是这种操作只能转移内容，而不能转移配置</p>
+<p>怎么看自己的硬盘是不是GUID格式？可以单击硬盘后点击上方的磁盘选项，其中转化为GUID格式是灰色的则表示这个硬盘已经是GUID格式了</p>
 </blockquote>
-<p>另一种方法</p>
-<p><strong>原电脑操作</strong>：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617221149413.png" alt="image-20240617221149413"></p>
+<p>然后建立<code>esp</code>分区</p>
+<p>接下来同样的建立其他分区，注意格式和大小，最后的分区情况如图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617223815292.png" alt="image-20240617223815292"></p>
+<p>然后将备份的数据还原到F盘中</p>
+<h3 id="准备启动U盘"><a href="#准备启动U盘" class="headerlink" title="准备启动U盘"></a>准备启动U盘</h3><p>下载软件<code>UltraISO</code>，地址<a href="https://ultraiso.net/xiazai.html">最新UltraISO官方免费下载 - UltraISO软碟通中文官方网站</a></p>
+<p>将一个空白的U盘插入电脑</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617225021101.png" alt="image-20240617225021101"></p>
+<p>在这里打开下载的镜像文件，然后点击启动-&gt;写入硬盘映像</p>
+<p>依次点击 <code>便捷启动 -&gt; 写入新的驱动器引导扇区 -&gt; Syslinux -&gt; 写入</code></p>
+<p>读条结束后即可</p>
+<h3 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h3><p>这一步由于在BIOS中进行，没有截图显示，仅记录一些要点以及我遇到的问题</p>
 <ul>
-<li>给你的博客仓库新建一个分支，并设为默认分支，例如<code>hexo</code></li>
-<li>找到一个目录，使用<code>git clone</code>将仓库克隆到本地，删除除了<code>.git</code>外的所有内容</li>
-<li>命令行将本地清空的仓库推送到<code>hexo</code>分支</li>
-<li>将清空的仓库中的.git文件夹复制到博客目录下</li>
-<li>将博客目录下的themes中每个主题文件夹下的.git和.gitgnore删掉</li>
-<li>将上述博客目录推送到hexo分支</li>
+<li>我的电脑为2019款联想拯救者y7000，在重启&#x2F;开机时按F2并不能进入BIOS界面<ul>
+<li>我们可以在Windows中依次点击 设置 -&gt; windows更新 -&gt; 高级选项 -&gt; 恢复 -&gt; 高级启动 -&gt; 立即重启，从而进入BIOS界面</li>
 </ul>
-<p><strong>新电脑</strong>：</p>
-<ul>
-<li>创建好空文件夹后，<code>git clone</code></li>
-<li>进入目录后，<code>npm install</code>,<code>hexo g</code>,<code>hexo s</code>，如无意外就可以看到原始内容了</li>
+</li>
+<li>U盘插入但是设备中没有<code>linpus lite</code>，这可能是因为U盘的问题，我换了个U盘就成功了</li>
+<li>安装过程中记得联网，以及一定要检查设置盘时除去之前安排给Linux的四个区域，其余区域都处于<strong>不使用此分区</strong></li>
+<li>安装后会重启，记得拔下U盘后按enter</li>
+<li>这里教程中说应该选择<code>enrool mdk</code>，但是我在这一步的时候无法选择，只能强制关机，再重启后已经没有这个选项了，只有<code>reset mdk</code>，我拿不准这二者是不是一样的，于是选择了<code>continue boot</code>，也启动成功了，不确定这里后续会不会有问题</li>
+<li>重启时可能会进入<code>grub</code>界面，如果想回到Windows系统可以这样操作</li>
 </ul>
-<blockquote>
-<p>🧐</p>
-<p>好复杂啊。。我还是直接复制吧</p>
-</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls</span><br><span class="line">ls (hd0,1)/efi/microsoft/boot/bootmgfw.efi</span><br><span class="line">root=(hd1,1)</span><br><span class="line">boot</span><br></pre></td></tr></table></figure>
+
+<p>这里第二行要遍历所有分区找到这个文件再进行下一步</p>
+<p>到这里差不多安装完成，后续是一些设置</p>
+<h3 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h3><p>将系统启动引导转移到移动硬盘上以避免每次都要选择系统</p>
+<p>将硬盘和U盘都插上电脑，开机进入BIOS选择<code>试用unbuntu</code>，连接网络，然后在终端输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-add-repository ppa:yannubuntu/boot-repair</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install boot-repair</span><br><span class="line">boot-repair</span><br></pre></td></tr></table></figure>
+
+<p>选择“推荐修复”，等待程序运行完成即可</p>
+<p>返回Windows系统，可以看到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240618011033111.png" alt="image-20240618011033111"></p>
+<p><code>esp</code>分区中出现了<code>efi</code>，那么我们就可以删除主硬盘中的ubuntu了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240618011231247.png" alt="image-20240618011231247"></p>
+<p>至此便初步大功告成了，之后可以根据需要对Ubuntu安装软件和美化</p>
+<p>后续：在拔下硬盘启动电脑时发生一直在logo界面闪退的现象，进入BIOS发现启动引导中仍然存在<code>linpus lite</code>，尽管我没有插U盘</p>
+<p>解决：使用<code>bootice</code>软件将efi选项中多余的删除，即可正常开机了。</p>
 ]]></content>
       <categories>
         <category>daily</category>
@@ -777,6 +867,29 @@
       </tags>
   </entry>
   <entry>
+    <title>tensorflow下载过程</title>
+    <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>之前的笔记中我没有意识到python，tensorflow，cuda，cudnn的对应关系，这次在服务器上安装就掉坑里了，因此在安装前首先要注意需要下载的版本，以及自己的cuda和cudnn版本</p>
+<p>我使用的是<code>python = 3.9</code>，<code>tensorflow==2.10.0</code>，<code>cuda==11.3.1</code>，<code>cudnn==8.2.1</code></p>
+<p>具体步骤为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create -n env_name python=3.9</span><br><span class="line">conda activate env_name</span><br><span class="line">conda install cudatoolkit==11.3.1</span><br><span class="line">conda install cudnn==8.2.1</span><br><span class="line">pip install tensorflow==2.10.0 -i source</span><br></pre></td></tr></table></figure>
+
+<p>这样就初步安装成功了</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>在之前的验证中我只验证了<code>tensorflow</code>是否安装成功，而没有检测能否使用<code>GPU</code>，因此将验证命令更新如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br><span class="line"><span class="built_in">print</span>(tf.test.is_gpu_available())</span><br><span class="line"><span class="built_in">print</span>(tf.test.gpu_device_name())</span><br><span class="line"><span class="built_in">print</span>(tf.config.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num GPUs Available: &quot;</span>,<span class="built_in">len</span>(tf.config.experimental.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240614094327445.png" alt="image-20240614094327445"></p>
+<p>运行结果中出现这个<code>True</code>表示识别成功</p>
+]]></content>
+      <categories>
+        <category>daily</category>
+      </categories>
+      <tags>
+        <tag>dl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>torch_geometric安装</title>
     <url>/2024/05/12/torch-geometric%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h2 id="torch-geometric安装过程"><a href="#torch-geometric安装过程" class="headerlink" title="torch_geometric安装过程"></a>torch_geometric安装过程</h2><h4 id="环境-版本检查"><a href="#环境-版本检查" class="headerlink" title="环境+版本检查"></a>环境+版本检查</h4><p>首先打开anaconda虚拟环境</p>
@@ -861,26 +974,43 @@
       </tags>
   </entry>
   <entry>
-    <title>tensorflow下载过程</title>
-    <url>/2024/06/14/tensorflow%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我在一年前曾写过一个<code>tensorflow</code>的安装流程笔记，但是今天再次安装发现存在一些问题，因此重新撰写</p>
-<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>之前的笔记中我没有意识到python，tensorflow，cuda，cudnn的对应关系，这次在服务器上安装就掉坑里了，因此在安装前首先要注意需要下载的版本，以及自己的cuda和cudnn版本</p>
-<p>我使用的是<code>python = 3.9</code>，<code>tensorflow==2.10.0</code>，<code>cuda==11.3.1</code>，<code>cudnn==8.2.1</code></p>
-<p>具体步骤为</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda create -n env_name python=3.9</span><br><span class="line">conda activate env_name</span><br><span class="line">conda install cudatoolkit==11.3.1</span><br><span class="line">conda install cudnn==8.2.1</span><br><span class="line">pip install tensorflow==2.10.0 -i source</span><br></pre></td></tr></table></figure>
+    <title>二分查找</title>
+    <url>/2026/01/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</url>
+    <content><![CDATA[<h2 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h2><p>题目：</p>
+<blockquote>
+<p>给你一个按照非递减顺序排列的整数数组 <code>nums</code>，和一个目标值 <code>target</code>。请你找出给定目标值在数组中的开始位置和结束位置。</p>
+<p>如果数组中不存在目标值 <code>target</code>，返回 <code>[-1, -1]</code>。</p>
+<p>你必须设计并实现时间复杂度为 <code>O(log n)</code> 的算法解决此问题。</p>
+</blockquote>
+<p>示例：输入<code>nums = [5,7,7,8,8,10], target = 8</code>，输出结果为<code>[3,4]</code>。</p>
+<p>思路：</p>
+<ol>
+<li>暴力做法：从左到右遍历，不断查找，询问是否大于等于8，这种方法时间复杂度为O(n)</li>
+<li>高效做法：初始化两个指针$L$和$R$，分别指向询问的左右边界，即闭区间$[L,R]$，$M$指向当前正在询问的数。用红色背景表示$false$，蓝色背景表示$true$，白色背景表示不确定。那么可以得到：<ol>
+<li>$M$是红色的 $\Rightarrow$ $[L,M]$都为红色，剩余不确定的区间为$[M+1,R]$，因此下一步$L\leftarrow M+1$；</li>
+<li>$M$是蓝色的 $\Rightarrow$ $[M,R]$都为蓝色，剩余不确定的区间为$[L,M-1]$，因此下一步$R \leftarrow M-1$。</li>
+</ol>
+</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">lower_bound</span>(<span class="params">nums:<span class="type">List</span>[<span class="built_in">int</span>], target:<span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">        mid = (left + right) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] &lt; target:</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            right = mid - <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> left</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">searchRange</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        start = lower_bound(nums,target)</span><br><span class="line">        <span class="keyword">if</span> start == <span class="built_in">len</span>(nums) <span class="keyword">or</span> nums[start] != target:</span><br><span class="line">            <span class="keyword">return</span> [-<span class="number">1</span>,-<span class="number">1</span>]</span><br><span class="line">        end = lower_bound(nums,target+<span class="number">1</span>) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> [start,end]</span><br></pre></td></tr></table></figure>
 
-<p>这样就初步安装成功了</p>
-<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>在之前的验证中我只验证了<code>tensorflow</code>是否安装成功，而没有检测能否使用<code>GPU</code>，因此将验证命令更新如下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.__version__)</span><br><span class="line"><span class="built_in">print</span>(tf.test.is_gpu_available())</span><br><span class="line"><span class="built_in">print</span>(tf.test.gpu_device_name())</span><br><span class="line"><span class="built_in">print</span>(tf.config.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Num GPUs Available: &quot;</span>,<span class="built_in">len</span>(tf.config.experimental.list_physical_devices(<span class="string">&#x27;GPU&#x27;</span>)))</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240614094327445.png" alt="image-20240614094327445"></p>
-<p>运行结果中出现这个<code>True</code>表示识别成功</p>
+<p><strong>关键不在于区间里的元素具有什么性质，而是区间外面的原色具有什么性质！</strong></p>
+<blockquote>
+<p>拓展：</p>
+<p>上例中我们找到的是大于等于目标值，对于整数数组来说，大于$\rightarrow$大于等于$target+1$，小于$\rightarrow$大于等于$target$的结果减一。</p>
+</blockquote>
+<h2 id="怎么判断使用哪种区间"><a href="#怎么判断使用哪种区间" class="headerlink" title="怎么判断使用哪种区间"></a>怎么判断使用哪种区间</h2><p>首先问自己一句：<strong>我要找的是一个真实元素还是一个边界位置？</strong></p>
+<ul>
+<li>左闭右开：当答案为数组末尾的位置时，适合左闭右开；</li>
+<li>闭区间：当明确是要在数组里找一个已经存在或者可能存在的真实元素时</li>
+</ul>
 ]]></content>
       <categories>
-        <category>daily</category>
+        <category>algorithm</category>
       </categories>
       <tags>
-        <tag>dl</tag>
+        <tag>study</tag>
       </tags>
   </entry>
   <entry>
@@ -983,6 +1113,55 @@
       </categories>
   </entry>
   <entry>
+    <title>单调栈</title>
+    <url>/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/</url>
+    <content><![CDATA[<h2 id="单调栈原理"><a href="#单调栈原理" class="headerlink" title="单调栈原理"></a>单调栈原理</h2><p>单调栈是一种用栈维护<code>候选答案</code>的方法，核心用途是快速找到<strong>某个元素左边&#x2F;右边第一个比他大或小的元素</strong></p>
+<p>比如：</p>
+<ul>
+<li>下一个更大的元素</li>
+<li>下一个更小的元素</li>
+<li>左边第一个更大元素</li>
+<li>柱状图最大矩形</li>
+<li>每日温度</li>
+</ul>
+<p>假设我们要找到每个数右边第一个更大的数，暴力做法是：每个位置都往右扫一遍。这种做法的时间复杂度是<code>O(n^2)</code></p>
+<p>单调栈的做法是：当一个新元素出现时，可以一次性解决前面一批没找到答案的元素。</p>
+<p>例如：有一个数组<code>[2,1,3]</code>，从左往后看，</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">2：暂时不知道右边第一个更大是谁，入栈</span><br><span class="line">1：也不知道，入栈</span><br><span class="line">3：出现了</span><br></pre></td></tr></table></figure>
+
+<p>这时，3比2大，也比1大，所以可以得到</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1的下一个更大元素是3</span><br><span class="line">2的下一个更大元素是3</span><br></pre></td></tr></table></figure>
+
+<h3 id="栈里到底存什么"><a href="#栈里到底存什么" class="headerlink" title="栈里到底存什么"></a>栈里到底存什么</h3><p>通常栈里存的是下标，不是值。这是因为下标可以同时拿到：</p>
+<ul>
+<li>值 nums[i]</li>
+<li>位置 i</li>
+<li>答案 ans[i]</li>
+<li>距离 i - stack[-1]</li>
+</ul>
+<p>模版为：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 返回 left，其中 left[i] 是 nums[i] 左侧最近的严格大于 nums[i] 的数的下标，若不存在则为 -1</span></span><br><span class="line"><span class="comment"># 时间复杂度 O(len(nums))</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">left_greater</span>(<span class="params">nums: <span class="built_in">list</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">list</span>[<span class="built_in">int</span>]:</span><br><span class="line">    n = <span class="built_in">len</span>(nums)</span><br><span class="line">    left = [-<span class="number">1</span>] * n</span><br><span class="line">    st = []</span><br><span class="line">    <span class="keyword">for</span> i, x <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">        <span class="keyword">while</span> st <span class="keyword">and</span> nums[st[-<span class="number">1</span>]] &lt;= x:  <span class="comment"># 如果求严格小于，改成 &gt;=</span></span><br><span class="line">            st.pop()</span><br><span class="line">        <span class="keyword">if</span> st:</span><br><span class="line">            left[i] = st[-<span class="number">1</span>]</span><br><span class="line">        st.append(i)</span><br><span class="line">    <span class="keyword">return</span> left</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回 right，其中 right[i] 是 nums[i] 右侧最近的严格大于 nums[i] 的数的下标，若不存在则为 len(nums)</span></span><br><span class="line"><span class="comment"># 时间复杂度 O(len(nums))</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">right_greater</span>(<span class="params">nums: <span class="built_in">list</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">list</span>[<span class="built_in">int</span>]:</span><br><span class="line">    n = <span class="built_in">len</span>(nums)</span><br><span class="line">    right = [n] * n</span><br><span class="line">    st = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        x = nums[i]</span><br><span class="line">        <span class="keyword">while</span> st <span class="keyword">and</span> nums[st[-<span class="number">1</span>]] &lt;= x:  <span class="comment"># 如果求严格小于，改成 &gt;=</span></span><br><span class="line">            st.pop()</span><br><span class="line">        <span class="keyword">if</span> st:</span><br><span class="line">            right[i] = st[-<span class="number">1</span>]</span><br><span class="line">        st.append(i)</span><br><span class="line">    <span class="keyword">return</span> right</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="739-每日温度"><a href="#739-每日温度" class="headerlink" title="739:每日温度"></a>739:每日温度</h2><p>题目：给定一个整数数组 <code>temperatures</code> ，表示每天的温度，返回一个数组 <code>answer</code> ，其中 <code>answer[i]</code> 是指对于第 <code>i</code> 天，下一个更高温度出现在几天后。如果气温在这之后都不会升高，请在该位置用 <code>0</code> 来代替。</p>
+<p>这里我们可以想象一座山，<img src="/./assets/image-20260609190411950.png" alt="image-20260609190411950"></p>
+<p>如图所示，我们可以发现，如果从右向左遍历，由于5大出现，2和3永远不可能是任何一个元素的下一个更大的数，所以我们可以直接不要这两个元素，具体过程为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">从右向左遍历，将6存入栈；</span><br><span class="line">3比6小，存入栈；</span><br><span class="line">2比3小，存入栈；</span><br><span class="line">5比2，3都大，将2，3删除，存入5；</span><br><span class="line">5和5相等，删除右边那个，保留左边这个；</span><br><span class="line">3比5小，存入栈；</span><br><span class="line">4比3大，删除3，存入4；</span><br><span class="line">存入1</span><br></pre></td></tr></table></figure>
+
+<p>所以这个数据结构为<img src="/./assets/image-20260609190752262.png" alt="image-20260609190752262"></p>
+<p>所以这题的解法为：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dailyTemperatures</span>(<span class="params">self, temperatures: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        n = <span class="built_in">len</span>(temperatures)</span><br><span class="line">        ans = [<span class="number">0</span>] * n</span><br><span class="line">        st = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">            t = temperatures[i]</span><br><span class="line">            <span class="keyword">while</span> st <span class="keyword">and</span> t &gt;= temperatures[st[-<span class="number">1</span>]]:</span><br><span class="line">                st.pop()</span><br><span class="line">            <span class="keyword">if</span> st:</span><br><span class="line">                ans[i] = st[-<span class="number">1</span>] - i</span><br><span class="line">            st.append(i)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>algotithm</category>
+      </categories>
+      <tags>
+        <tag>study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何打开并贡献文档仓库</title>
     <url>/2024/11/14/%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E5%B9%B6%E8%B4%A1%E7%8C%AE%E6%96%87%E6%A1%A3%E4%BB%93%E5%BA%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>git作为常用的版本管理工具，我们应该学会如何使用git与文档仓库连接</p>
@@ -1014,96 +1193,6 @@
 <h2 id="保持更新"><a href="#保持更新" class="headerlink" title="保持更新"></a>保持更新</h2><p>如果拉取的远程代码改变了，我们希望本地代码同步变化</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add upstream https://github.com/SongshGeo/Shuang-Team.git</span><br><span class="line">git remote -v</span><br><span class="line">git fetch upstream</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <tags>
-        <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>arch-install的使用</title>
-    <url>/2024/07/04/arch-install%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h2 id="arch-install的使用"><a href="#arch-install的使用" class="headerlink" title="arch-install的使用"></a>arch-install的使用</h2><p>由于arch的安装较为繁琐，因此出现了一种arch-install的工具，今天在虚拟机上试一试</p>
-<p>首先创建一个虚拟机并且连接网络，更换镜像源：编辑文件<code>/etc/pacman.d/mirrorlist</code></p>
-<p>在最上面加上<code>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</code>  </p>
-<p>输入<code>archinstall</code>进入安装程序</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240704094012719.png" alt="image-20240704094012719"></p>
-<p>其中，语言中有简体中文，但是直接设置会导致乱码，我们还需要下载字体，因此我们直接使用英文安装</p>
-<p>mirror中我们选择第一个，找到China，空格选中，回车确认</p>
-<p>locale默认即可，不用修改</p>
-<p>disk configuration 我们可以直接选择第一个自动分区，进入后再选择ext4分区</p>
-<p>bootloader可以选默认或grub，由于我希望使用这个虚拟机作用移动系统的试验机，因此我选择grub</p>
-<p>hostname设置机器名称</p>
-<p>rootpasswd设置管理员密码</p>
-<p>usercount设置用户，我们可以在这里新添用户并且赋予管理员权限</p>
-<p>profile可以选择想要的桌面环境，由于硬盘中我选择的是gnome，因此这里也选择gnome，这里还可以选择显卡驱动，我试试nvidia显卡驱动能不能正常安装</p>
-<p>optional repositories中选择第一个</p>
-<p>然后下载安装，等待片刻</p>
-<p>重启后即可进入系统（nvidia还是安装失败了，重新设置了一遍才启动）</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>archlinux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>linux to go 移动硬盘制作</title>
-    <url>/2024/06/17/linux-to-go-%E7%A7%BB%E5%8A%A8%E7%A1%AC%E7%9B%98%E5%88%B6%E4%BD%9C/</url>
-    <content><![CDATA[<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年曾经购置过一个移动硬盘，希望改装成<code>ArchLinux</code>的启动盘，因为种种原因未能成功，移动硬盘就变成了一个数据盘，今年由于经常使用服务器跑代码，希望重新捡起来Linux系统的操作（wsl也下载了，但是感觉不如Ubuntu-desktop方便），因此又萌生了Linux启动盘的想法，特此记录过程</p>
-<p>操作过程教程来源于<a href="https://blog.csdn.net/m0_64545111/article/details/136131918">【万字详细教程】Linux to go——装在移动硬盘里的Linux系统（Ubuntu22.04）制作流程；一口气解决系统安装&#x2F;引导文件迁移&#x2F;显卡驱动安装等问题-CSDN博客</a></p>
-<p>那么就开始吧</p>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><p>首先是准备好移动硬盘，Linux系统镜像（ubuntu下载地址<a href="https://ubuntu.com/download/desktop">Download Ubuntu Desktop | Ubuntu</a>），分盘工具（<a href="https://www.diskgenius.cn/download.php">DiskGenius – 正式版下载|免费下载</a>）</p>
-<h3 id="分盘"><a href="#分盘" class="headerlink" title="分盘"></a>分盘</h3><p>由于我的硬盘中已经有数据了，所以我先备份数据，再删除分区</p>
-<p>右击磁盘然后删除当前分区</p>
-<p>然后转化分区为<code>GUID</code>格式</p>
-<blockquote>
-<p>怎么看自己的硬盘是不是GUID格式？可以单击硬盘后点击上方的磁盘选项，其中转化为GUID格式是灰色的则表示这个硬盘已经是GUID格式了</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617221149413.png" alt="image-20240617221149413"></p>
-<p>然后建立<code>esp</code>分区</p>
-<p>接下来同样的建立其他分区，注意格式和大小，最后的分区情况如图所示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617223815292.png" alt="image-20240617223815292"></p>
-<p>然后将备份的数据还原到F盘中</p>
-<h3 id="准备启动U盘"><a href="#准备启动U盘" class="headerlink" title="准备启动U盘"></a>准备启动U盘</h3><p>下载软件<code>UltraISO</code>，地址<a href="https://ultraiso.net/xiazai.html">最新UltraISO官方免费下载 - UltraISO软碟通中文官方网站</a></p>
-<p>将一个空白的U盘插入电脑</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240617225021101.png" alt="image-20240617225021101"></p>
-<p>在这里打开下载的镜像文件，然后点击启动-&gt;写入硬盘映像</p>
-<p>依次点击 <code>便捷启动 -&gt; 写入新的驱动器引导扇区 -&gt; Syslinux -&gt; 写入</code></p>
-<p>读条结束后即可</p>
-<h3 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h3><p>这一步由于在BIOS中进行，没有截图显示，仅记录一些要点以及我遇到的问题</p>
-<ul>
-<li>我的电脑为2019款联想拯救者y7000，在重启&#x2F;开机时按F2并不能进入BIOS界面<ul>
-<li>我们可以在Windows中依次点击 设置 -&gt; windows更新 -&gt; 高级选项 -&gt; 恢复 -&gt; 高级启动 -&gt; 立即重启，从而进入BIOS界面</li>
-</ul>
-</li>
-<li>U盘插入但是设备中没有<code>linpus lite</code>，这可能是因为U盘的问题，我换了个U盘就成功了</li>
-<li>安装过程中记得联网，以及一定要检查设置盘时除去之前安排给Linux的四个区域，其余区域都处于<strong>不使用此分区</strong></li>
-<li>安装后会重启，记得拔下U盘后按enter</li>
-<li>这里教程中说应该选择<code>enrool mdk</code>，但是我在这一步的时候无法选择，只能强制关机，再重启后已经没有这个选项了，只有<code>reset mdk</code>，我拿不准这二者是不是一样的，于是选择了<code>continue boot</code>，也启动成功了，不确定这里后续会不会有问题</li>
-<li>重启时可能会进入<code>grub</code>界面，如果想回到Windows系统可以这样操作</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls</span><br><span class="line">ls (hd0,1)/efi/microsoft/boot/bootmgfw.efi</span><br><span class="line">root=(hd1,1)</span><br><span class="line">boot</span><br></pre></td></tr></table></figure>
-
-<p>这里第二行要遍历所有分区找到这个文件再进行下一步</p>
-<p>到这里差不多安装完成，后续是一些设置</p>
-<h3 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h3><p>将系统启动引导转移到移动硬盘上以避免每次都要选择系统</p>
-<p>将硬盘和U盘都插上电脑，开机进入BIOS选择<code>试用unbuntu</code>，连接网络，然后在终端输入</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-add-repository ppa:yannubuntu/boot-repair</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install boot-repair</span><br><span class="line">boot-repair</span><br></pre></td></tr></table></figure>
-
-<p>选择“推荐修复”，等待程序运行完成即可</p>
-<p>返回Windows系统，可以看到</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240618011033111.png" alt="image-20240618011033111"></p>
-<p><code>esp</code>分区中出现了<code>efi</code>，那么我们就可以删除主硬盘中的ubuntu了</p>
-<p><img src="https://cdn.jsdelivr.net/gh/xyuechen/image/image-20240618011231247.png" alt="image-20240618011231247"></p>
-<p>至此便初步大功告成了，之后可以根据需要对Ubuntu安装软件和美化</p>
-<p>后续：在拔下硬盘启动电脑时发生一直在logo界面闪退的现象，进入BIOS发现启动引导中仍然存在<code>linpus lite</code>，尽管我没有插U盘</p>
-<p>解决：使用<code>bootice</code>软件将efi选项中多余的删除，即可正常开机了。</p>
-]]></content>
-      <categories>
-        <category>daily</category>
-      </categories>
       <tags>
         <tag>daily</tag>
       </tags>
@@ -1172,6 +1261,45 @@
       </tags>
   </entry>
   <entry>
+    <title>滑动窗口</title>
+    <url>/2026/01/15/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</url>
+    <content><![CDATA[<h2 id="长度最小的子数组"><a href="#长度最小的子数组" class="headerlink" title="长度最小的子数组"></a>长度最小的子数组</h2><p>题目：</p>
+<blockquote>
+<p>给定一个含有 <code>n</code> 个正整数的数组和一个正整数 <code>target</code> 。</p>
+<p>找出该数组中满足其总和大于等于 <code>target</code> 的长度最小的 <strong>子数组</strong> <code>[numsl, numsl+1, ..., numsr-1, numsr]</code> ，并返回其长度<strong>。</strong>如果不存在符合条件的子数组，返回 <code>0</code> 。</p>
+</blockquote>
+<p>示例：输入<code>target = 7, nums = [2,3,1,2,4,3]</code>，输出的结果为2。</p>
+<p>思路：我们先判断整个数组的和是否大于目标值，然后从左到右找到第一个满足条件的子数组，由于数组均为正数，我们可以移动左右端点，继续判断是否满足条件</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minSubArrayLen</span>(<span class="params">self, target: <span class="built_in">int</span>, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        ans = n + <span class="number">1</span></span><br><span class="line">        s = <span class="number">0</span></span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> right,x <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">            s += x</span><br><span class="line">            <span class="keyword">while</span> s - nums[left] &gt;= target:</span><br><span class="line">                s -= nums[left]</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> s &gt;= target:</span><br><span class="line">                ans = <span class="built_in">min</span>(ans,right - left + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> ans <span class="keyword">if</span> ans &lt;= n <span class="keyword">else</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="乘积小于K的子数组"><a href="#乘积小于K的子数组" class="headerlink" title="乘积小于K的子数组"></a>乘积小于K的子数组</h2><p>题目：</p>
+<blockquote>
+<p>给你一个整数数组 <code>nums</code> 和一个整数 <code>k</code> ，请你返回子数组内所有元素的乘积严格小于 <code>k</code> 的连续子数组的数目。</p>
+</blockquote>
+<p>示例：输入<code>nums = [10,5,2,6], k = 100</code>，输出结果为8。</p>
+<p>思路：枚举到某个数就将结果接上，如果乘积大于等于K，那么右移左端点。我们可知，如果一段数组的乘积小于K，那么它的每一个子数组的乘积都会小于K</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">numSubarrayProductLessThanK</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> k &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        prod = <span class="number">1</span></span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> right, x <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">            prod *= x</span><br><span class="line">            <span class="keyword">while</span> prod &gt;= k:</span><br><span class="line">                prod /= nums[left]</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            ans += right - left + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<h2 id="无重复字符的最长子串"><a href="#无重复字符的最长子串" class="headerlink" title="无重复字符的最长子串"></a>无重复字符的最长子串</h2><p>题目：</p>
+<blockquote>
+<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长 子串</strong> 的长度。</p>
+</blockquote>
+<p>示例：输入为<code>s = &quot;abcabcbb&quot;</code>，输出结果为3。</p>
+<p>思路：在上例中，我们假设枚举到了<code>abc</code>，将右侧的字符接上，得到的为<code>abcb</code>，发现有重复元素，将左端点右移，得到<code>bcb</code>，发现还是有重复元素，继续右移，直到没有重复元素。</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">lengthOfLongestSubstring</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        cnt = Counter()</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> right, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(s):</span><br><span class="line">            cnt[c] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> cnt[c] &gt; <span class="number">1</span>:</span><br><span class="line">                cnt[s[left]] -= <span class="number">1</span></span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            ans = <span class="built_in">max</span>(ans,right-left+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
+      <tags>
+        <tag>study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雨水容器</title>
     <url>/2026/01/11/%E9%9B%A8%E6%B0%B4%E5%AE%B9%E5%99%A8/</url>
     <content><![CDATA[<h2 id="盛最多水的容器"><a href="#盛最多水的容器" class="headerlink" title="盛最多水的容器"></a>盛最多水的容器</h2><p>题目：给定一个长度为 <code>n</code> 的整数数组 <code>height</code> 。有 <code>n</code> 条垂线，第 <code>i</code> 条线的两个端点是 <code>(i, 0)</code> 和 <code>(i, height[i])</code> 。</p>
@@ -1204,6 +1332,273 @@
       </categories>
       <tags>
         <tag>study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>认识容器</title>
+    <url>/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/</url>
+    <content><![CDATA[<hr>
+<h1 id="认识Docker"><a href="#认识Docker" class="headerlink" title="认识Docker"></a>认识Docker</h1><h2 id="1-docker解决什么问题"><a href="#1-docker解决什么问题" class="headerlink" title="1.docker解决什么问题"></a>1.docker解决什么问题</h2><p>传统部署中经常遇到一个问题</p>
+<blockquote>
+<p>“程序在我的电脑上可以运行，但是在服务器上就不行？”</p>
+</blockquote>
+<p>这通常是因为不同环境存在差异：</p>
+<ul>
+<li>操作系统不同</li>
+<li>软件版本不同</li>
+<li>缺少依赖</li>
+<li>配置不同</li>
+</ul>
+<p>Docker会将应用及其所需的依赖打包成标准化的“镜像”，然后基于镜像构建容器。只要运行环境支持Docker，同一个镜像就能以相同的方式运行。</p>
+<h2 id="2-三个核心概念"><a href="#2-三个核心概念" class="headerlink" title="2.三个核心概念"></a>2.三个核心概念</h2><p><strong>镜像Image</strong></p>
+<p>镜像是一个只读的应用模板，里面通常包含：应用程序，系统工具，运行环境，第三方依赖，默认启动命令</p>
+<p>例如：</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">nginx:latest</span><br><span class="line">python:3.12-slim</span><br><span class="line">mysql:8</span><br></pre></td></tr></table></figure>
+
+<p>可以将其理解为“安装包+运行环境”</p>
+<p><strong>容器Container</strong></p>
+<p>容器是镜像运行后产生的实例，也就是说，镜像类似于程序安装包，容器类似于正在运行的程序。同一个镜像可以产生多个容器，删除容器一般不会删除镜像。</p>
+<p><strong>仓库Registry</strong></p>
+<p>仓库用于保存和分发镜像，<code>Docker Hub</code>是常见的公共仓库。</p>
+<h2 id="3-容器和虚拟机的区别"><a href="#3-容器和虚拟机的区别" class="headerlink" title="3.容器和虚拟机的区别"></a>3.容器和虚拟机的区别</h2><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>容器</th>
+<th>虚拟机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动速度</td>
+<td>通常为秒级</td>
+<td>通常较慢</td>
+</tr>
+<tr>
+<td>资源占用</td>
+<td>较少</td>
+<td>较多</td>
+</tr>
+<tr>
+<td>操作系统</td>
+<td>共享宿主机内核</td>
+<td>包含完整操作系统</td>
+</tr>
+<tr>
+<td>隔离程度</td>
+<td>进程级隔离</td>
+<td>虚拟硬件级隔离</td>
+</tr>
+<tr>
+<td>常见用途</td>
+<td>应用打包和部署</td>
+<td>完整操作系统隔离</td>
+</tr>
+</tbody></table>
+<h2 id="4-练习"><a href="#4-练习" class="headerlink" title="4.练习"></a>4.练习</h2><p>运行下列命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker version</span><br><span class="line">docker run --<span class="built_in">rm</span> hello-world</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">❯ docker run --<span class="built_in">rm</span> hello-world</span><br><span class="line">Unable to find image <span class="string">&#x27;hello-world:latest&#x27;</span> locally</span><br><span class="line">latest: Pulling from library/hello-world</span><br><span class="line">58dee6a49ef1: Pull complete</span><br><span class="line">c3bdf82c34d1: Download complete</span><br><span class="line">Digest: sha256:7f4da0fc94bcece205a8c0b6f4d11c8196924654ffe5c4d1aa439b7f632048b2</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> hello-world:latest</span><br><span class="line"></span><br><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the <span class="string">&quot;hello-world&quot;</span> image from the Docker Hub.</span><br><span class="line">    (arm64v8)</span><br><span class="line"> 3. The Docker daemon created a new container from that image <span class="built_in">which</span> runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, <span class="built_in">which</span> sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://hub.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/get-started/</span><br></pre></td></tr></table></figure>
+
+<h1 id="镜像与容器的基本管理"><a href="#镜像与容器的基本管理" class="headerlink" title="镜像与容器的基本管理"></a>镜像与容器的基本管理</h1><h2 id="1-查看已有镜像"><a href="#1-查看已有镜像" class="headerlink" title="1.查看已有镜像"></a>1.查看已有镜像</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p>常见字段：</p>
+<ul>
+<li><code>REPOSITORY</code>：镜像名称</li>
+<li><code>TAG</code>：镜像版本标签</li>
+<li><code>IMAGE ID</code>：镜像唯一标识</li>
+<li><code>SIZE</code>：镜像大小</li>
+</ul>
+<h2 id="2-创建一个可持续运行的容器"><a href="#2-创建一个可持续运行的容器" class="headerlink" title="2.创建一个可持续运行的容器"></a>2.创建一个可持续运行的容器</h2><p>昨天下载运行的<code>hello-world</code>是一个打印输出信息后就结束的容器，不适合观察容器的运行状态，我们使用<code>nginx</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --name my-nginx -d nginx</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>docker run</code>：创建并运行容器</li>
+<li><code>--name</code>：为容器命名</li>
+<li><code>-d</code>：在后台运行</li>
+<li><code>nginx</code>：使用的镜像</li>
+</ul>
+<p>第一次运行时docker会下载<code>nginx:latest</code></p>
+<h2 id="3-查看容器状态"><a href="#3-查看容器状态" class="headerlink" title="3.查看容器状态"></a>3.查看容器状态</h2><p>查看正在运行的容器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>输出信息为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">❯ docker ps -a</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                   CREATED          STATUS          PORTS     NAMES</span><br><span class="line">794883d78014   nginx     <span class="string">&quot;/docker-entrypoint.…&quot;</span>   31 seconds ago   Up 30 seconds   80/tcp    my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>这里要区分</p>
+<ul>
+<li>镜像名：nginx</li>
+<li>容器名：my-nginx</li>
+<li>容器ID</li>
+</ul>
+<p>后续命令指定容器时可以使用容器名，也可以使用容器ID</p>
+<h2 id="4-停止和重启"><a href="#4-停止和重启" class="headerlink" title="4.停止和重启"></a>4.停止和重启</h2><p>如果要停止正在运行的容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker stop my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>重新启动该容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker start my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>这里注意<code>run</code>和<code>start</code>的区别：</p>
+<ul>
+<li><code>docker run</code>：创建一个容器，然后启动</li>
+<li><code>docker start</code>：启动一个已存在的容器</li>
+</ul>
+<p>所以如果反复运行<code>docker run</code>，那就会重复创建容器</p>
+<h2 id="5-查看日志和容器详情"><a href="#5-查看日志和容器详情" class="headerlink" title="5.查看日志和容器详情"></a>5.查看日志和容器详情</h2><p>查看容器日志</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker logs my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>进入后按Ctrl+C只会停止查看日志，不会退出容器</p>
+<p>持续跟踪日志</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker logs -f my-nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-删除容器"><a href="#6-删除容器" class="headerlink" title="6.删除容器"></a>6.删除容器</h2><p>通常我们会先停止容器再删除</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker stop my-nignx</span><br><span class="line">docker <span class="built_in">rm</span> my-nginx</span><br><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<p>最后的输出应该看不到这个容器了，当然也可以强行删除运行中的容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -f my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>删除容器不会删除镜像.</p>
+<p>总结：容器的生命周期为</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">镜像</span><br><span class="line">  ↓ docker run</span><br><span class="line">创建并运行容器</span><br><span class="line">  ↓ docker stop</span><br><span class="line">停止的容器</span><br><span class="line">  ↓ docker start</span><br><span class="line">重新运行</span><br><span class="line">  ↓ docker rm</span><br><span class="line">容器被删除，但镜像仍然存在</span><br></pre></td></tr></table></figure>
+
+<h1 id="端口映射与访问容器"><a href="#端口映射与访问容器" class="headerlink" title="端口映射与访问容器"></a>端口映射与访问容器</h1><h2 id="1-为什么要映射"><a href="#1-为什么要映射" class="headerlink" title="1.为什么要映射"></a>1.为什么要映射</h2><p>当我们运行<code>nginx</code>镜像时，容器内部会监听80端口，但是容器拥有独立的网络环境，因此我们无法访问，为了解决这个问题，我们就需要使用<code>-p-</code>将宿主机端口映射到容器端口：</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">宿主机 8080 端口 -&gt; 容器 80 端口 -&gt; Nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-启动Nginx"><a href="#2-启动Nginx" class="headerlink" title="2.启动Nginx"></a>2.启动Nginx</h2><p>先清理可能存在的同名镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -f my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>然后使用下列命令启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --name my-nginx -d \ -p 8080:80 nginx</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>--name my-nginx</code>：设置容器名称</li>
+<li><code>-d</code>：在后台运行</li>
+<li><code>-p 8080:80</code>：把宿主机的<code>8080</code>映射到容器的<code>80</code></li>
+<li><code>nginx</code>：使用nginx镜像</li>
+</ul>
+<p><code>-p</code>的格式是：<code>-p 宿主机端口：容器端口</code></p>
+<h2 id="3-检查运行状态"><a href="#3-检查运行状态" class="headerlink" title="3.检查运行状态"></a>3.检查运行状态</h2><p>输入<code>docker ps</code>可以看到当前运行状态，重点看<code>POST</code>的内容：</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">CONTAINER ID   IMAGE     COMMAND                   CREATED         STATUS         PORTS                                     NAMES</span><br><span class="line">1bf9a55729f2   nginx     &quot;/docker-entrypoint.…&quot;   4 seconds ago   Up 4 seconds   0.0.0.0:8080-&gt;80/tcp, [::]:8080-&gt;80/tcp   my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>那么就可以访问了，打开网址<a href="http://localhost:8080/">http://localhost:8080</a> ，或者可以在终端输入<code>curl http://localhost:8080</code>来查看内容。</p>
+<h2 id="4-访问日志"><a href="#4-访问日志" class="headerlink" title="4.访问日志"></a>4.访问日志</h2><p>使用<code>docker logs -f my-nginx</code>持续追踪日志，刷新几次浏览器，会看到</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">192.168.65.1 - - [11/Aug/2026:03:13:45 +0000] &quot;GET / HTTP/1.1&quot; 304</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-进入容器内部"><a href="#5-进入容器内部" class="headerlink" title="5.进入容器内部"></a>5.进入容器内部</h2><p>使用命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it my-nginx sh</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>docker exec</code>：在运行的容器内执行命令</li>
+<li><code>-i</code>：保持输入通道打开</li>
+<li><code>-t</code>：分配终端</li>
+<li><code>sh</code>：启动shell</li>
+</ul>
+<p>进入后执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br><span class="line">hostname</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="built_in">cat</span> /usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
+
+<p>最后使用<code>exit</code>退出</p>
+<h1 id="容器的进程与交互式操作"><a href="#容器的进程与交互式操作" class="headerlink" title="容器的进程与交互式操作"></a>容器的进程与交互式操作</h1><blockquote>
+<p>容器不是虚拟机，容器的生命周期由他的主进程决定。</p>
+</blockquote>
+<h2 id="1-前台运行和后台运行"><a href="#1-前台运行和后台运行" class="headerlink" title="1.前台运行和后台运行"></a>1.前台运行和后台运行</h2><p>我们之前使用<code>-d</code>参数让进程在后台运行，如果不加这个参数运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --name nginx-foreground -p 8081:80 nginx</span><br></pre></td></tr></table></figure>
+
+<p>终端就会被前台进程占用，然后我们访问<a href="http://localhost:8081/">http://localhost:8081</a> ，在终端可以看到访问日志。</p>
+<p>按下<code>Ctrl</code>+<code>C</code>，进程终止，容器也会停下，使用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<p>检查容器状态，会看到这个容器处于<code>Exited</code>，然后使用<code>docker rm nginx-foreground</code>删除这个容器。</p>
+<h2 id="2-容器为什么会退出"><a href="#2-容器为什么会退出" class="headerlink" title="2.容器为什么会退出"></a>2.容器为什么会退出</h2><p>每个容器都有一个主进程，进程号通常为PID1：</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">容器启动</span><br><span class="line">   ↓</span><br><span class="line">主进程 PID 1 开始运行</span><br><span class="line">   ↓</span><br><span class="line">主进程持续运行 → 容器保持运行</span><br><span class="line">主进程执行结束 → 容器停止</span><br></pre></td></tr></table></figure>
+
+<p><code>hello-world</code>会很快退出，是因为它的主程序输出文字后就结束了。</p>
+<p><code>nginx</code>会持续运行，是因为它的主进程会持续监听HTTP请求。</p>
+<p>容器退出不一定表示发生错误，也可能是程序运行结束。</p>
+<h2 id="3-查看容器中的进程"><a href="#3-查看容器中的进程" class="headerlink" title="3.查看容器中的进程"></a>3.查看容器中的进程</h2><p>确认<code>my-nginx</code>正在运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker start my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>查看进程</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker top my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>就可以看到Nginx的主进程和工作进程。再进入容器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it my-nginx sh</span><br></pre></td></tr></table></figure>
+
+<p>进入后再执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps</span><br></pre></td></tr></table></figure>
+
+<p>如果镜像中的<code>ps</code>功能有限或不存在，也属于正常情况，许多容器镜像会尽量精简，只包含运行应用必要的工具。</p>
+<p>再运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>退出容器</p>
+<h2 id="4-运行交互式容器"><a href="#4-运行交互式容器" class="headerlink" title="4.运行交互式容器"></a>4.运行交互式容器</h2><p>启动一个临时Ubuntu容器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --name ubuntu-lab -it ubuntu bash</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>-i</code>：保持标准输入打开</li>
+<li><code>-t</code>：分配一个终端</li>
+<li><code>bash</code>：容器启动后执行的主命令</li>
+</ul>
+<p>进入后尝试</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">whoami</span></span><br><span class="line">hostname</span><br><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="built_in">cat</span> /etc/os-release</span><br></pre></td></tr></table></figure>
+
+<p>可以看到输出为</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@9260abe2644e:/<span class="comment"># whoami</span></span><br><span class="line">root</span><br><span class="line">root@9260abe2644e:/<span class="comment"># pwd</span></span><br><span class="line">/</span><br><span class="line">root@9260abe2644e:/<span class="comment"># hostname</span></span><br><span class="line">9260abe2644e</span><br><span class="line">root@9260abe2644e:/<span class="comment"># ls</span></span><br><span class="line">bin  boot  dev  etc  home  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</span><br><span class="line">root@9260abe2644e:/<span class="comment"># cat /etc/os-release</span></span><br><span class="line">PRETTY_NAME=<span class="string">&quot;Ubuntu 26.04 LTS&quot;</span></span><br><span class="line">NAME=<span class="string">&quot;Ubuntu&quot;</span></span><br><span class="line">VERSION_ID=<span class="string">&quot;26.04&quot;</span></span><br><span class="line">VERSION=<span class="string">&quot;26.04 LTS (Resolute Raccoon)&quot;</span></span><br><span class="line">VERSION_CODENAME=resolute</span><br><span class="line">ID=ubuntu</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">HOME_URL=<span class="string">&quot;https://www.ubuntu.com/&quot;</span></span><br><span class="line">SUPPORT_URL=<span class="string">&quot;https://help.ubuntu.com/&quot;</span></span><br><span class="line">BUG_REPORT_URL=<span class="string">&quot;https://bugs.launchpad.net/ubuntu/&quot;</span></span><br><span class="line">PRIVACY_POLICY_URL=<span class="string">&quot;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&quot;</span></span><br><span class="line">UBUNTU_CODENAME=resolute</span><br><span class="line">LOGO=ubuntu-logo</span><br></pre></td></tr></table></figure>
+
+<p>会看到：</p>
+<ul>
+<li>容器内显示ubuntu空间</li>
+<li>默认用户通常是root</li>
+<li>容器有自己的主机名</li>
+<li>仍然共享宿主机的硬件资源</li>
+<li>Docker实际通过Linux虚拟机提供Linux内核</li>
+</ul>
+<h2 id="5-run-start和exec的区别"><a href="#5-run-start和exec的区别" class="headerlink" title="5.run,start和exec的区别"></a>5.<code>run</code>,<code>start</code>和<code>exec</code>的区别</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>是否创建新容器</th>
+<th>操作对象</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>docker run</code></td>
+<td>是</td>
+<td>镜像</td>
+<td>创建并运行新容器</td>
+</tr>
+<tr>
+<td><code>docker start</code></td>
+<td>否</td>
+<td>已有容器</td>
+<td>重新启动已停止容器</td>
+</tr>
+<tr>
+<td><code>docker exec</code></td>
+<td>否</td>
+<td>运行中的容器</td>
+<td>在容器中执行额外命令</td>
+</tr>
+</tbody></table>
+<h2 id="6-查看容器退出原因"><a href="#6-查看容器退出原因" class="headerlink" title="6.查看容器退出原因"></a>6.查看容器退出原因</h2><p>输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker inspect \</span><br><span class="line">  --format <span class="string">&#x27;状态=&#123;&#123;.State.Status&#125;&#125; 退出码=&#123;&#123;.State.ExitCode&#125;&#125;&#x27;</span> \</span><br><span class="line">  ubuntu-lab</span><br></pre></td></tr></table></figure>
+
+<p>如果是正常执行exit，那么一般会看到</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">状态=exited 退出码=0</span><br></pre></td></tr></table></figure>
+
+<p>一般来说，0表示程序正常结束，非0表示发生错误或者意外终止，可以使用<code>logs</code>查看最后的日志</p>
+]]></content>
+      <categories>
+        <category>learn</category>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
       </tags>
   </entry>
 </search>

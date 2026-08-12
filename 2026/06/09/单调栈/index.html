@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>单调栈 | XuHui</title><meta name="author" content="xu"><meta name="copyright" content="xu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="单调栈原理单调栈是一种用栈维护候选答案的方法，核心用途是快速找到某个元素左边&#x2F;右边第一个比他大或小的元素 比如：  下一个更大的元素 下一个更小的元素 左边第一个更大元素 柱状图最大矩形 每日温度  假设我们要找到每个数右边第一个更大的数，暴力做法是：每个位置都往右扫一遍。这种做法的时间复杂度是O(n^2) 单调栈的做法是：当一个新元素出现时，可以一次性解决前面一批没找到答案的元素。 例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单调栈">
+<meta property="og:url" content="https://xyuechen/github.io/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/index.html">
+<meta property="og:site_name" content="XuHui">
+<meta property="og:description" content="单调栈原理单调栈是一种用栈维护候选答案的方法，核心用途是快速找到某个元素左边&#x2F;右边第一个比他大或小的元素 比如：  下一个更大的元素 下一个更小的元素 左边第一个更大元素 柱状图最大矩形 每日温度  假设我们要找到每个数右边第一个更大的数，暴力做法是：每个位置都往右扫一遍。这种做法的时间复杂度是O(n^2) 单调栈的做法是：当一个新元素出现时，可以一次性解决前面一批没找到答案的元素。 例">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyuechen/github.io/img/star.png">
+<meta property="article:published_time" content="2026-06-09T10:49:38.000Z">
+<meta property="article:modified_time" content="2026-06-09T11:19:11.964Z">
+<meta property="article:author" content="xu">
+<meta property="article:tag" content="study">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xyuechen/github.io/img/star.png"><link rel="shortcut icon" href="/img/star.png"><link rel="canonical" href="https://xyuechen/github.io/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '单调栈',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-06-09 19:19:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/star.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/huasanli.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="XuHui"><img class="site-icon" src="/img/star.png#%20image"/><span class="site-name">XuHui</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">单调栈</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-09T10:49:38.000Z" title="发表于 2026-06-09 18:49:38">2026-06-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-09T11:19:11.964Z" title="更新于 2026-06-09 19:19:11">2026-06-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/algotithm/">algotithm</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="单调栈原理"><a href="#单调栈原理" class="headerlink" title="单调栈原理"></a>单调栈原理</h2><p>单调栈是一种用栈维护<code>候选答案</code>的方法，核心用途是快速找到<strong>某个元素左边&#x2F;右边第一个比他大或小的元素</strong></p>
+<p>比如：</p>
+<ul>
+<li>下一个更大的元素</li>
+<li>下一个更小的元素</li>
+<li>左边第一个更大元素</li>
+<li>柱状图最大矩形</li>
+<li>每日温度</li>
+</ul>
+<p>假设我们要找到每个数右边第一个更大的数，暴力做法是：每个位置都往右扫一遍。这种做法的时间复杂度是<code>O(n^2)</code></p>
+<p>单调栈的做法是：当一个新元素出现时，可以一次性解决前面一批没找到答案的元素。</p>
+<p>例如：有一个数组<code>[2,1,3]</code>，从左往后看，</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2：暂时不知道右边第一个更大是谁，入栈</span><br><span class="line">1：也不知道，入栈</span><br><span class="line">3：出现了</span><br></pre></td></tr></table></figure>
+
+<p>这时，3比2大，也比1大，所以可以得到</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1的下一个更大元素是3</span><br><span class="line">2的下一个更大元素是3</span><br></pre></td></tr></table></figure>
+
+<h3 id="栈里到底存什么"><a href="#栈里到底存什么" class="headerlink" title="栈里到底存什么"></a>栈里到底存什么</h3><p>通常栈里存的是下标，不是值。这是因为下标可以同时拿到：</p>
+<ul>
+<li>值 nums[i]</li>
+<li>位置 i</li>
+<li>答案 ans[i]</li>
+<li>距离 i - stack[-1]</li>
+</ul>
+<p>模版为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 返回 left，其中 left[i] 是 nums[i] 左侧最近的严格大于 nums[i] 的数的下标，若不存在则为 -1</span></span><br><span class="line"><span class="comment"># 时间复杂度 O(len(nums))</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">left_greater</span>(<span class="params">nums: <span class="built_in">list</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">list</span>[<span class="built_in">int</span>]:</span><br><span class="line">    n = <span class="built_in">len</span>(nums)</span><br><span class="line">    left = [-<span class="number">1</span>] * n</span><br><span class="line">    st = []</span><br><span class="line">    <span class="keyword">for</span> i, x <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">        <span class="keyword">while</span> st <span class="keyword">and</span> nums[st[-<span class="number">1</span>]] &lt;= x:  <span class="comment"># 如果求严格小于，改成 &gt;=</span></span><br><span class="line">            st.pop()</span><br><span class="line">        <span class="keyword">if</span> st:</span><br><span class="line">            left[i] = st[-<span class="number">1</span>]</span><br><span class="line">        st.append(i)</span><br><span class="line">    <span class="keyword">return</span> left</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回 right，其中 right[i] 是 nums[i] 右侧最近的严格大于 nums[i] 的数的下标，若不存在则为 len(nums)</span></span><br><span class="line"><span class="comment"># 时间复杂度 O(len(nums))</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">right_greater</span>(<span class="params">nums: <span class="built_in">list</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">list</span>[<span class="built_in">int</span>]:</span><br><span class="line">    n = <span class="built_in">len</span>(nums)</span><br><span class="line">    right = [n] * n</span><br><span class="line">    st = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        x = nums[i]</span><br><span class="line">        <span class="keyword">while</span> st <span class="keyword">and</span> nums[st[-<span class="number">1</span>]] &lt;= x:  <span class="comment"># 如果求严格小于，改成 &gt;=</span></span><br><span class="line">            st.pop()</span><br><span class="line">        <span class="keyword">if</span> st:</span><br><span class="line">            right[i] = st[-<span class="number">1</span>]</span><br><span class="line">        st.append(i)</span><br><span class="line">    <span class="keyword">return</span> right</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="739-每日温度"><a href="#739-每日温度" class="headerlink" title="739:每日温度"></a>739:每日温度</h2><p>题目：给定一个整数数组 <code>temperatures</code> ，表示每天的温度，返回一个数组 <code>answer</code> ，其中 <code>answer[i]</code> 是指对于第 <code>i</code> 天，下一个更高温度出现在几天后。如果气温在这之后都不会升高，请在该位置用 <code>0</code> 来代替。</p>
+<p>这里我们可以想象一座山，<img src="/./assets/image-20260609190411950.png" alt="image-20260609190411950"></p>
+<p>如图所示，我们可以发现，如果从右向左遍历，由于5大出现，2和3永远不可能是任何一个元素的下一个更大的数，所以我们可以直接不要这两个元素，具体过程为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">从右向左遍历，将6存入栈；</span><br><span class="line">3比6小，存入栈；</span><br><span class="line">2比3小，存入栈；</span><br><span class="line">5比2，3都大，将2，3删除，存入5；</span><br><span class="line">5和5相等，删除右边那个，保留左边这个；</span><br><span class="line">3比5小，存入栈；</span><br><span class="line">4比3大，删除3，存入4；</span><br><span class="line">存入1</span><br></pre></td></tr></table></figure>
+
+<p>所以这个数据结构为<img src="/./assets/image-20260609190752262.png" alt="image-20260609190752262"></p>
+<p>所以这题的解法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dailyTemperatures</span>(<span class="params">self, temperatures: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        n = <span class="built_in">len</span>(temperatures)</span><br><span class="line">        ans = [<span class="number">0</span>] * n</span><br><span class="line">        st = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">            t = temperatures[i]</span><br><span class="line">            <span class="keyword">while</span> st <span class="keyword">and</span> t &gt;= temperatures[st[-<span class="number">1</span>]]:</span><br><span class="line">                st.pop()</span><br><span class="line">            <span class="keyword">if</span> st:</span><br><span class="line">                ans[i] = st[-<span class="number">1</span>] - i</span><br><span class="line">            st.append(i)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://xyuechen/github.io">xu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xyuechen/github.io/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/">https://xyuechen/github.io/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xyuechen/github.io" target="_blank">XuHui</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/study/">study</a></div><div class="post_share"><div class="social-share" data-image="/img/star.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/" title="认识容器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">认识容器</div></div></a></div><div class="next-post pull-right"><a href="/2026/01/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" title="二分查找"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">二分查找</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/01/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" title="二分查找"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-16</div><div class="title">二分查找</div></div></a></div><div><a href="/2026/01/11/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" title="两数之和"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-11</div><div class="title">两数之和</div></div></a></div><div><a href="/2026/01/15/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-15</div><div class="title">滑动窗口</div></div></a></div><div><a href="/2026/01/11/%E9%9B%A8%E6%B0%B4%E5%AE%B9%E5%99%A8/" title="雨水容器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-11</div><div class="title">雨水容器</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/star.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xu</div><div class="author-info__description">学习和生活日常</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xyuechen"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xyuechen" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/2624313195@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E8%B0%83%E6%A0%88%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">单调栈原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E9%87%8C%E5%88%B0%E5%BA%95%E5%AD%98%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.</span> <span class="toc-text">栈里到底存什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#739-%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6"><span class="toc-number">2.</span> <span class="toc-text">739:每日温度</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/" title="认识容器">认识容器</a><time datetime="2026-08-06T02:14:35.000Z" title="发表于 2026-08-06 10:14:35">2026-08-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/" title="单调栈">单调栈</a><time datetime="2026-06-09T10:49:38.000Z" title="发表于 2026-06-09 18:49:38">2026-06-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" title="二分查找">二分查找</a><time datetime="2026-01-16T06:02:16.000Z" title="发表于 2026-01-16 14:02:16">2026-01-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/15/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口">滑动窗口</a><time datetime="2026-01-15T01:32:29.000Z" title="发表于 2026-01-15 09:32:29">2026-01-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/11/%E9%9B%A8%E6%B0%B4%E5%AE%B9%E5%99%A8/" title="雨水容器">雨水容器</a><time datetime="2026-01-11T12:29:15.000Z" title="发表于 2026-01-11 20:29:15">2026-01-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2026 By xu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>

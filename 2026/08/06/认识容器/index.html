@@ -1,0 +1,420 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>认识容器 | XuHui</title><meta name="author" content="xu"><meta name="copyright" content="xu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="认识Docker1.docker解决什么问题传统部署中经常遇到一个问题  “程序在我的电脑上可以运行，但是在服务器上就不行？”  这通常是因为不同环境存在差异：  操作系统不同 软件版本不同 缺少依赖 配置不同  Docker会将应用及其所需的依赖打包成标准化的“镜像”，然后基于镜像构建容器。只要运行环境支持Docker，同一个镜像就能以相同的方式运行。 2.三个核心概念镜像Image 镜像是一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认识容器">
+<meta property="og:url" content="https://xyuechen/github.io/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/index.html">
+<meta property="og:site_name" content="XuHui">
+<meta property="og:description" content="认识Docker1.docker解决什么问题传统部署中经常遇到一个问题  “程序在我的电脑上可以运行，但是在服务器上就不行？”  这通常是因为不同环境存在差异：  操作系统不同 软件版本不同 缺少依赖 配置不同  Docker会将应用及其所需的依赖打包成标准化的“镜像”，然后基于镜像构建容器。只要运行环境支持Docker，同一个镜像就能以相同的方式运行。 2.三个核心概念镜像Image 镜像是一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyuechen/github.io/img/star.png">
+<meta property="article:published_time" content="2026-08-06T02:14:35.000Z">
+<meta property="article:modified_time" content="2026-08-12T05:56:35.510Z">
+<meta property="article:author" content="xu">
+<meta property="article:tag" content="daily">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xyuechen/github.io/img/star.png"><link rel="shortcut icon" href="/img/star.png"><link rel="canonical" href="https://xyuechen/github.io/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '认识容器',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-08-12 13:56:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/star.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/huasanli.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="XuHui"><img class="site-icon" src="/img/star.png#%20image"/><span class="site-name">XuHui</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">认识容器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-06T02:14:35.000Z" title="发表于 2026-08-06 10:14:35">2026-08-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-12T05:56:35.510Z" title="更新于 2026-08-12 13:56:35">2026-08-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/learn/">learn</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/learn/docker/">docker</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><hr>
+<h1 id="认识Docker"><a href="#认识Docker" class="headerlink" title="认识Docker"></a>认识Docker</h1><h2 id="1-docker解决什么问题"><a href="#1-docker解决什么问题" class="headerlink" title="1.docker解决什么问题"></a>1.docker解决什么问题</h2><p>传统部署中经常遇到一个问题</p>
+<blockquote>
+<p>“程序在我的电脑上可以运行，但是在服务器上就不行？”</p>
+</blockquote>
+<p>这通常是因为不同环境存在差异：</p>
+<ul>
+<li>操作系统不同</li>
+<li>软件版本不同</li>
+<li>缺少依赖</li>
+<li>配置不同</li>
+</ul>
+<p>Docker会将应用及其所需的依赖打包成标准化的“镜像”，然后基于镜像构建容器。只要运行环境支持Docker，同一个镜像就能以相同的方式运行。</p>
+<h2 id="2-三个核心概念"><a href="#2-三个核心概念" class="headerlink" title="2.三个核心概念"></a>2.三个核心概念</h2><p><strong>镜像Image</strong></p>
+<p>镜像是一个只读的应用模板，里面通常包含：应用程序，系统工具，运行环境，第三方依赖，默认启动命令</p>
+<p>例如：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nginx:latest</span><br><span class="line">python:3.12-slim</span><br><span class="line">mysql:8</span><br></pre></td></tr></table></figure>
+
+<p>可以将其理解为“安装包+运行环境”</p>
+<p><strong>容器Container</strong></p>
+<p>容器是镜像运行后产生的实例，也就是说，镜像类似于程序安装包，容器类似于正在运行的程序。同一个镜像可以产生多个容器，删除容器一般不会删除镜像。</p>
+<p><strong>仓库Registry</strong></p>
+<p>仓库用于保存和分发镜像，<code>Docker Hub</code>是常见的公共仓库。</p>
+<h2 id="3-容器和虚拟机的区别"><a href="#3-容器和虚拟机的区别" class="headerlink" title="3.容器和虚拟机的区别"></a>3.容器和虚拟机的区别</h2><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>容器</th>
+<th>虚拟机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动速度</td>
+<td>通常为秒级</td>
+<td>通常较慢</td>
+</tr>
+<tr>
+<td>资源占用</td>
+<td>较少</td>
+<td>较多</td>
+</tr>
+<tr>
+<td>操作系统</td>
+<td>共享宿主机内核</td>
+<td>包含完整操作系统</td>
+</tr>
+<tr>
+<td>隔离程度</td>
+<td>进程级隔离</td>
+<td>虚拟硬件级隔离</td>
+</tr>
+<tr>
+<td>常见用途</td>
+<td>应用打包和部署</td>
+<td>完整操作系统隔离</td>
+</tr>
+</tbody></table>
+<h2 id="4-练习"><a href="#4-练习" class="headerlink" title="4.练习"></a>4.练习</h2><p>运行下列命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br><span class="line">docker run --<span class="built_in">rm</span> hello-world</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">❯ docker run --<span class="built_in">rm</span> hello-world</span><br><span class="line">Unable to find image <span class="string">&#x27;hello-world:latest&#x27;</span> locally</span><br><span class="line">latest: Pulling from library/hello-world</span><br><span class="line">58dee6a49ef1: Pull complete</span><br><span class="line">c3bdf82c34d1: Download complete</span><br><span class="line">Digest: sha256:7f4da0fc94bcece205a8c0b6f4d11c8196924654ffe5c4d1aa439b7f632048b2</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> hello-world:latest</span><br><span class="line"></span><br><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the <span class="string">&quot;hello-world&quot;</span> image from the Docker Hub.</span><br><span class="line">    (arm64v8)</span><br><span class="line"> 3. The Docker daemon created a new container from that image <span class="built_in">which</span> runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, <span class="built_in">which</span> sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://hub.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/get-started/</span><br></pre></td></tr></table></figure>
+
+<h1 id="镜像与容器的基本管理"><a href="#镜像与容器的基本管理" class="headerlink" title="镜像与容器的基本管理"></a>镜像与容器的基本管理</h1><h2 id="1-查看已有镜像"><a href="#1-查看已有镜像" class="headerlink" title="1.查看已有镜像"></a>1.查看已有镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p>常见字段：</p>
+<ul>
+<li><code>REPOSITORY</code>：镜像名称</li>
+<li><code>TAG</code>：镜像版本标签</li>
+<li><code>IMAGE ID</code>：镜像唯一标识</li>
+<li><code>SIZE</code>：镜像大小</li>
+</ul>
+<h2 id="2-创建一个可持续运行的容器"><a href="#2-创建一个可持续运行的容器" class="headerlink" title="2.创建一个可持续运行的容器"></a>2.创建一个可持续运行的容器</h2><p>昨天下载运行的<code>hello-world</code>是一个打印输出信息后就结束的容器，不适合观察容器的运行状态，我们使用<code>nginx</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name my-nginx -d nginx</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>docker run</code>：创建并运行容器</li>
+<li><code>--name</code>：为容器命名</li>
+<li><code>-d</code>：在后台运行</li>
+<li><code>nginx</code>：使用的镜像</li>
+</ul>
+<p>第一次运行时docker会下载<code>nginx:latest</code></p>
+<h2 id="3-查看容器状态"><a href="#3-查看容器状态" class="headerlink" title="3.查看容器状态"></a>3.查看容器状态</h2><p>查看正在运行的容器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>输出信息为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">❯ docker ps -a</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                   CREATED          STATUS          PORTS     NAMES</span><br><span class="line">794883d78014   nginx     <span class="string">&quot;/docker-entrypoint.…&quot;</span>   31 seconds ago   Up 30 seconds   80/tcp    my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>这里要区分</p>
+<ul>
+<li>镜像名：nginx</li>
+<li>容器名：my-nginx</li>
+<li>容器ID</li>
+</ul>
+<p>后续命令指定容器时可以使用容器名，也可以使用容器ID</p>
+<h2 id="4-停止和重启"><a href="#4-停止和重启" class="headerlink" title="4.停止和重启"></a>4.停止和重启</h2><p>如果要停止正在运行的容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>重新启动该容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>这里注意<code>run</code>和<code>start</code>的区别：</p>
+<ul>
+<li><code>docker run</code>：创建一个容器，然后启动</li>
+<li><code>docker start</code>：启动一个已存在的容器</li>
+</ul>
+<p>所以如果反复运行<code>docker run</code>，那就会重复创建容器</p>
+<h2 id="5-查看日志和容器详情"><a href="#5-查看日志和容器详情" class="headerlink" title="5.查看日志和容器详情"></a>5.查看日志和容器详情</h2><p>查看容器日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>进入后按Ctrl+C只会停止查看日志，不会退出容器</p>
+<p>持续跟踪日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f my-nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-删除容器"><a href="#6-删除容器" class="headerlink" title="6.删除容器"></a>6.删除容器</h2><p>通常我们会先停止容器再删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker stop my-nignx</span><br><span class="line">docker <span class="built_in">rm</span> my-nginx</span><br><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<p>最后的输出应该看不到这个容器了，当然也可以强行删除运行中的容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -f my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>删除容器不会删除镜像.</p>
+<p>总结：容器的生命周期为</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">镜像</span><br><span class="line">  ↓ docker run</span><br><span class="line">创建并运行容器</span><br><span class="line">  ↓ docker stop</span><br><span class="line">停止的容器</span><br><span class="line">  ↓ docker start</span><br><span class="line">重新运行</span><br><span class="line">  ↓ docker rm</span><br><span class="line">容器被删除，但镜像仍然存在</span><br></pre></td></tr></table></figure>
+
+<h1 id="端口映射与访问容器"><a href="#端口映射与访问容器" class="headerlink" title="端口映射与访问容器"></a>端口映射与访问容器</h1><h2 id="1-为什么要映射"><a href="#1-为什么要映射" class="headerlink" title="1.为什么要映射"></a>1.为什么要映射</h2><p>当我们运行<code>nginx</code>镜像时，容器内部会监听80端口，但是容器拥有独立的网络环境，因此我们无法访问，为了解决这个问题，我们就需要使用<code>-p-</code>将宿主机端口映射到容器端口：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">宿主机 8080 端口 -&gt; 容器 80 端口 -&gt; Nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-启动Nginx"><a href="#2-启动Nginx" class="headerlink" title="2.启动Nginx"></a>2.启动Nginx</h2><p>先清理可能存在的同名镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -f my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>然后使用下列命令启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name my-nginx -d \ -p 8080:80 nginx</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>--name my-nginx</code>：设置容器名称</li>
+<li><code>-d</code>：在后台运行</li>
+<li><code>-p 8080:80</code>：把宿主机的<code>8080</code>映射到容器的<code>80</code></li>
+<li><code>nginx</code>：使用nginx镜像</li>
+</ul>
+<p><code>-p</code>的格式是：<code>-p 宿主机端口：容器端口</code></p>
+<h2 id="3-检查运行状态"><a href="#3-检查运行状态" class="headerlink" title="3.检查运行状态"></a>3.检查运行状态</h2><p>输入<code>docker ps</code>可以看到当前运行状态，重点看<code>POST</code>的内容：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER ID   IMAGE     COMMAND                   CREATED         STATUS         PORTS                                     NAMES</span><br><span class="line">1bf9a55729f2   nginx     &quot;/docker-entrypoint.…&quot;   4 seconds ago   Up 4 seconds   0.0.0.0:8080-&gt;80/tcp, [::]:8080-&gt;80/tcp   my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>那么就可以访问了，打开网址<a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> ，或者可以在终端输入<code>curl http://localhost:8080</code>来查看内容。</p>
+<h2 id="4-访问日志"><a href="#4-访问日志" class="headerlink" title="4.访问日志"></a>4.访问日志</h2><p>使用<code>docker logs -f my-nginx</code>持续追踪日志，刷新几次浏览器，会看到</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.65.1 - - [11/Aug/2026:03:13:45 +0000] &quot;GET / HTTP/1.1&quot; 304</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-进入容器内部"><a href="#5-进入容器内部" class="headerlink" title="5.进入容器内部"></a>5.进入容器内部</h2><p>使用命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it my-nginx sh</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>docker exec</code>：在运行的容器内执行命令</li>
+<li><code>-i</code>：保持输入通道打开</li>
+<li><code>-t</code>：分配终端</li>
+<li><code>sh</code>：启动shell</li>
+</ul>
+<p>进入后执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br><span class="line">hostname</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="built_in">cat</span> /usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
+
+<p>最后使用<code>exit</code>退出</p>
+<h1 id="容器的进程与交互式操作"><a href="#容器的进程与交互式操作" class="headerlink" title="容器的进程与交互式操作"></a>容器的进程与交互式操作</h1><blockquote>
+<p>容器不是虚拟机，容器的生命周期由他的主进程决定。</p>
+</blockquote>
+<h2 id="1-前台运行和后台运行"><a href="#1-前台运行和后台运行" class="headerlink" title="1.前台运行和后台运行"></a>1.前台运行和后台运行</h2><p>我们之前使用<code>-d</code>参数让进程在后台运行，如果不加这个参数运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name nginx-foreground -p 8081:80 nginx</span><br></pre></td></tr></table></figure>
+
+<p>终端就会被前台进程占用，然后我们访问<a target="_blank" rel="noopener" href="http://localhost:8081/">http://localhost:8081</a> ，在终端可以看到访问日志。</p>
+<p>按下<code>Ctrl</code>+<code>C</code>，进程终止，容器也会停下，使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<p>检查容器状态，会看到这个容器处于<code>Exited</code>，然后使用<code>docker rm nginx-foreground</code>删除这个容器。</p>
+<h2 id="2-容器为什么会退出"><a href="#2-容器为什么会退出" class="headerlink" title="2.容器为什么会退出"></a>2.容器为什么会退出</h2><p>每个容器都有一个主进程，进程号通常为PID1：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">容器启动</span><br><span class="line">   ↓</span><br><span class="line">主进程 PID 1 开始运行</span><br><span class="line">   ↓</span><br><span class="line">主进程持续运行 → 容器保持运行</span><br><span class="line">主进程执行结束 → 容器停止</span><br></pre></td></tr></table></figure>
+
+<p><code>hello-world</code>会很快退出，是因为它的主程序输出文字后就结束了。</p>
+<p><code>nginx</code>会持续运行，是因为它的主进程会持续监听HTTP请求。</p>
+<p>容器退出不一定表示发生错误，也可能是程序运行结束。</p>
+<h2 id="3-查看容器中的进程"><a href="#3-查看容器中的进程" class="headerlink" title="3.查看容器中的进程"></a>3.查看容器中的进程</h2><p>确认<code>my-nginx</code>正在运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>查看进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top my-nginx</span><br></pre></td></tr></table></figure>
+
+<p>就可以看到Nginx的主进程和工作进程。再进入容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it my-nginx sh</span><br></pre></td></tr></table></figure>
+
+<p>进入后再执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps</span><br></pre></td></tr></table></figure>
+
+<p>如果镜像中的<code>ps</code>功能有限或不存在，也属于正常情况，许多容器镜像会尽量精简，只包含运行应用必要的工具。</p>
+<p>再运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>退出容器</p>
+<h2 id="4-运行交互式容器"><a href="#4-运行交互式容器" class="headerlink" title="4.运行交互式容器"></a>4.运行交互式容器</h2><p>启动一个临时Ubuntu容器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name ubuntu-lab -it ubuntu bash</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ul>
+<li><code>-i</code>：保持标准输入打开</li>
+<li><code>-t</code>：分配一个终端</li>
+<li><code>bash</code>：容器启动后执行的主命令</li>
+</ul>
+<p>进入后尝试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">whoami</span></span><br><span class="line">hostname</span><br><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="built_in">cat</span> /etc/os-release</span><br></pre></td></tr></table></figure>
+
+<p>可以看到输出为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">root@9260abe2644e:/<span class="comment"># whoami</span></span><br><span class="line">root</span><br><span class="line">root@9260abe2644e:/<span class="comment"># pwd</span></span><br><span class="line">/</span><br><span class="line">root@9260abe2644e:/<span class="comment"># hostname</span></span><br><span class="line">9260abe2644e</span><br><span class="line">root@9260abe2644e:/<span class="comment"># ls</span></span><br><span class="line">bin  boot  dev  etc  home  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</span><br><span class="line">root@9260abe2644e:/<span class="comment"># cat /etc/os-release</span></span><br><span class="line">PRETTY_NAME=<span class="string">&quot;Ubuntu 26.04 LTS&quot;</span></span><br><span class="line">NAME=<span class="string">&quot;Ubuntu&quot;</span></span><br><span class="line">VERSION_ID=<span class="string">&quot;26.04&quot;</span></span><br><span class="line">VERSION=<span class="string">&quot;26.04 LTS (Resolute Raccoon)&quot;</span></span><br><span class="line">VERSION_CODENAME=resolute</span><br><span class="line">ID=ubuntu</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">HOME_URL=<span class="string">&quot;https://www.ubuntu.com/&quot;</span></span><br><span class="line">SUPPORT_URL=<span class="string">&quot;https://help.ubuntu.com/&quot;</span></span><br><span class="line">BUG_REPORT_URL=<span class="string">&quot;https://bugs.launchpad.net/ubuntu/&quot;</span></span><br><span class="line">PRIVACY_POLICY_URL=<span class="string">&quot;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&quot;</span></span><br><span class="line">UBUNTU_CODENAME=resolute</span><br><span class="line">LOGO=ubuntu-logo</span><br></pre></td></tr></table></figure>
+
+<p>会看到：</p>
+<ul>
+<li>容器内显示ubuntu空间</li>
+<li>默认用户通常是root</li>
+<li>容器有自己的主机名</li>
+<li>仍然共享宿主机的硬件资源</li>
+<li>Docker实际通过Linux虚拟机提供Linux内核</li>
+</ul>
+<h2 id="5-run-start和exec的区别"><a href="#5-run-start和exec的区别" class="headerlink" title="5.run,start和exec的区别"></a>5.<code>run</code>,<code>start</code>和<code>exec</code>的区别</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>是否创建新容器</th>
+<th>操作对象</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>docker run</code></td>
+<td>是</td>
+<td>镜像</td>
+<td>创建并运行新容器</td>
+</tr>
+<tr>
+<td><code>docker start</code></td>
+<td>否</td>
+<td>已有容器</td>
+<td>重新启动已停止容器</td>
+</tr>
+<tr>
+<td><code>docker exec</code></td>
+<td>否</td>
+<td>运行中的容器</td>
+<td>在容器中执行额外命令</td>
+</tr>
+</tbody></table>
+<h2 id="6-查看容器退出原因"><a href="#6-查看容器退出原因" class="headerlink" title="6.查看容器退出原因"></a>6.查看容器退出原因</h2><p>输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker inspect \</span><br><span class="line">  --format <span class="string">&#x27;状态=&#123;&#123;.State.Status&#125;&#125; 退出码=&#123;&#123;.State.ExitCode&#125;&#125;&#x27;</span> \</span><br><span class="line">  ubuntu-lab</span><br></pre></td></tr></table></figure>
+
+<p>如果是正常执行exit，那么一般会看到</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">状态=exited 退出码=0</span><br></pre></td></tr></table></figure>
+
+<p>一般来说，0表示程序正常结束，非0表示发生错误或者意外终止，可以使用<code>logs</code>查看最后的日志</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://xyuechen/github.io">xu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xyuechen/github.io/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/">https://xyuechen/github.io/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xyuechen/github.io" target="_blank">XuHui</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/daily/">daily</a></div><div class="post_share"><div class="social-share" data-image="/img/star.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/" title="单调栈"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">单调栈</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/11/14/conda%E7%8E%AF%E5%A2%83%E8%BF%81%E7%A7%BB/" title="conda环境迁移"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-14</div><div class="title">conda环境迁移</div></div></a></div><div><a href="/2025/02/24/hexo-%E8%BF%81%E7%A7%BB/" title="hexo_迁移"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-24</div><div class="title">hexo_迁移</div></div></a></div><div><a href="/2023/07/29/hexo%E7%BE%8E%E5%8C%96%E8%AE%B0%E5%BD%95/" title="hexo美化记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-29</div><div class="title">hexo美化记录</div></div></a></div><div><a href="/2024/06/17/linux-to-go-%E7%A7%BB%E5%8A%A8%E7%A1%AC%E7%9B%98%E5%88%B6%E4%BD%9C/" title="linux to go 移动硬盘制作"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-17</div><div class="title">linux to go 移动硬盘制作</div></div></a></div><div><a href="/2025/04/28/python%E5%B7%A5%E5%85%B7uv/" title="python工具uv"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-28</div><div class="title">python工具uv</div></div></a></div><div><a href="/2023/08/10/%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/" title="免费科学上网方法记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-10</div><div class="title">免费科学上网方法记录</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/star.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xu</div><div class="author-info__description">学习和生活日常</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xyuechen"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xyuechen" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/2624313195@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A4%E8%AF%86Docker"><span class="toc-number">1.</span> <span class="toc-text">认识Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-docker%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">1.docker解决什么问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%89%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.</span> <span class="toc-text">2.三个核心概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AE%B9%E5%99%A8%E5%92%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.3.</span> <span class="toc-text">3.容器和虚拟机的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BB%83%E4%B9%A0"><span class="toc-number">1.4.</span> <span class="toc-text">4.练习</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">镜像与容器的基本管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9F%A5%E7%9C%8B%E5%B7%B2%E6%9C%89%E9%95%9C%E5%83%8F"><span class="toc-number">2.1.</span> <span class="toc-text">1.查看已有镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%8C%81%E7%BB%AD%E8%BF%90%E8%A1%8C%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">2.创建一个可持续运行的容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E7%8A%B6%E6%80%81"><span class="toc-number">2.3.</span> <span class="toc-text">3.查看容器状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%81%9C%E6%AD%A2%E5%92%8C%E9%87%8D%E5%90%AF"><span class="toc-number">2.4.</span> <span class="toc-text">4.停止和重启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97%E5%92%8C%E5%AE%B9%E5%99%A8%E8%AF%A6%E6%83%85"><span class="toc-number">2.5.</span> <span class="toc-text">5.查看日志和容器详情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">2.6.</span> <span class="toc-text">6.删除容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E4%B8%8E%E8%AE%BF%E9%97%AE%E5%AE%B9%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">端口映射与访问容器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%98%A0%E5%B0%84"><span class="toc-number">3.1.</span> <span class="toc-text">1.为什么要映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%90%AF%E5%8A%A8Nginx"><span class="toc-number">3.2.</span> <span class="toc-text">2.启动Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%A3%80%E6%9F%A5%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81"><span class="toc-number">3.3.</span> <span class="toc-text">3.检查运行状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97"><span class="toc-number">3.4.</span> <span class="toc-text">4.访问日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8"><span class="toc-number">3.5.</span> <span class="toc-text">5.进入容器内部</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B%E4%B8%8E%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">容器的进程与交互式操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%89%8D%E5%8F%B0%E8%BF%90%E8%A1%8C%E5%92%8C%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C"><span class="toc-number">4.1.</span> <span class="toc-text">1.前台运行和后台运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%B9%E5%99%A8%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E9%80%80%E5%87%BA"><span class="toc-number">4.2.</span> <span class="toc-text">2.容器为什么会退出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E8%BF%9B%E7%A8%8B"><span class="toc-number">4.3.</span> <span class="toc-text">3.查看容器中的进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%BF%90%E8%A1%8C%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="toc-number">4.4.</span> <span class="toc-text">4.运行交互式容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-run-start%E5%92%8Cexec%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.5.</span> <span class="toc-text">5.run,start和exec的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E9%80%80%E5%87%BA%E5%8E%9F%E5%9B%A0"><span class="toc-number">4.6.</span> <span class="toc-text">6.查看容器退出原因</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/06/%E8%AE%A4%E8%AF%86%E5%AE%B9%E5%99%A8/" title="认识容器">认识容器</a><time datetime="2026-08-06T02:14:35.000Z" title="发表于 2026-08-06 10:14:35">2026-08-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/09/%E5%8D%95%E8%B0%83%E6%A0%88/" title="单调栈">单调栈</a><time datetime="2026-06-09T10:49:38.000Z" title="发表于 2026-06-09 18:49:38">2026-06-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" title="二分查找">二分查找</a><time datetime="2026-01-16T06:02:16.000Z" title="发表于 2026-01-16 14:02:16">2026-01-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/15/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口">滑动窗口</a><time datetime="2026-01-15T01:32:29.000Z" title="发表于 2026-01-15 09:32:29">2026-01-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/11/%E9%9B%A8%E6%B0%B4%E5%AE%B9%E5%99%A8/" title="雨水容器">雨水容器</a><time datetime="2026-01-11T12:29:15.000Z" title="发表于 2026-01-11 20:29:15">2026-01-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2026 By xu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
